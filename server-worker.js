@@ -43,7 +43,7 @@ const logger            = require('@bit/nurminendev.utils.logger').workerLogger
 
 const webpack               = process.env.NODE_ENV !== 'production' ? require('webpack') : null
 const webpackDevMiddleware  = process.env.NODE_ENV !== 'production' ? require('webpack-dev-middleware') : null
-const webpackConfig         = process.env.NODE_ENV !== 'production' ? require('./build/webpack.dev.js') : null
+const webpackConfig         = process.env.NODE_ENV !== 'production' ? require('./config/webpack.dev.js') : null
 const webpackCompiler       = process.env.NODE_ENV !== 'production' ? webpack(webpackConfig) : null
 
 
@@ -77,14 +77,35 @@ class ServerWorker {
 
                 this.webpackDevMiddleware = webpackDevMiddleware(webpackCompiler, {
                     publicPath: webpackConfig.output.publicPath,
-                    stats: 'minimal'
+                    stats: 'minimal',
+                    writeToDisk: true
                 })
 
-                app.use(this.webpackDevMiddleware)
+                // We just use webpack-dev-middleware as a runtime compiler
+                // Disable in-memory serving of assets as an Express middleware
+                //app.use(this.webpackDevMiddleware)
             }
 
-            // Setup routes here TODO
-            app.use(express.static(path.resolve(__dirname, 'dist')))
+
+            // Our webpack assets
+            app.use('/assets', express.static(path.resolve(__dirname, 'dist', 'assets')))
+
+
+            // Routes from config/routes.js
+            const routes = require('./config/routes.js')
+
+            routes.forEach((route) => {
+                const method = route.method
+                const path = route.path
+                const routeModule = route.controller.substr(0, route.controller.indexOf('#'))
+                const routeHandler = route.controller.substring(route.controller.lastIndexOf('#') + 1)
+
+                const routeHandlerObject = require(`./controllers/${routeModule}.js`)
+
+                app[method.toLowerCase()](path, routeHandlerObject[routeHandler].bind(routeHandlerObject))
+
+            })
+
 
             app.get('/', (req, res) => {
                 res.sendFile(path.resolve(__dirname, 'dist', 'index.html'))

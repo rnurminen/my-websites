@@ -6,4 +6,4 @@
 !/log/.keep
 
 /dist/*
-!/dist/.keep
+!/dist/assets/.keep

@@ -24,19 +24,21 @@ module.exports = {
     },
     output: {
         filename: '[name].bundle.js',
-        path: path.resolve(__dirname, '..', 'dist'),
-        publicPath: '/'
+        path: path.resolve(__dirname, '..', 'dist', 'assets'),
+        publicPath: '/assets'
     },
     plugins: [
         new CleanWebpackPlugin({
-            cleanOnceBeforeBuildPatterns: ['**/*', '!.keep']
+            dry: false,
+            cleanOnceBeforeBuildPatterns: ['../*', '**/*', '!../assets', '!.keep'],
+            dangerouslyAllowCleanPatternsOutsideProject: true
         }), // Cleans up the above 'output.path' folder before each build
 
         // Static pages (.html) files served by our webserver
         // Compiled from .pug view templates via pug-loader
         new HtmlWebpackPlugin({
             template: './frontend/views/index.pug',
-            filename: 'index.html',
+            filename: '../index.html',
             chunks: ['app']
         })
     ],
