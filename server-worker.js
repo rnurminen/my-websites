@@ -1,0 +1,243 @@
+//
+//
+// nurminen-dev-platform - NodeJS/Express development and testing playground
+//
+// Copyright (c) 2020 Riku Nurminen
+//
+// https://www.nurminen.dev
+//
+// Permission is hereby granted, free of charge, to any person obtaining a copy
+// of this software and associated documentation files (the "Software"), to
+// deal in the Software without restriction, including without limitation the
+// rights to use, copy, modify, merge, publish, distribute, sublicense, and/or
+// sell copies of the Software, and to permit persons to whom the Software is
+// furnished to do so, subject to the following conditions:
+//
+// The above copyright notice and this permission notice shall be included in
+// all copies or substantial portions of the Software.
+//
+// THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+// IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+// FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+// AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+// LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING
+// FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER
+// DEALINGS IN THE SOFTWARE.
+//
+//
+
+
+'use strict'
+
+require('dotenv').config()
+
+const path              = require('path')
+const http              = require('http')
+const httpTerminator    = require('http-terminator')
+const express           = require('express')
+const app               = express()
+const helmet            = require('helmet')
+const chalk             = require('chalk')
+
+const logger            = require('@bit/nurminendev.utils.logger').workerLogger
+
+const webpack               = process.env.NODE_ENV !== 'production' ? require('webpack') : null
+const webpackDevMiddleware  = process.env.NODE_ENV !== 'production' ? require('webpack-dev-middleware') : null
+const webpackConfig         = process.env.NODE_ENV !== 'production' ? require('./build/webpack.dev.js') : null
+const webpackCompiler       = process.env.NODE_ENV !== 'production' ? webpack(webpackConfig) : null
+
+
+class ServerWorker {
+    constructor() {
+        this.serverQuitting = false
+
+        this.serverInsecure = null
+        this.serverSSL = null
+
+        this.httpTerminator = null
+        this.httpsTerminator = null
+
+        this.webpackDevMiddleware = null
+    }
+
+
+    setupServer() {
+        return new Promise((resolve, reject) => {
+            process.on('message', (message) => {
+                if(message == 'shutdown') {
+                    this.shutdownServer()
+                }
+            })
+
+            // Helmet on, for safety.
+            app.use(helmet())
+
+            // Webpack watcher for asset recompiling in development environment
+            if (process.env.NODE_ENV !== 'production') {
+
+                this.webpackDevMiddleware = webpackDevMiddleware(webpackCompiler, {
+                    publicPath: webpackConfig.output.publicPath,
+                    stats: 'minimal'
+                })
+
+                app.use(this.webpackDevMiddleware)
+            }
+
+            // Setup routes here TODO
+            app.use(express.static(path.resolve(__dirname, 'dist')))
+
+            app.get('/', (req, res) => {
+                res.sendFile(path.resolve(__dirname, 'dist', 'index.html'))
+            })
+
+            app.get('/test', (req, res) => {
+                logger.log('debug', 'TEST REQUEST START **********')
+                res.write('Hello ')
+                setTimeout(function() {
+                    logger.log('debug', 'REQUEST END *********************')
+                    res.end(' World\n');
+                }, 10000);
+            })
+
+            // Default endpoint for everything else
+            app.use((req, res) => {
+                var ip = req.connection.remoteAddress
+                var method = req.method
+                var url = req.originalUrl
+                //wacsLog.log('[warning] Wildcard request (' + method + ' ' + url + ') from ' + ip + '[reset]', 1, true)
+                res.status(403).json({
+                    "StatusCode": 403
+                })
+            })
+
+            resolve()
+        })
+    }
+
+    async runServer() {
+        await this.setupServer()
+
+        // Default to listening on all interfaces if not set in ENV
+        const listenHost = process.env.SERVER_LISTEN_HOST || '0.0.0.0'
+
+        const portInsecure = process.env.SERVER_LISTEN_PORT_INSECURE
+
+        if(portInsecure && !isNaN(portInsecure)) {
+            this.serverInsecure = http.createServer(app)
+            this.serverInsecure.on('error', this._handleHttpServerError.bind(this))
+            this.serverInsecure.on('clientError', this._handleHttpClientError.bind(this))
+            this.serverInsecure.on('close', () => {
+                logger.log('info', chalk.bgBlue('[Express] HTTP Server closed'))
+            })
+            this.serverInsecure.listen(portInsecure, listenHost, () => {
+                // Create terminator only after Express is listening for connections
+                this.httpTerminator = httpTerminator.createHttpTerminator({
+                    server: this.serverInsecure,
+                    gracefulTerminationTimeout: 5000
+                })
+                logger.log('info', chalk.bgBlue(`[Express] Server listening on ${listenHost}:${portInsecure} (HTTP)`))
+            })
+        }
+
+        if(this.serverInsecure === null && this.serverSSL === null) {
+            logger.log('notice', 'Express server configuration not found, nothing to do, exiting...')
+            this.shutdownServer()
+        }
+    }
+
+
+    async shutdownServer() {
+        if(this.serverQuitting === false) {
+            this.serverQuitting = true
+
+            if (process.env.NODE_ENV !== 'production') {
+                await this._closeWebpackDevMiddleware()
+            }
+
+            // The process.send('shutdown') request below will do a worker.disconnect() from
+            // the master process, which would also close our HTTP server(s), but we want to
+            // gracefully exit any ongoing connections, so we do it here ourselves instead
+            if (this.httpTerminator !== null) {
+                logger.log('debug', 'Gracefully closing HTTP connections...')
+                await this.httpTerminator.terminate()
+            }
+
+            if (this.httpsTerminator !== null) {
+                logger.log('debug', 'Gracefully closing HTTPS connections...')
+                await this.httpsTerminator.terminate()
+            }
+
+            // Send process shutdown request to master process
+            process.send({ 'type': 'shutdown' })
+        }
+    }
+
+
+    _closeWebpackDevMiddleware() {{
+        return new Promise((resolve) => {
+            if(this.webpackDevMiddleware === null) {
+                resolve()
+            } else {
+                this.webpackDevMiddleware.close(() => {
+                    logger.log('debug', 'webpack-dev-middleware closed.')
+                    resolve()
+                })
+            }
+        })
+    }}
+
+
+    _handleHttpServerError(error) {
+        if(error.code === 'EACCES') {
+            logger.log('emerg', `Failed to start HTTP server: Access denied when binding to ${error.address} port ${error.port}`)
+        } else if(error.code === 'EADDRINUSE') {
+            logger.log('emerg', `Failed to start HTTP server: Address already in use: ${error.address}`)
+        } else {
+            logger.log('emerg', `Failed to start HTTP server: ${error.code} (${error.errno}), syscall: ${error.syscall}, stack trace:\n${error.stack}`)
+        }
+
+        this.shutdownServer()
+    }
+
+    _handleHttpClientError(err, socket) {
+        try {
+            /* In some cases, the client has already received the response and/or the socket has already
+               been destroyed, like in case of ECONNRESET errors. Before trying to send data to the socket,
+               it is better to check that it is still writable.
+               https://nodejs.org/api/http.html#http_event_clienterror
+            */
+            if (err.code === 'ECONNRESET' || !socket.writable) {
+                throw new Error('ECONNRESET or socket not writable')
+            }
+
+            const ip = socket.remoteAddress
+
+            const errorBody = err.code
+            const contentLength = errorBody.length
+
+            let response = 'HTTP/1.1 400 Bad Request\r\n'
+            response += 'Content-Type: text/plain\r\n'
+            response += 'Content-Length: ' + contentLength + '\r\n'
+            response += 'Connection: close\r\n'
+            response += 'Date: ' + (new Date()).toUTCString() + '\r\n'
+            response += '\r\n'
+            response += errorBody
+
+            logger.log('warning', `HTTP clientError: ${err.code}, remoteAddress: ${ip}`)
+
+            socket.write(
+                response,
+                'UTF-8',
+                () => socket.end()
+            )
+        }
+    
+        catch(fatalErr) {
+            logger.log('error', `_handleHttpClientError(): ${fatalErr}`)
+            socket.end()
+        }
+    }
+}
+
+
+module.exports = new ServerWorker
