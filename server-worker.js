@@ -1,6 +1,6 @@
 //
 //
-// nurminen-dev-platform - NodeJS/Express development and testing playground
+// nurminen-dev-platform - A NodeJS/Express development and testing playground
 //
 // Copyright (c) 2020 Riku Nurminen
 //
@@ -33,6 +33,7 @@ require('dotenv').config()
 
 const path              = require('path')
 const http              = require('http')
+const https             = require('https')
 const httpTerminator    = require('http-terminator')
 const express           = require('express')
 const app               = express()
@@ -40,11 +41,13 @@ const helmet            = require('helmet')
 const chalk             = require('chalk')
 
 const logger            = require('@bit/nurminendev.utils.logger').workerLogger
+const util              = require('@bit/nurminendev.utils.miscutils')
 
 const webpack               = process.env.NODE_ENV !== 'production' ? require('webpack') : null
 const webpackDevMiddleware  = process.env.NODE_ENV !== 'production' ? require('webpack-dev-middleware') : null
 const webpackConfig         = process.env.NODE_ENV !== 'production' ? require('./config/webpack.dev.js') : null
 const webpackCompiler       = process.env.NODE_ENV !== 'production' ? webpack(webpackConfig) : null
+
 
 
 class ServerWorker {
@@ -86,7 +89,6 @@ class ServerWorker {
                 //app.use(this.webpackDevMiddleware)
             }
 
-
             // Our webpack assets
             app.use('/assets', express.static(path.resolve(__dirname, 'dist', 'assets')))
 
@@ -104,20 +106,6 @@ class ServerWorker {
 
                 app[method.toLowerCase()](path, routeHandlerObject[routeHandler].bind(routeHandlerObject))
 
-            })
-
-
-            app.get('/', (req, res) => {
-                res.sendFile(path.resolve(__dirname, 'dist', 'index.html'))
-            })
-
-            app.get('/test', (req, res) => {
-                logger.log('debug', 'TEST REQUEST START **********')
-                res.write('Hello ')
-                setTimeout(function() {
-                    logger.log('debug', 'REQUEST END *********************')
-                    res.end(' World\n');
-                }, 10000);
             })
 
             // Default endpoint for everything else
@@ -160,8 +148,58 @@ class ServerWorker {
             })
         }
 
+        const portSSL    = process.env.SERVER_LISTEN_PORT_SSL
+        const sslPrivKey = process.env.SERVER_SSL_PRIVKEY
+        const sslCert    = process.env.SERVER_SSL_CERT
+        const sslCA      = process.env.SERVER_SSL_CA
+
+        if(portSSL && !isNaN(portSSL) && sslPrivKey && sslCert && sslCA) {
+            const sslPrivKeyData = await util.readFile(sslPrivKey)
+            if(sslPrivKeyData === false) {
+                logger.log('alert', `Unable to read SSL cert from SERVER_SSL_PRIVKEY; cannot start HTTPS server.`)
+            }
+            const sslCertData = await util.readFile(sslCert)
+            if(sslCertData === false) {
+                logger.log('alert', `Unable to read SSL cert from SERVER_SSL_CERT; cannot start HTTPS server.`)
+            }
+            const sslCAdata = await util.readFile(sslCA)
+            if(sslCAdata === false) {
+                logger.log('alert', `Unable to read SSL cert from SERVER_SSL_CA; cannot start HTTPS server.`)
+            }
+
+            if(sslPrivKeyData !== false && sslCertData !== false && sslCAdata !== false) {
+                let credentials = {
+                    key: sslPrivKeyData,
+                    cert: sslCertData,
+                    ca: sslCAdata
+                }
+    
+                if(process.env.SERVER_SSL_MINVERSION) {
+                    credentials['minVersion'] = process.env.SERVER_SSL_MINVERSION
+                }
+    
+                this.serverSSL = https.createServer(credentials, app)
+
+                this.serverSSL.on('error', this._handleHttpServerError.bind(this))
+                this.serverSSL.on('clientError', this._handleHttpClientError.bind(this))
+
+                this.serverSSL.on('close', () => {
+                    logger.log('info', chalk.bgBlue('[Express] HTTPS Server closed'))
+                })
+
+                this.serverSSL.listen(portSSL, listenHost, () => {
+                    // Create terminator only after Express is listening for connections
+                    this.httpsTerminator = httpTerminator.createHttpTerminator({
+                        server: this.serverSSL,
+                        gracefulTerminationTimeout: 5000
+                    })
+                    logger.log('info', chalk.bgBlue(`[Express] Server listening on ${listenHost}:${portInsecure} (HTTPS)`))
+                })
+            }
+        }
+
         if(this.serverInsecure === null && this.serverSSL === null) {
-            logger.log('notice', 'Express server configuration not found, nothing to do, exiting...')
+            logger.log('emerg', 'Neither HTTP nor HTTPS server was able to start, exiting...')
             this.shutdownServer()
         }
     }

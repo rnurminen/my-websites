@@ -1,6 +1,6 @@
 //
 //
-// nurminen-dev-platform - NodeJS/Express development and testing playground
+// nurminen-dev-platform - A NodeJS/Express development and testing playground
 //
 // Copyright (c) 2020 Riku Nurminen
 //
@@ -27,6 +27,7 @@
 //
 
 
+const path   = require('path')
 const logger = require('@bit/nurminendev.utils.logger').workerLogger
 
 
@@ -36,11 +37,7 @@ class IndexController {
     }
 
     index(req, res) {
-        this.testVar++
-
-        logger.log('debug', `Testvar is: ${this.testVar}`)
-
-        res.end('test' + this.testVar)
+        res.sendFile(path.resolve(__dirname, '..', 'dist', 'index.html'))
     }
 
 

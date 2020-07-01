@@ -1,6 +1,6 @@
 //
 //
-// nurminen-dev-platform - NodeJS/Express development and testing playground
+// nurminen-dev-platform - A NodeJS/Express development and testing playground
 //
 // Copyright (c) 2020 Riku Nurminen
 //
@@ -37,7 +37,7 @@ const cluster = require('cluster')
 if(cluster.isMaster) {
 
     const masterLogger = require('@bit/nurminendev.utils.logger').masterLogger
-    const isObject = require('@bit/nurminendev.utils.miscutils').isObject
+    const util = require('@bit/nurminendev.utils.miscutils')
 
     //////////////////////////////////////////////////////////////////////
     //
@@ -69,7 +69,7 @@ if(cluster.isMaster) {
     let workers = process.env.WORKERS
 
     // WORKERS must be >=1 and <= CPU count, else default to CPU count
-    if(Number.isNaN(workers) || workers < 1 || workers > cpuCount) {
+    if(isNaN(workers) || workers < 1 || workers > cpuCount) {
         workers = cpuCount
     }
 
@@ -89,7 +89,7 @@ if(cluster.isMaster) {
 
     // Setup message handlers
     cluster.on('message', (worker, message) => {
-        if(!isObject(message)) {
+        if(!util.isObject(message)) {
             return
         }
 

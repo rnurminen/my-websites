@@ -1,21 +1,23 @@
 {
     "name": "nurminen-dev-platform",
+    "productName": "nurminen-dev-platform",
+    "description": "A NodeJS/Express development and testing playground",
     "version": "1.0.0",
-    "description": "NodeJS/Express development and testing playground",
+    "author": "Riku Nurminen <riku@nurminen.dev>",
+    "homepage": "https://www.nurminen.dev",
+    "license": "MIT",
     "main": "runner.js",
     "scripts": {
-        "start": "node --unhandled-rejections=strict runner.js"
+        "updateall": "npx npm-check-updates -u"
     },
-    "author": "Riku Nurminen",
-    "license": "MIT",
     "dependencies": {
         "@bit/nurminendev.utils.logger": "0.0.41",
-        "@bit/nurminendev.utils.miscutils": "0.0.2",
+        "@bit/nurminendev.utils.miscutils": "0.0.3",
         "chalk": "^4.1.0",
         "cluster": "^0.7.7",
         "dotenv": "^8.2.0",
         "express": "^4.17.1",
-        "helmet": "^3.22.1",
+        "helmet": "^3.23.3",
         "http-terminator": "^2.0.3",
         "lodash": "^4.17.15"
     },
@@ -25,7 +27,7 @@
         "pug": "^3.0.0",
         "pug-loader": "^2.4.0",
         "webpack": "^4.43.0",
-        "webpack-cli": "^3.3.11",
+        "webpack-cli": "^3.3.12",
         "webpack-dev-middleware": "^3.7.2",
         "webpack-merge": "^4.2.2"
     },
@@ -33,7 +35,7 @@
         "node": "14.x"
     },
     "repository": {
-        "type" : "git",
-        "url" : "https://github.com/Nurminen-dev/nurminen-dev-platform"
+        "type": "git",
+        "url": "https://github.com/Nurminen-dev/nurminen-dev-platform"
     }
 }
