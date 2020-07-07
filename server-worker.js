@@ -42,12 +42,12 @@ const chalk             = require('chalk')
 
 const logger            = require('@bit/nurminendev.utils.logger').workerLogger
 const util              = require('@bit/nurminendev.utils.miscutils')
+const handle            = util.handle
 
 const webpack               = process.env.NODE_ENV !== 'production' ? require('webpack') : null
 const webpackDevMiddleware  = process.env.NODE_ENV !== 'production' ? require('webpack-dev-middleware') : null
 const webpackConfig         = process.env.NODE_ENV !== 'production' ? require('./config/webpack.dev.js') : null
 const webpackCompiler       = process.env.NODE_ENV !== 'production' ? webpack(webpackConfig) : null
-
 
 
 class ServerWorker {
@@ -64,67 +64,71 @@ class ServerWorker {
     }
 
 
-    setupServer() {
-        return new Promise((resolve, reject) => {
-            process.on('message', (message) => {
-                if(message == 'shutdown') {
-                    this.shutdownServer()
-                }
-            })
-
-            // Helmet on, for safety.
-            app.use(helmet())
-
-            // Webpack watcher for asset recompiling in development environment
-            if (process.env.NODE_ENV !== 'production') {
-
-                this.webpackDevMiddleware = webpackDevMiddleware(webpackCompiler, {
-                    publicPath: webpackConfig.output.publicPath,
-                    stats: 'minimal',
-                    writeToDisk: true
-                })
-
-                // We just use webpack-dev-middleware as a runtime compiler
-                // Disable in-memory serving of assets as an Express middleware
-                //app.use(this.webpackDevMiddleware)
+    async setupServer() {
+        process.on('message', (message) => {
+            if (message == 'shutdown') {
+                this.shutdownServer()
             }
-
-            // Our webpack assets
-            app.use('/assets', express.static(path.resolve(__dirname, 'dist', 'assets')))
-
-
-            // Routes from config/routes.js
-            const routes = require('./config/routes.js')
-
-            routes.forEach((route) => {
-                const method = route.method
-                const path = route.path
-                const routeModule = route.controller.substr(0, route.controller.indexOf('#'))
-                const routeHandler = route.controller.substring(route.controller.lastIndexOf('#') + 1)
-
-                const routeHandlerObject = require(`./controllers/${routeModule}.js`)
-
-                app[method.toLowerCase()](path, routeHandlerObject[routeHandler].bind(routeHandlerObject))
-
-            })
-
-            // Default endpoint for everything else
-            app.use((req, res) => {
-                var ip = req.connection.remoteAddress
-                var method = req.method
-                var url = req.originalUrl
-                //wacsLog.log('[warning] Wildcard request (' + method + ' ' + url + ') from ' + ip + '[reset]', 1, true)
-                res.status(403).json({
-                    "StatusCode": 403
-                })
-            })
-
-            resolve()
         })
+
+        // Helmet on, for safety.
+        app.use(helmet())
+
+        // Webpack watcher for asset recompiling in development environment
+        if (process.env.NODE_ENV !== 'production') {
+
+            this.webpackDevMiddleware = webpackDevMiddleware(webpackCompiler, {
+                publicPath: webpackConfig.output.publicPath,
+                stats: 'minimal',
+                writeToDisk: true
+            })
+
+            // We just use webpack-dev-middleware as a runtime compiler
+            // Disable in-memory serving of assets as an Express middleware
+            //app.use(this.webpackDevMiddleware)
+        }
+
+        // Our webpack assets
+        app.use('/assets', express.static(path.resolve(__dirname, 'dist', 'assets')))
+
+
+        // Routes from config/routes.js
+        const routes = require('./config/routes.js')
+
+        routes.forEach((route) => {
+            const method = route.method
+            const path = route.path
+            const routeModule = route.controller.substr(0, route.controller.indexOf('#'))
+            const routeHandler = route.controller.substring(route.controller.lastIndexOf('#') + 1)
+
+            const routeHandlerObject = require(`./controllers/${routeModule}.js`)
+
+            app[method.toLowerCase()](path, routeHandlerObject[routeHandler].bind(routeHandlerObject))
+
+        })
+
+        // Default endpoint for everything else
+        app.use((req, res) => {
+            var ip = req.connection.remoteAddress
+            var method = req.method
+            var url = req.originalUrl
+            //wacsLog.log('[warning] Wildcard request (' + method + ' ' + url + ') from ' + ip + '[reset]', 1, true)
+            res.status(403).json({
+                "StatusCode": 403
+            })
+        })
+
+        return true
     }
 
     async runServer() {
-        await this.setupServer()
+        const [status, error] = await handle(this.setupServer())
+
+        if(error) {
+            logger.log('emerg', `ServerWorker.setupServer() failed, error: ${error}`)
+            this.shutdownServer()
+            return
+        }
 
         // Default to listening on all interfaces if not set in ENV
         const listenHost = process.env.SERVER_LISTEN_HOST || '0.0.0.0'
@@ -213,9 +217,7 @@ class ServerWorker {
                 await this._closeWebpackDevMiddleware()
             }
 
-            // The process.send('shutdown') request below will do a worker.disconnect() from
-            // the master process, which would also close our HTTP server(s), but we want to
-            // gracefully exit any ongoing connections, so we do it here ourselves instead
+            // Gracefully exit HTTP(S) connections
             if (this.httpTerminator !== null) {
                 logger.log('debug', 'Gracefully closing HTTP connections...')
                 await this.httpTerminator.terminate()
@@ -257,6 +259,7 @@ class ServerWorker {
 
         this.shutdownServer()
     }
+
 
     _handleHttpClientError(err, socket) {
         try {

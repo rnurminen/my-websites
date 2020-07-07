@@ -12,7 +12,7 @@
     },
     "dependencies": {
         "@bit/nurminendev.utils.logger": "0.0.41",
-        "@bit/nurminendev.utils.miscutils": "0.0.3",
+        "@bit/nurminendev.utils.miscutils": "0.0.8",
         "chalk": "^4.1.0",
         "cluster": "^0.7.7",
         "dotenv": "^8.2.0",
@@ -29,7 +29,7 @@
         "webpack": "^4.43.0",
         "webpack-cli": "^3.3.12",
         "webpack-dev-middleware": "^3.7.2",
-        "webpack-merge": "^4.2.2"
+        "webpack-merge": "^5.0.7"
     },
     "engines": {
         "node": "14.x"
