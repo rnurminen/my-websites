@@ -109,13 +109,11 @@ class ServerWorker {
 
         // Default endpoint for everything else
         app.use((req, res) => {
-            var ip = req.connection.remoteAddress
-            var method = req.method
-            var url = req.originalUrl
-            //wacsLog.log('[warning] Wildcard request (' + method + ' ' + url + ') from ' + ip + '[reset]', 1, true)
-            res.status(403).json({
-                "StatusCode": 403
-            })
+            const ip = req.connection.remoteAddress
+            const method = req.method
+            const url = req.originalUrl
+            logger.log('notice', `Wildcard request ${method} ${url} (from: ${ip})`, 'no-rollbar')
+            res.status(404).json('404 Not Found')
         })
 
         return true

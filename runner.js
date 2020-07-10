@@ -95,7 +95,7 @@ if(cluster.isMaster) {
 
         switch(message.type) {
             case 'log':
-                masterLogger.log(message.level, message.message, message.rollbar)
+                masterLogger.log(message.level, message.message, message.overrideRollbar)
                 break
             case 'shutdown':
                 worker.disconnect()
