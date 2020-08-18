@@ -1,5 +1,7 @@
 # nurminen-dev-platform
 
+![nurminen-dev-platform](https://i.imgur.com/c2MhEre.png)
+
 **A highly customizable NodeJS / Express framework**
 
 I use this framework as a base in many of my projects. Can be used for example as a backend-only REST server, or a standalone web-server serving a front-end.
