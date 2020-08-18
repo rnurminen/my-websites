@@ -2,8 +2,11 @@
 
 **A highly customizable NodeJS / Express framework**
 
-### Features
+I use this framework as a base in many of my projects. Can be used for example as a backend-only REST server, or a standalone web-server serving a front-end.
 
+## Features
+
+**As a backend / web-server:**
 - Multi-core support for scalability, with Node Cluster API
   - Master process (`runner.js`):
     - Signal handling
@@ -12,14 +15,54 @@
     - Logging with [@bit/nurminendev.utils.logger](https://bit.dev/nurminendev/utils/logger).masterLogger
       - Based on [Winston](https://www.npmjs.com/package/winston)
       - Easy console, file and Rollbar logging
+      - Automatically rotated logfiles for 30 days
   - Worker process(es) (`server-worker.js`)
     - One per CPU, controllable with `WORKERS` env var
     - Logging with [@bit/nurminendev.utils.logger](https://bit.dev/nurminendev/utils/logger).workerLogger
       - Sends log messages via IPC channel to master process logger
 - Ruby on Rails style route handling (`config/routes.js`)
-  - {
-        method: 'POST',
-        path: '/v1/activities/products/:targetSystem',
-        controller: V1_requestHandler,
-        customParameter: 'activityProductList'
-    }
+  - `{ method: 'POST', path: '/api', controller: 'api/handler#requestHandler', customParameter: 'someParam' }`
+  - Will go to `controllers/api/handler.js` -> `class ApiController { requestHandler(customParameter, req, res) }`
+
+**Front-end:**
+- Basic webpack / VueJS template for building a front-end
+
+## Env vars
+
+```
+# How many workers to spawn?
+# Will automatically be capped to CPU count
+# <=0 will set this to CPU count as well
+WORKERS=4
+
+# Logfile name, will be used as:
+# server-dir/log/{APPLICATION_LOG_FILE}-YYYY-MM-DD.log
+# server-dir/log/{APPLICATION_LOG_FILE}.log will be a symlink to current/latest logfile
+# Logs are automatically rotated and kept for 30 days
+APPLICATION_LOG_FILE=app
+
+# Server listen IP
+SERVER_LISTEN_HOST=127.0.0.1
+
+# Server listen port (HTTP, insecure)
+# Omit or set to 0 to skip starting non-SSL server
+SERVER_LISTEN_PORT_INSECURE=3000
+
+# Server listen port, SSL
+SERVER_LISTEN_PORT_SSL=443
+
+# SSL certificates
+SERVER_SSL_PRIVKEY=/path/to/privkey.pem
+SERVER_SSL_CERT=/path/to/cert.pem
+SERVER_SSL_CA=/path/to/chain.pem
+
+# SSL minimum version allowed to connect to HTTPS server
+# See: https://nodejs.org/api/tls.html#tls_tls_default_min_version
+SERVER_SSL_MINVERSION=TLSv1
+
+# Rollbar access token, leave empty to disable Rollbar logging
+ROLLBAR_ACCESS_TOKEN=token
+
+# Rollbar environment
+ROLLBAR_ENVIRONMENT=development
+```
