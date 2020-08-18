@@ -4,25 +4,27 @@
 
 **A highly customizable NodeJS / Express framework**
 
-I use this framework as a base in many of my projects. Can be used for example as a backend-only REST server, or a standalone web-server serving a front-end.
+I use this framework as a base for my projects.
+
+It can be used as backend-only (REST server, for example), or as standalone web-server serving a front-end.
 
 ## Features
 
 **As a backend / web-server:**
 - Multi-core support for scalability, with Node Cluster API
-  - Master process (`runner.js`):
+  - Master process (**runner.js**):
     - Signal handling
       - SIGTERM and SIGINT: Gracefully shuts down connections to all workers before shutting them down
       - SIGUSR2: Graceful shutdown and restart workers (**code hot reload**)
     - Logging with [@bit/nurminendev.utils.logger](https://bit.dev/nurminendev/utils/logger).masterLogger
       - Based on [Winston](https://www.npmjs.com/package/winston)
-      - Easy console, file and Rollbar logging
+      - Centralized console, file and Rollbar logging
       - Automatically rotated logfiles for 30 days
-  - Worker process(es) (`server-worker.js`)
+  - Worker process(es) (**server-worker.js**)
     - One per CPU, controllable with `WORKERS` env var
     - Logging with [@bit/nurminendev.utils.logger](https://bit.dev/nurminendev/utils/logger).workerLogger
       - Sends log messages via IPC channel to master process logger
-- Ruby on Rails style route handling (`config/routes.js`)
+- Ruby on Rails style route handling (**config/routes.js**)
   - `{ method: 'POST', path: '/api', controller: 'api/handler#requestHandler', customParameter: 'someParam' }`
   - Will go to `controllers/api/handler.js` -> `class ApiController { requestHandler(customParameter, req, res) }`
   - `controllers/api/handler.js` should `module.exports = new ApiController` at the end!
@@ -33,16 +35,15 @@ I use this framework as a base in many of my projects. Can be used for example a
 ## Env vars
 
 ```
-# How many workers to spawn?
-# Will automatically be capped to CPU count
-# <=0 will set this to CPU count as well
-WORKERS=4
+# Maximum number of CPUs the server should use
+# Omit or set to 0 to use all CPU cores
+APP_WORKERS=4
 
 # Logfile name, will be used as:
-# server-dir/log/{APPLICATION_LOG_FILE}-YYYY-MM-DD.log
-# server-dir/log/{APPLICATION_LOG_FILE}.log will be a symlink to current/latest logfile
+# server-dir/log/{APP_LOGFILE}-YYYY-MM-DD.log
+# server-dir/log/{APP_LOGFILE}.log will be a symlink to current/latest logfile
 # Logs are automatically rotated and kept for 30 days
-APPLICATION_LOG_FILE=app
+APP_LOGFILE=app
 
 # Server listen IP
 SERVER_LISTEN_HOST=127.0.0.1
@@ -61,7 +62,7 @@ SERVER_SSL_CA=/path/to/chain.pem
 
 # SSL minimum version allowed to connect to HTTPS server
 # See: https://nodejs.org/api/tls.html#tls_tls_default_min_version
-SERVER_SSL_MINVERSION=TLSv1
+SERVER_SSL_MINVERSION=TLSv1.3
 
 # Rollbar access token, leave empty to disable Rollbar logging
 ROLLBAR_ACCESS_TOKEN=token

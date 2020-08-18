@@ -66,9 +66,9 @@ if(cluster.isMaster) {
     masterLogger.log('info', '')
 
     const cpuCount = require('os').cpus().length
-    let workers = process.env.WORKERS
+    let workers = process.env.APP_WORKERS
 
-    // WORKERS must be >=1 and <= CPU count, else default to CPU count
+    // APP_WORKERS must be >=1 and <= CPU count, else default to CPU count
     if(isNaN(workers) || workers < 1 || workers > cpuCount) {
         workers = cpuCount
     }
