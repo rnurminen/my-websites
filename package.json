@@ -11,7 +11,7 @@
         "updateall": "npx npm-check-updates -u"
     },
     "dependencies": {
-        "@bit/nurminendev.utils.logger": "0.0.52",
+        "@bit/nurminendev.utils.logger": "0.0.53",
         "@bit/nurminendev.utils.miscutils": "0.0.35",
         "chalk": "^4.1.0",
         "cluster": "^0.7.7",
@@ -29,7 +29,7 @@
         "webpack": "^4.44.1",
         "webpack-cli": "^3.3.12",
         "webpack-dev-middleware": "^3.7.2",
-        "webpack-merge": "^5.1.1"
+        "webpack-merge": "^5.1.2"
     },
     "engines": {
         "node": "14.x"
