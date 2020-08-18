@@ -113,7 +113,7 @@ class ServerWorker {
             const method = req.method
             const url = req.originalUrl
             logger.log('notice', `Wildcard request ${method} ${url} (from: ${ip})`, 'no-rollbar')
-            res.status(404).json('404 Not Found')
+            res.status(404).send('404 Not Found')
         })
 
         return true
@@ -123,9 +123,8 @@ class ServerWorker {
         const [status, error] = await handle(this.setupServer())
 
         if(error) {
-            logger.log('emerg', `ServerWorker.setupServer() failed, error: ${error}`)
-            this.shutdownServer()
-            return
+            logger.safeError('emerg', 'ServerWorker.setupServer() failed', error)
+            return await this.shutdownServer()
         }
 
         // Default to listening on all interfaces if not set in ENV
@@ -202,7 +201,7 @@ class ServerWorker {
 
         if(this.serverInsecure === null && this.serverSSL === null) {
             logger.log('emerg', 'Neither HTTP nor HTTPS server was able to start, exiting...')
-            this.shutdownServer()
+            return await this.shutdownServer()
         }
     }
 
