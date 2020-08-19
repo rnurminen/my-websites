@@ -22,7 +22,7 @@ It can be used as backend-only (REST server, for example), or as standalone web-
       - Centralized console, file and Rollbar logging
       - Daily logfile rotation ([winston-daily-rotate-file](https://www.npmjs.com/package/winston-daily-rotate-file))
   - Worker process(es) (**server-worker.js**)
-    - One per CPU, controllable with `WORKERS` env var
+    - One per CPU, controllable with `APP_WORKERS` env var
     - Logging with [@bit/nurminendev.utils.logger](https://bit.dev/nurminendev/utils/logger).workerLogger
       - Sends log messages via IPC channel to master process logger
 - Ruby on Rails style route handling (**config/routes.js**)
