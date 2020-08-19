@@ -1,7 +1,7 @@
 {
     "name": "nurminen-dev-platform",
     "productName": "nurminen-dev-platform",
-    "description": "A NodeJS/Express development and testing playground",
+    "description": "A highly customizable NodeJS / Express framework",
     "version": "1.0.0",
     "author": "Riku Nurminen <riku@nurminen.dev>",
     "homepage": "https://www.nurminen.dev",

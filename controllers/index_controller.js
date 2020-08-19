@@ -1,10 +1,10 @@
 //
 //
-// nurminen-dev-platform - A NodeJS/Express development and testing playground
+// nurminen-dev-platform - A highly customizable NodeJS / Express framework
 //
-// Copyright (c) 2020 Riku Nurminen
+// https://github.com/Nurminen-dev/nurminen-dev-platform
 //
-// https://www.nurminen.dev
+// Copyright (c) 2020 Riku Nurminen - https://www.nurminen.dev
 //
 // Permission is hereby granted, free of charge, to any person obtaining a copy
 // of this software and associated documentation files (the "Software"), to
