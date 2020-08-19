@@ -13,13 +13,14 @@ It can be used as backend-only (REST server, for example), or as standalone web-
 **As a backend / web-server:**
 - Multi-core support for scalability, with Node Cluster API
   - Master process (**runner.js**):
+    - Automatic worker process restart upon a crash
     - Signal handling
       - SIGTERM and SIGINT: Gracefully shuts down connections to all workers before shutting them down
       - SIGUSR2: Graceful shutdown and restart workers (**code hot reload**)
     - Logging with [@bit/nurminendev.utils.logger](https://bit.dev/nurminendev/utils/logger).masterLogger
       - Based on [Winston](https://www.npmjs.com/package/winston)
       - Centralized console, file and Rollbar logging
-      - Automatically rotated logfiles for 30 days
+      - Daily logfile rotation ([winston-daily-rotate-file](https://www.npmjs.com/package/winston-daily-rotate-file))
   - Worker process(es) (**server-worker.js**)
     - One per CPU, controllable with `WORKERS` env var
     - Logging with [@bit/nurminendev.utils.logger](https://bit.dev/nurminendev/utils/logger).workerLogger
