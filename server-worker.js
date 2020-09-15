@@ -109,10 +109,11 @@ class ServerWorker {
 
         // Default endpoint for everything else
         app.use((req, res) => {
-            const ip = req.connection.remoteAddress
+            const ip     = req.connection.remoteAddress
             const method = req.method
-            const url = req.originalUrl
-            logger.log('notice', `Wildcard request ${method} ${url} (from: ${ip})`, 'no-rollbar')
+            const url    = req.originalUrl
+            const agent  = req.get('user-agent')
+            logger.log('notice', `Wildcard request ${method} ${url} (from: ${ip}, User-Agent: ${agent})`, 'no-rollbar')
             res.status(404).send('404 Not Found')
         })
 
