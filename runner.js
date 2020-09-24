@@ -29,21 +29,21 @@
 
 'use strict'
 
-require('dotenv').config()
+require('dotenv').config({ path: `${__dirname}/.env` })
 
 const cluster = require('cluster')
 
 
 if(cluster.isMaster) {
 
-    const masterLogger = require('@bit/nurminendev.utils.logger').masterLogger
-    const util = require('@bit/nurminendev.utils.miscutils')
-
     //////////////////////////////////////////////////////////////////////
     //
     // MASTER app process
     //
     //////////////////////////////////////////////////////////////////////
+
+    const masterLogger  = require('@bit/nurminendev.utils.logger').masterLogger
+    const util          = require('@bit/nurminendev.utils.miscutils')
 
     process.title = 'master'
 
@@ -66,7 +66,7 @@ if(cluster.isMaster) {
     masterLogger.log('info', '')
 
     const cpuCount = require('os').cpus().length
-    let workers = process.env.APP_WORKERS
+    let workers    = process.env.APP_WORKERS
 
     // APP_WORKERS must be >=1 and <= CPU count, else default to CPU count
     if(isNaN(workers) || workers < 1 || workers > cpuCount) {
@@ -76,11 +76,6 @@ if(cluster.isMaster) {
     masterLogger.log('info', `Detected ${cpuCount} CPUs, using ${workers}`)
     masterLogger.log('info', '')
 
-
-    // Fire up workers
-    for (let i = 0; i < workers; i++) {
-        cluster.fork()
-    }
 
     cluster.on('online', (worker) => {
         masterLogger.log('info', 'Worker process ' + chalk.bgRed(`[${worker.process.pid}]`) + ' online')
@@ -167,6 +162,12 @@ if(cluster.isMaster) {
             cluster.fork()
         })
     })
+
+
+    // Fire up workers
+    for (let i = 0; i < workers; i++) {
+        cluster.fork()
+    }
 
 
 } else if(cluster.isWorker) {
