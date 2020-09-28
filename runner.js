@@ -116,6 +116,10 @@ if(cluster.isMaster) {
                         firstInitDone = true
                     }
                 }
+            case 'pingConsole':
+                const pingIfNoActivityInSeconds = (60 * 60) * 2
+                masterLogger.pingConsole(pingIfNoActivityInSeconds)
+                break
             default:
                 break
 

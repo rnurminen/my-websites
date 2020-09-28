@@ -51,16 +51,19 @@ const webpackCompiler       = process.env.NODE_ENV !== 'production' ? webpack(we
 
 
 class ServerWorker {
+    serverQuitting  = false
+    serverInsecure  = null
+    serverSSL       = null
+    httpTerminator  = null
+    httpsTerminator = null
+
+    _pingInterval   = null
+
+    webpackDevMiddleware = null
+
+
     constructor() {
-        this.serverQuitting = false
 
-        this.serverInsecure = null
-        this.serverSSL = null
-
-        this.httpTerminator = null
-        this.httpsTerminator = null
-
-        this.webpackDevMiddleware = null
     }
 
 
@@ -116,6 +119,10 @@ class ServerWorker {
             logger.log('notice', `Wildcard request ${method} ${url} (from: ${ip}, User-Agent: ${agent})`, 'no-rollbar')
             res.status(404).send('404 Not Found')
         })
+
+        this._pingInterval = setInterval(() => {
+            process.send({ 'type': 'pingConsole' })
+        }, 60000)
 
         return true
     }
@@ -233,6 +240,8 @@ class ServerWorker {
     async shutdownServer() {
         if(this.serverQuitting === false) {
             this.serverQuitting = true
+
+            clearInterval(this._pingInterval)
 
             if (process.env.NODE_ENV !== 'production') {
                 await this._closeWebpackDevMiddleware()

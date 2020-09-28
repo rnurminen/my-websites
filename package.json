@@ -11,7 +11,7 @@
         "updateall": "npx npm-check-updates -u"
     },
     "dependencies": {
-        "@bit/nurminendev.utils.logger": "0.0.68",
+        "@bit/nurminendev.utils.logger": "0.0.80",
         "@bit/nurminendev.utils.miscutils": "0.0.36",
         "chalk": "^4.1.0",
         "cluster": "^0.7.7",
