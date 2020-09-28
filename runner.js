@@ -82,6 +82,9 @@ if(cluster.isMaster) {
     })
 
 
+    let numWorkersReady = 0
+    let firstInitDone = false
+
     // Setup message handlers
     cluster.on('message', (worker, message) => {
         if(!util.isObject(message)) {
@@ -95,6 +98,24 @@ if(cluster.isMaster) {
             case 'shutdown':
                 worker.disconnect()
                 break
+            case 'serverRunning':
+                if(!firstInitDone) {
+                    numWorkersReady++
+
+                    if(numWorkersReady === Object.entries(cluster.workers).length) {
+                        masterLogger.log('info', '')
+                        masterLogger.log('info', `All workers online (${workers})` )
+                        if(message.listen_port_insecure !== null) {
+                            masterLogger.log('info', `HTTP server listening on ${message.listen_host}:${message.listen_port_insecure}`)
+                        }
+                        if(message.listen_port_secure !== null) {
+                            masterLogger.log('info', `HTTPS server listening on ${message.listen_host}:${message.listen_port_secure}`)
+                        }
+                        masterLogger.log('info', '')
+
+                        firstInitDone = true
+                    }
+                }
             default:
                 break
 
@@ -142,6 +163,9 @@ if(cluster.isMaster) {
     // HOT RELOAD
     process.on('SIGUSR2', () => {
         masterLogger.log('info', 'Received SIGUSR2, restarting workers')
+
+        numWorkersReady = 0
+        firstInitDone = false
 
         let wid
         const workerIds = []

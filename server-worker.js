@@ -134,20 +134,7 @@ class ServerWorker {
         const portInsecure = process.env.SERVER_LISTEN_PORT_INSECURE
 
         if(portInsecure && !isNaN(portInsecure)) {
-            this.serverInsecure = http.createServer(app)
-            this.serverInsecure.on('error', this._handleHttpServerError.bind(this))
-            this.serverInsecure.on('clientError', this._handleHttpClientError.bind(this))
-            this.serverInsecure.on('close', () => {
-                logger.log('info', chalk.bgBlue('[Express] HTTP Server closed'))
-            })
-            this.serverInsecure.listen(portInsecure, listenHost, () => {
-                // Create terminator only after Express is listening for connections
-                this.httpTerminator = httpTerminator.createHttpTerminator({
-                    server: this.serverInsecure,
-                    gracefulTerminationTimeout: 5000
-                })
-                logger.log('info', chalk.bgBlue(`[Express] Server listening on ${listenHost}:${portInsecure} (HTTP)`))
-            })
+            await this._startHttpServer(listenHost, portInsecure)
         }
 
         const portSSL    = process.env.SERVER_LISTEN_PORT_SSL
@@ -156,19 +143,59 @@ class ServerWorker {
         const sslCA      = process.env.SERVER_SSL_CA
 
         if(portSSL && !isNaN(portSSL) && sslPrivKey && sslCert && sslCA) {
-            const sslPrivKeyData = await util.readFile(sslPrivKey)
+            await this._startHttpSecureServer(listenHost, portSSL, sslPrivKey, sslCert, sslCA)
+        }
+
+        if(this.serverInsecure === null && this.serverSSL === null) {
+            logger.log('emerg', 'Neither HTTP nor HTTPS server was able to start, exiting...')
+            return await this.shutdownServer()
+        }
+
+        process.send({
+            'type': 'serverRunning',
+            'listen_host': listenHost,
+            'listen_port_insecure': (this.serverInsecure !== null) ? portInsecure : null,
+            'listen_port_secure': (this.serverSSL !== null) ? portSSL : null
+        })
+    }
+
+
+    _startHttpServer(listenHost, portInsecure) {
+        return new Promise((resolve, reject) => {
+            this.serverInsecure = http.createServer(app)
+            this.serverInsecure.on('error', this._handleHttpServerError.bind(this))
+            this.serverInsecure.on('clientError', this._handleHttpClientError.bind(this))
+            this.serverInsecure.on('close', () => {
+                logger.log('debug', chalk.bgBlue('[Express] HTTP Server closed'))
+            })
+            this.serverInsecure.listen(portInsecure, listenHost, () => {
+                // Create terminator only after Express is listening for connections
+                this.httpTerminator = httpTerminator.createHttpTerminator({
+                    server: this.serverInsecure,
+                    gracefulTerminationTimeout: 5000
+                })
+                logger.log('debug', chalk.bgBlue(`[Express] Server listening on ${listenHost}:${portInsecure} (HTTP)`))
+                resolve()
+            })
+        })
+    }
+
+    async _startHttpSecureServer(listenHost, portSSL, sslPrivKey, sslCert, sslCA) {
+        const sslPrivKeyData = await util.readFile(sslPrivKey)
+        const sslCertData = await util.readFile(sslCert)
+        const sslCAdata = await util.readFile(sslCA)
+
+        return new Promise((resolve, reject) => {
             if(sslPrivKeyData === false) {
                 logger.log('alert', `Unable to read SSL cert from SERVER_SSL_PRIVKEY; cannot start HTTPS server.`)
             }
-            const sslCertData = await util.readFile(sslCert)
             if(sslCertData === false) {
                 logger.log('alert', `Unable to read SSL cert from SERVER_SSL_CERT; cannot start HTTPS server.`)
             }
-            const sslCAdata = await util.readFile(sslCA)
             if(sslCAdata === false) {
                 logger.log('alert', `Unable to read SSL cert from SERVER_SSL_CA; cannot start HTTPS server.`)
             }
-
+    
             if(sslPrivKeyData !== false && sslCertData !== false && sslCAdata !== false) {
                 let credentials = {
                     key: sslPrivKeyData,
@@ -181,29 +208,25 @@ class ServerWorker {
                 }
     
                 this.serverSSL = https.createServer(credentials, app)
-
+    
                 this.serverSSL.on('error', this._handleHttpServerError.bind(this))
                 this.serverSSL.on('clientError', this._handleHttpClientError.bind(this))
-
+    
                 this.serverSSL.on('close', () => {
-                    logger.log('info', chalk.bgBlue('[Express] HTTPS Server closed'))
+                    logger.log('debug', chalk.bgBlue('[Express] HTTPS Server closed'))
                 })
-
+    
                 this.serverSSL.listen(portSSL, listenHost, () => {
                     // Create terminator only after Express is listening for connections
                     this.httpsTerminator = httpTerminator.createHttpTerminator({
                         server: this.serverSSL,
                         gracefulTerminationTimeout: 5000
                     })
-                    logger.log('info', chalk.bgBlue(`[Express] Server listening on ${listenHost}:${portInsecure} (HTTPS)`))
+                    logger.log('debug', chalk.bgBlue(`[Express] Server listening on ${listenHost}:${portSSL} (HTTPS)`))
+                    resolve()
                 })
             }
-        }
-
-        if(this.serverInsecure === null && this.serverSSL === null) {
-            logger.log('emerg', 'Neither HTTP nor HTTPS server was able to start, exiting...')
-            return await this.shutdownServer()
-        }
+        })
     }
 
 
@@ -250,7 +273,7 @@ class ServerWorker {
         if(error.code === 'EACCES') {
             logger.log('emerg', `Failed to start HTTP server: Access denied when binding to ${error.address} port ${error.port}`)
         } else if(error.code === 'EADDRINUSE') {
-            logger.log('emerg', `Failed to start HTTP server: Address already in use: ${error.address}`)
+            logger.log('emerg', `Failed to start HTTP server: Address already in use: ${error.address}:${error.port}`)
         } else {
             logger.log('emerg', `Failed to start HTTP server: ${error.code} (${error.errno}), syscall: ${error.syscall}, stack trace:\n${error.stack}`)
         }
