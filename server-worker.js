@@ -31,6 +31,8 @@
 
 require('dotenv').config()
 
+const sqreen            = process.env.SQREEN_TOKEN ? require('sqreen') : null
+
 const path              = require('path')
 const http              = require('http')
 const https             = require('https')

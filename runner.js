@@ -212,8 +212,20 @@ if(cluster.isMaster) {
     process.on('SIGINT', () => { })
     process.on('SIGUSR2', () => { })
 
-    const serverWorker = require('./server-worker.js')
+    const workerLogger  = require('@bit/nurminendev.utils.logger').workerLogger
+    
+    try {
+        const serverWorker = require('./server-worker.js')
 
-    serverWorker.runServer()
+        serverWorker.runServer().catch((error) => {
+            // This will catch promise rejections / exceptions from runServer()
+            workerLogger.safeError('error', `Worker failed to start`, error)
+            process.exit(0)
+        })
+    } catch(error) {
+        // This will catch overall exceptions from require('./server-worker.js')
+        workerLogger.safeError('error', `Worker failed to start`, error)
+        process.exit(0)
+    }
 
 }
