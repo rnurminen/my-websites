@@ -106,10 +106,10 @@ if(cluster.isMaster) {
                         masterLogger.log('info', '')
                         masterLogger.log('info', `All workers online (${workers})` )
                         if(message.listen_port_insecure !== null) {
-                            masterLogger.log('info', `HTTP server listening on ${message.listen_host}:${message.listen_port_insecure}`)
+                            masterLogger.log('info', `Express server listening on ${message.listen_host}:${message.listen_port_insecure} (HTTP)`)
                         }
                         if(message.listen_port_secure !== null) {
-                            masterLogger.log('info', `HTTPS server listening on ${message.listen_host}:${message.listen_port_secure}`)
+                            masterLogger.log('info', `Express server listening on ${message.listen_host}:${message.listen_port_secure} (HTTPS)`)
                         }
                         masterLogger.log('info', '')
 
