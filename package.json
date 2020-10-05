@@ -12,7 +12,7 @@
     },
     "dependencies": {
         "@bit/nurminendev.utils.logger": "0.0.80",
-        "@bit/nurminendev.utils.miscutils": "0.0.36",
+        "@bit/nurminendev.utils.miscutils": "0.0.37",
         "chalk": "^4.1.0",
         "cluster": "^0.7.7",
         "dotenv": "^8.2.0",

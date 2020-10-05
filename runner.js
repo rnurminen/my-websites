@@ -212,6 +212,10 @@ if(cluster.isMaster) {
     process.on('SIGINT', () => { })
     process.on('SIGUSR2', () => { })
 
+    require('dotenv').config({ path: `${__dirname}/.env` })
+
+    const sqreen = process.env.SQREEN_TOKEN ? require('sqreen') : null
+    
     const workerLogger  = require('@bit/nurminendev.utils.logger').workerLogger
     
     try {
