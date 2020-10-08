@@ -1,11 +1,11 @@
 {
-    "name": "nurminen-dev-platform",
-    "productName": "nurminen-dev-platform",
-    "description": "A highly customizable NodeJS / Express framework",
+    "name": "my-websites",
+    "description": "The Websites",
     "version": "1.0.0",
     "author": "Riku Nurminen <riku@nurminen.dev>",
     "homepage": "https://www.nurminen.dev",
-    "license": "MIT",
+    "//": "UNLICENSED = All rights reserved",
+    "license": "UNLICENSED",
     "main": "server.js",
     "scripts": {
         "updateall": "npx npm-check-updates -u"
@@ -16,23 +16,34 @@
         "dotenv": "^8.2.0",
         "express": "^4.17.1",
         "lodash": "^4.17.20",
-        "unnode": "^1.0.0"
+        "moment": "^2.29.1",
+        "pug": "^3.0.0",
+        "unnode": "^0.0.2"
     },
     "devDependencies": {
+        "@babel/core": "^7.11.6",
+        "@babel/preset-env": "^7.11.5",
+        "babel-loader": "^8.1.0",
         "clean-webpack-plugin": "^3.0.0",
+        "css-loader": "^4.3.0",
+        "css-minimizer-webpack-plugin": "^1.1.5",
+        "glob": "^7.1.6",
         "html-webpack-plugin": "^4.5.0",
-        "pug": "^3.0.0",
-        "pug-loader": "^2.4.0",
+        "html-webpack-pug-plugin": "^2.0.0",
+        "mini-css-extract-plugin": "^0.12.0",
+        "sass": "^1.27.0",
+        "sass-loader": "^10.0.2",
+        "terser-webpack-plugin": "^4.2.3",
         "webpack": "^4.44.2",
         "webpack-cli": "^3.3.12",
         "webpack-dev-middleware": "^3.7.2",
-        "webpack-merge": "^5.1.4"
+        "webpack-merge": "^5.2.0"
     },
     "engines": {
         "node": "14.x"
     },
     "repository": {
         "type": "git",
-        "url": "https://github.com/Nurminen-dev/nurminen-dev-platform"
+        "url": "https://github.com/rnurminen/my-websites"
     }
 }

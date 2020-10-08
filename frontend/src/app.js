@@ -1,5 +1,10 @@
+
+
+
 import _ from 'lodash'
 import printMe from './print.js';
+
+import '../css/styles.scss'
 
 if (process.env.NODE_ENV !== 'production') {
     console.log('Looks like we are in development mode!');
@@ -19,5 +24,12 @@ function component() {
     element.appendChild(btn);
     return element
 }
+
+const multiply = (a, b) => {
+
+    return a * b;
+};
+
+console.log('multiply: ' + multiply(5, 5))
 
 document.body.appendChild(component())

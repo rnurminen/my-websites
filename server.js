@@ -1,6 +1,6 @@
 //
 //
-// my-websites - The Websites
+// my-websites
 //
 // Copyright (c) 2020 Riku Nurminen
 //
@@ -43,9 +43,11 @@ if(unnode.isMaster) {
 
     masterLogger.log('info', '')
     masterLogger.log('info', '')
-    masterLogger.log('info', '    ' + chalk.underline.bold('nurminen-dev-platform'))
+    masterLogger.log('info', '    ' + chalk.underline.bold('my-websites - The Websites'))
     masterLogger.log('info', '')
-    masterLogger.log('info', '    Copyright 2020 Riku Nurminen - https://www.nurminen.dev')
+    masterLogger.log('info', '    Copyright (c) 2020 Riku Nurminen')
+    masterLogger.log('info', '')
+    masterLogger.log('info', '    All rights reserved by me :)')
     masterLogger.log('info', '')
     masterLogger.log('info', '')
     masterLogger.log('info', chalk.whiteBright(`Node Cluster API    v${clusterVersion}`))
@@ -92,6 +94,9 @@ async function runWorker() {
         }
 
         const app = serverWorker.getServerApp()
+
+        app.set('view engine', 'pug')
+        app.set('views', path.join(__dirname, 'dist', 'views'))
 
         // Our webpack assets
         app.use('/assets', express.static(path.resolve(__dirname, 'dist', 'assets')))

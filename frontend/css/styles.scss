@@ -1,0 +1,30 @@
+$font-size: 24px;
+
+body {
+    font-size: $font-size;
+}
+
+
+#bleh {
+    font-size: 10px;
+}
+
+/* unvisited link */
+a:link {
+    color: red;
+  }
+  
+  /* visited link */
+  a:visited {
+    color: green;
+  }
+  
+  /* mouse over link */
+  a:hover {
+    color: hotpink;
+  }
+  
+  /* selected link */
+  a:active {
+    color: blue;
+  }
