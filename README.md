@@ -1,6 +1,10 @@
 # my-websites
 
-My websites :)
+- https://www.nurminen.dev
+- https://www.ricforge.com
+- https://www.unnodejs.org
+- https://en.rikunmediatuotanto.fi
+- https://vanhat.rikunmediatuotanto.fi
 
 ## License
  
