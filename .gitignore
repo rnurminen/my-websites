@@ -3,7 +3,5 @@
 /node_modules
 
 /log/*
-!/log/.keep
 
 /dist/*
-!/dist/assets/.keep
