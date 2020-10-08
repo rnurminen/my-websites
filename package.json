@@ -6,20 +6,17 @@
     "author": "Riku Nurminen <riku@nurminen.dev>",
     "homepage": "https://www.nurminen.dev",
     "license": "MIT",
-    "main": "runner.js",
+    "main": "server.js",
     "scripts": {
         "updateall": "npx npm-check-updates -u"
     },
     "dependencies": {
-        "@bit/nurminendev.utils.logger": "0.0.80",
-        "@bit/nurminendev.utils.miscutils": "0.0.37",
         "chalk": "^4.1.0",
         "cluster": "^0.7.7",
         "dotenv": "^8.2.0",
         "express": "^4.17.1",
-        "helmet": "^4.1.1",
-        "http-terminator": "^2.0.3",
-        "lodash": "^4.17.20"
+        "lodash": "^4.17.20",
+        "unnode": "^1.0.0"
     },
     "devDependencies": {
         "clean-webpack-plugin": "^3.0.0",

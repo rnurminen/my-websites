@@ -28,7 +28,7 @@
 
 
 const path   = require('path')
-const logger = require('@bit/nurminendev.utils.logger').workerLogger
+const logger = require('unnode').workerLogger
 
 
 class IndexController {

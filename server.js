@@ -1,0 +1,118 @@
+//
+//
+// my-websites - The Websites
+//
+// Copyright (c) 2020 Riku Nurminen
+//
+// All rights reserved by me. :)
+//
+//
+
+
+'use strict'
+
+require('dotenv').config({ path: `${__dirname}/.env` })
+
+const path      = require('path')
+
+const unnode    = require('../unnode/unnode.js')
+
+
+if(unnode.isMaster) {
+
+    //////////////////////////////////////////////////////////////////////
+    //
+    // MASTER app process
+    //
+    //////////////////////////////////////////////////////////////////////
+
+    const unnodeMaster = require('../unnode/unnode.js').master
+    const masterLogger = require('../unnode/unnode.js').masterLogger
+
+    // Pre-init logger, otherwise it won't be usable until after unnodeMaster.init()
+    masterLogger.init(__dirname)
+
+    const chalk = require('chalk')
+
+    const clusterVersion  = require('cluster/package.json').version
+    const expressVersion  = require('express/package.json').version
+    const helmetVersion   = require('helmet/package.json').version
+    const httptermVersion = require('http-terminator/package.json').version
+    const fetchVersion    = require('node-fetch/package.json').version
+    const winstonVersion  = require('winston/package.json').version
+
+    masterLogger.log('info', '')
+    masterLogger.log('info', '')
+    masterLogger.log('info', '    ' + chalk.underline.bold('nurminen-dev-platform'))
+    masterLogger.log('info', '')
+    masterLogger.log('info', '    Copyright 2020 Riku Nurminen - https://www.nurminen.dev')
+    masterLogger.log('info', '')
+    masterLogger.log('info', '')
+    masterLogger.log('info', chalk.whiteBright(`Node Cluster API    v${clusterVersion}`))
+    masterLogger.log('info', chalk.whiteBright(`Express             v${expressVersion}`))
+    masterLogger.log('info', chalk.whiteBright(`Helmet              v${helmetVersion}`))
+    masterLogger.log('info', chalk.whiteBright(`http-terminator     v${httptermVersion}`))
+    masterLogger.log('info', chalk.whiteBright(`node-fetch          v${fetchVersion}`))
+    masterLogger.log('info', chalk.whiteBright(`Winston             v${winstonVersion}`))
+    masterLogger.log('info', '')
+
+    unnodeMaster.init(__dirname)
+
+
+} else if(unnode.isWorker) {
+
+
+    //////////////////////////////////////////////////////////////////////
+    //
+    // WORKER app process
+    //
+    //////////////////////////////////////////////////////////////////////
+
+    const sqreen = process.env.SQREEN_TOKEN ? require('sqreen') : null
+    
+    runWorker()
+
+}
+
+
+async function runWorker() {
+    const express       = require('express')
+
+    const serverWorker  = require('../unnode/unnode.js').worker
+    const workerLogger  = require('../unnode/unnode.js').workerLogger
+    const utils         = require('../unnode/unnode.js').utils
+    const handle        = utils.handle
+
+    try {
+        const [status, error] = await handle(serverWorker.setupServer(__dirname))
+
+        if(error) {
+            workerLogger.safeError('emerg', 'ServerWorker.setupServer() failed', error)
+            return serverWorker.shutdownServer()
+        }
+
+        const app = serverWorker.getServerApp()
+
+        // Our webpack assets
+        app.use('/assets', express.static(path.resolve(__dirname, 'dist', 'assets')))
+    
+        // Default endpoint for everything else
+        app.use((req, res) => {
+            const ip = req.connection.remoteAddress
+            const method = req.method
+            const url = req.originalUrl
+            const agent = req.get('user-agent')
+            workerLogger.log('notice', `Wildcard request ${method} ${url} (from: ${ip}, User-Agent: ${agent})`, 'no-rollbar')
+            res.status(404).send('404 Not Found')
+        })
+    
+        serverWorker.runServer().catch((error) => {
+            workerLogger.safeError('error', `Worker failed to start`, error)
+            process.exit(0)
+        })
+    } catch(error) {
+        workerLogger.safeError('error', `Worker failed to start`, error)
+        process.exit(0)
+    }
+
+}
