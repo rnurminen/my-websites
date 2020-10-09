@@ -1,5 +1,23 @@
 extends layout/application.pug
 
 block content
-  p Test index page layout 2
-  p Time now is: #{timeNow}
+  h1 Bulma
+
+  p(class="subtitle").
+    Modern CSS framework based on
+    #[a(href='https://developer.mozilla.org/en-US/docs/Web/CSS/CSS_Flexible_Box_Layout/Basic_Concepts_of_Flexbox') Flexbox] paragraph continued.
+    And paragraph continued.
+
+  .field
+    .control
+      input(type="text" class="input" placeholder="Input")
+
+  .field
+    p(class='control')
+      span(class="select")
+        select
+          option Select dropdown
+
+  .buttons
+    a(class='button is-primary') Primary
+    a(class='button is-link') Link

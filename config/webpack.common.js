@@ -23,7 +23,7 @@ const HtmlWebpackPugPlugin      = require('html-webpack-pug-plugin')
 function getPugTemplates() {
     const templateFiles = glob.sync(path.resolve(__dirname, '..', 'frontend', 'views') + '/**/*.pug')
     return templateFiles.map(templateFile => {
-        const outTemplate = `../${templateFile.substr(templateFile.lastIndexOf('views'))}`
+        const outTemplate = `./${templateFile.substr(templateFile.lastIndexOf('views'))}`
 
         return new HtmlWebpackPlugin({
             template: templateFile,
@@ -66,20 +66,17 @@ module.exports = {
     },
 
     output: {
-        filename: '[name].bundle.js',
-        path: path.resolve(__dirname, '..', 'dist', 'assets'),
-        publicPath: '/assets'
+        filename: 'assets/js/[name].bundle.js',
+        path: path.resolve(__dirname, '..', 'dist'),
+        publicPath: '/'
     },
 
     plugins: [
         new CleanWebpackPlugin({ // Cleanup /dist folder before each build
-            dry: true,
-            cleanOnceBeforeBuildPatterns: [path.join(__dirname, '../dist/**/*')], // Parent dir of output.path
-            dangerouslyAllowCleanPatternsOutsideProject: true
         }),
 
         new MiniCssExtractPlugin({
-            filename: '[name].css',
+            filename: 'assets/css/[name].css',
         }),
     ]
     .concat(htmlPlugins)

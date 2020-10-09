@@ -13,9 +13,11 @@
 
 require('dotenv').config({ path: `${__dirname}/.env` })
 
-const path      = require('path')
+const path          = require('path')
 
-const unnode    = require('../unnode/unnode.js')
+const unnode        = require('../unnode/unnode.js')
+const utils         = require('../unnode/unnode.js').utils
+const handle        = utils.handle
 
 
 if(unnode.isMaster) {
@@ -59,6 +61,7 @@ if(unnode.isMaster) {
     masterLogger.log('info', '')
 
     unnodeMaster.init(__dirname)
+        .catch(error => masterLogger.safeError('emerg', 'UnnodeMaster.init() failed', error))
 
 
 } else if(unnode.isWorker) {
@@ -80,22 +83,25 @@ if(unnode.isMaster) {
 async function runWorker() {
     const express       = require('express')
 
-    const serverWorker  = require('../unnode/unnode.js').worker
+    const unnodeWorker  = require('../unnode/unnode.js').worker
     const workerLogger  = require('../unnode/unnode.js').workerLogger
-    const utils         = require('../unnode/unnode.js').utils
-    const handle        = utils.handle
 
     try {
-        const [status, error] = await handle(serverWorker.setupServer(__dirname))
+        const [status, error] = await handle(unnodeWorker.setupServer(__dirname))
 
         if(error) {
-            workerLogger.safeError('emerg', 'ServerWorker.setupServer() failed', error)
-            return serverWorker.shutdownServer()
+            workerLogger.safeError('emerg', 'UnnodeWorker.setupServer() failed', error)
+            return unnodeWorker.shutdownServer()
         }
 
-        const app = serverWorker.getServerApp()
+        const app = unnodeWorker.getServerApp()
 
         app.set('view engine', 'pug')
+
+        if(process.env.NODE_ENV !== 'production') {
+            app.locals.pretty = true
+        }
+
         app.set('views', path.join(__dirname, 'dist', 'views'))
 
         // Our webpack assets
@@ -111,7 +117,7 @@ async function runWorker() {
             res.status(404).send('404 Not Found')
         })
     
-        serverWorker.runServer().catch((error) => {
+        unnodeWorker.runServer().catch((error) => {
             workerLogger.safeError('error', `Worker failed to start`, error)
             process.exit(0)
         })
