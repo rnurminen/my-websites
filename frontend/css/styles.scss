@@ -1,27 +1,40 @@
+/*!
+ *
+ * This website is copyright (c) 2020 Riku Nurminen
+ *
+ * You may adapt elements and methods of this site’s CSS in your own projects,
+ * but the unique combination of images, colors, sizes, typography, and positioning
+ * ("the design") is copyright (c) 2020 Riku Nurminen and may not be reproduced.
+ *
+ */
+
 @charset "utf-8";
+
+
 
 // Import a Google Font
 @import url('https://fonts.googleapis.com/css?family=Nunito:400,700');
 
-// Set your brand colors
-$purple: #8A4D76;
-$pink: #FA7C91;
-$brown: #757763;
-$beige-light: #D0D1CD;
-$beige-lighter: #EFF0EB;
-
-// Update Bulma's global variables
 $family-sans-serif: "Nunito", sans-serif;
-$grey-dark: $brown;
-$grey-light: $beige-light;
-$primary: $purple;
-$link: $pink;
-$fullhd-enabled: false;
+$widescreen-enabled: true;
+$fullhd-enabled: true;
 
 // Update some of Bulma's component variables
-$body-background-color: $beige-lighter;
+$body-background-color: #EFF0EB;
 $control-border-width: 2px;
 $input-border-color: transparent;
 $input-shadow: none;
 
 @import "~bulma/bulma";
+
+
+
+
+.header-image {
+    background-image: url("../images/hero/hero_bg.svg");
+    background-position: center center;
+    background-repeat: repeat;
+    background-attachment: fixed;
+    background-size: auto;
+    background-color: #999;
+}

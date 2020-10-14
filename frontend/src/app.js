@@ -1,12 +1,21 @@
+//
+//
+// my-websites
+//
+// Copyright (c) 2020 Riku Nurminen
+//
+// All rights reserved by me. :)
+//
+//
 
 
+//
+// webpack entry file
+//
 
-import _ from 'lodash'
-import printMe from './print.js';
 
+// Stylesheets
 import '../css/styles.scss'
 
-if (process.env.NODE_ENV !== 'production') {
-    console.log('Looks like we are in development mode!');
-}
 
+require.context('../images/static', true, /\.(png|jpe?g)$/)

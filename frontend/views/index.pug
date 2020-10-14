@@ -1,23 +1,50 @@
 extends layout/application.pug
 
 block content
-  h1 Bulma
+  section.hero.is-fullheight.is-default.is-bold.header-image
+    .hero-head
+      nav.navbar.is-white
+        .container
+          .navbar-brand
+            a.navbar-item(href='../')
+              img(src='/assets/images/static/navbar-logo-small.png' alt='Logo')
+            span.navbar-burger.burger(data-target='navbarMenu')
+              span
+              span
+              span
+          #navbarMenu.navbar-menu
+            .navbar-end
+              .tabs.is-right
+                ul
+                  li.is-active
+                    a Home
+                  li
+                    a(href='') Examples
+                  li
+                    a(href='') Features
+                  li
+                    a(href='') Team
+                  li
+                    a(href='') Help
+    .hero-body
+      .container.has-text-centered.has-text-white
+        .columns.is-vcentered
+          .column.is-5
+            figure.image.is-square
+              img(src='/assets/images/static/hero-big-logo.png' alt='Description')
+          .column.is-6.is-offset-1
+            h1.title.is-2.has-text-grey-lighter
+              | Node.js back end made easy!
+            h2.subtitle.is-4.has-text-grey-lighter
+              | Latest release: #[a(href='#' title='Latest Unnode.js release at npmjs.org') 0.0.1 @ npmjs.org]
 
-  p(class="subtitle").
-    Modern CSS framework based on
-    #[a(href='https://developer.mozilla.org/en-US/docs/Web/CSS/CSS_Flexible_Box_Layout/Basic_Concepts_of_Flexbox') Flexbox] paragraph continued.
-    And paragraph continued.
-
-  .field
-    .control
-      input(type="text" class="input" placeholder="Input")
-
-  .field
-    p(class='control')
-      span(class="select")
-        select
-          option Select dropdown
-
-  .buttons
-    a(class='button is-primary') Primary
-    a(class='button is-link') Link
+            br
+            p.has-text-centered
+              a.button.is-medium.is-info.is-outlined
+                | Learn more
+    .hero-foot
+      .container
+        .tabs.is-centered
+          ul
+            li
+              a And this is the bottom

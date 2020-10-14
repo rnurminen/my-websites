@@ -16,9 +16,8 @@ const { CleanWebpackPlugin }    = require('clean-webpack-plugin')
 const HtmlWebpackPlugin         = require('html-webpack-plugin')
 const MiniCssExtractPlugin      = require('mini-css-extract-plugin')
 const TerserJSPlugin            = require('terser-webpack-plugin')
-const CssMinimizerPlugin        = require('css-minimizer-webpack-plugin')
 const HtmlWebpackPugPlugin      = require('html-webpack-pug-plugin')
-
+const OptimizeCssAssetsPlugin   = require('optimize-css-assets-webpack-plugin')
 
 function getPugTemplates() {
     const templateFiles = glob.sync(path.resolve(__dirname, '..', 'frontend', 'views') + '/**/*.pug')
@@ -50,19 +49,35 @@ module.exports = {
                 }
             },
             {
-                test: /\.s[ac]ss$/i,
+                test: /.s?css$/,
                 use: [
                     MiniCssExtractPlugin.loader,
-                    'css-loader',
-                    'sass-loader'
+                    { loader: 'css-loader', options: { sourceMap: true } },
+                    { loader: 'sass-loader', options: { sourceMap: true } }
                 ],
+            },
+            {
+                test: /\.(png|jpe?g|svg)$/i,
+                use: [
+                    {
+                        loader: 'file-loader',
+                        options: {
+                            // Just load all images into assets/images
+                            outputPath: (url, resourcePath, context) => {
+                                return `assets/${resourcePath.substr(resourcePath.lastIndexOf('frontend/images') + 9)}`
+                            }
+                        },
+                    },
+                    //{
+                    //    loader: 'image-webpack-loader'
+                    //}
+                ]
             },
         ]
     },
 
     entry: {
-        app: './frontend/src/app.js',
-        print: './frontend/src/print.js'
+        app: './frontend/src/app.js'
     },
 
     output: {
@@ -73,6 +88,7 @@ module.exports = {
 
     plugins: [
         new CleanWebpackPlugin({ // Cleanup /dist folder before each build
+            cleanStaleWebpackAssets: false,
         }),
 
         new MiniCssExtractPlugin({
@@ -90,8 +106,15 @@ module.exports = {
             new TerserJSPlugin({
                 extractComments: false
             }),
-            new CssMinimizerPlugin(),
-        ],
+            new OptimizeCssAssetsPlugin({
+                cssProcessorOptions: {
+                    map: {
+                        inline: false,
+                        annotation: true,
+                    }
+                }
+            })
+        ]
     }
 
 }
