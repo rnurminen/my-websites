@@ -36,12 +36,12 @@ class IndexController {
         this.testVar = 0
     }
 
-    index(req, res) {
+    index(_, req, res) {
         res.render('index', { timeNow: moment().toISOString() })
     }
 
 
-    test(req, res) {
+    test(_, req, res) {
         this.testVar++
 
         logger.log('debug', `Testvar is: ${this.testVar}`)

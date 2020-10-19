@@ -52,7 +52,7 @@ if(unnode.isMaster) {
 
     const chalk = require('chalk')
 
-    const clusterVersion  = require('cluster/package.json').version
+    const unnodeVersion   = require('unnode/package.json').version
     const expressVersion  = require('express/package.json').version
     const helmetVersion   = require('helmet/package.json').version
     const httptermVersion = require('http-terminator/package.json').version
@@ -68,7 +68,8 @@ if(unnode.isMaster) {
     masterLogger.log('info', '    All rights reserved by me :)')
     masterLogger.log('info', '')
     masterLogger.log('info', '')
-    masterLogger.log('info', chalk.whiteBright(`Node Cluster API    v${clusterVersion}`))
+    masterLogger.log('info', chalk.whiteBright(`Unnode.js           v${unnodeVersion}`))
+    masterLogger.log('info', '')
     masterLogger.log('info', chalk.whiteBright(`Express             v${expressVersion}`))
     masterLogger.log('info', chalk.whiteBright(`Helmet              v${helmetVersion}`))
     masterLogger.log('info', chalk.whiteBright(`http-terminator     v${httptermVersion}`))
@@ -122,16 +123,8 @@ async function runWorker() {
 
         // Our webpack assets
         app.use('/assets', express.static(path.resolve(__dirname, 'dist', 'assets')))
-    
-        // Default endpoint for everything else
-        app.use((req, res) => {
-            const ip = req.connection.remoteAddress
-            const method = req.method
-            const url = req.originalUrl
-            const agent = req.get('user-agent')
-            workerLogger.log('notice', `Wildcard request ${method} ${url} (from: ${ip}, User-Agent: ${agent})`, 'no-rollbar')
-            res.status(404).send('404 Not Found')
-        })
+
+        unnodeWorker.addWildcardRoute()
     
         unnodeWorker.runServer().catch((error) => {
             workerLogger.safeError('error', `Worker failed to start`, error)

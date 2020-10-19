@@ -25,8 +25,11 @@ $control-border-width: 2px;
 $input-border-color: transparent;
 $input-shadow: none;
 
-@import "~bulma/bulma";
+$navbar-background-color: transparent;
 
+
+
+@import "~bulma/bulma";
 
 
 
@@ -37,4 +40,8 @@ $input-shadow: none;
     background-attachment: fixed;
     background-size: auto;
     background-color: #999;
+}
+
+.hero .scrolled-navbar {
+    background-color: white;
 }
