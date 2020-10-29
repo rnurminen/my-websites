@@ -1,5 +1,5 @@
 //
-// nurminen-dev-platform: Routes configuration
+// my-websites: Routes configuration
 //
 
 module.exports = [
