@@ -110,18 +110,11 @@ async function runWorker() {
             return unnodeWorker.shutdownServer()
         }
 
-        const app = unnodeWorker.getServerApp()
-
-        app.set('view engine', 'pug')
+        const app = unnodeWorker.getWebBackend('localhost')
 
         if(process.env.NODE_ENV !== 'production') {
             app.locals.pretty = true
         }
-
-        app.set('views', path.join(__dirname, 'dist', 'views'))
-
-        // Our webpack assets
-        app.use('/assets', express.static(path.resolve(__dirname, 'dist', 'assets')))
 
         unnodeWorker.addWildcardRoute()
     

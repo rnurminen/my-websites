@@ -12,10 +12,7 @@
 
 
 
-// Import a Google Font
-@import url('https://fonts.googleapis.com/css?family=Nunito:400,700');
-
-$family-sans-serif: "Nunito", sans-serif;
+$family-sans-serif: "Segoe UI", Frutiger, "Frutiger Linotype", "Dejavu Sans", "Helvetica Neue", Arial, sans-serif;
 $widescreen-enabled: true;
 $fullhd-enabled: true;
 
@@ -44,4 +41,9 @@ $navbar-background-color: transparent;
 
 .hero .scrolled-navbar {
     background-color: white;
+}
+
+
+.my-section {
+    margin-top: 2rem;
 }

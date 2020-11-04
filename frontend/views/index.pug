@@ -34,7 +34,7 @@ block content
               img(src='/assets/images/static/hero-big-logo.png' alt='Description')
           .column.is-6.is-offset-1
             h1.title.is-2.has-text-grey-lighter
-              | Node.js back end made easy!
+              | A Node.js back end framework
             h2.subtitle.is-4.has-text-grey-lighter
               | Latest release: #[a(href='#' title='Latest Unnode.js release at npmjs.org') 0.0.1 @ npmjs.org]
 
@@ -48,3 +48,40 @@ block content
           ul
             li
               a And this is the bottom
+  
+  section.my-section(style='')
+    .container.is-fullhd
+      .tile.is-ancestor
+        .tile.is-parent
+          article.tile.is-child.box
+            p.mb-4
+              span.has-text-weight-bold.
+                Unnode.js 
+              | is a framework that makes creating Node.js back ends easy. It provides you with a simple setup of process clustering, logging and Express. It's small, simple and doesn't force you into a strict framework-structure; you can still organize your project as you like.
+            p.mb-4.
+              I created it because I noticed I kept using the same setup in most of my Node.js projects: Node Cluster API, Express and Winston+Rollbar for logging.
+            p.mb-4.
+              It is a bare-bones framework for creating hand-crafted, highly customized back ends where speed and precision are of the essence.
+            p.mb-4.
+              The project is currently in alpha pre-release stages. In the future, support for more web backends will be added (fastify being the first one).
+            p.mb-4.
+              Read on for more or jump right into Getting started!
+        .tile.is-4.is-parent
+          article.tile.is-child
+            figure.image.is-square
+              img(src='/assets/images/static/frontpage-console-example.png' style='border-radius:5px')
+
+      pre
+        code.javascript
+          | if(unnode.isWorker) {
+          |
+          |     //////////////////////////////////////////////////////////////////////
+          |     //
+          |     // WORKER app process
+          |     //
+          |     //////////////////////////////////////////////////////////////////////
+          |
+          |     const sqreen = process.env.SQREEN_TOKEN ? require('sqreen') : null
+          |
+          |     runWorker()
+          | }
