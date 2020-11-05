@@ -7,6 +7,7 @@
 
 const path = require('path')
 
+const helmet = require('helmet')
 
 module.exports = [
     {
@@ -16,6 +17,16 @@ module.exports = [
         'secureContext': {
             'key': process.env.UNNODE_SERVER_SECURE_DEFAULT_KEY,
             'cert': process.env.UNNODE_SERVER_SECURE_DEFAULT_CERT
+        },
+        'helmetOptions': {
+            contentSecurityPolicy: {
+                directives: {
+                    'default-src': ["'self'"],
+                    'img-src': ["'self'", 'img.shields.io'],
+                    'style-src': ["'self'", 'fonts.googleapis.com'],
+                    'font-src': ["'self'", 'fonts.gstatic.com']
+                }
+            }
         },
         'routes': [
             { method: 'GET',  path: '/', controller: 'unnodejs.org/unnodejsorg_controller#index' },

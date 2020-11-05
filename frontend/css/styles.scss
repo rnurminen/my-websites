@@ -10,18 +10,25 @@
 
 @charset "utf-8";
 
+@import url('https://fonts.googleapis.com/css?family=Open+Sans');
 
-
-$family-sans-serif: "Segoe UI", Frutiger, "Frutiger Linotype", "Dejavu Sans", "Helvetica Neue", Arial, sans-serif;
+$family-sans-serif: "Open Sans", sans-serif;
 $widescreen-enabled: true;
 $fullhd-enabled: true;
 
 // Update some of Bulma's component variables
-$body-background-color: #EFF0EB;
+$body-background-color: #fff;
 $control-border-width: 2px;
 $input-border-color: transparent;
 $input-shadow: none;
 
+$link: #000;
+
+$tabs-link-color: #fff;
+$tabs-link-active-color: #fff;
+$tabs-link-active-border-bottom-color: #fff;
+$tabs-link-hover-border-bottom-color: #fff;
+$navbar-item-active-color: #fff;
 $navbar-background-color: transparent;
 
 
@@ -29,6 +36,26 @@ $navbar-background-color: transparent;
 @import "~bulma/bulma";
 
 
+a:link {
+    text-decoration: underline;
+}
+  
+a:hover {
+    text-decoration: none;
+}
+
+
+a.white { color: #fff; }
+
+pre {
+    background-color: transparent;
+    padding: 0;
+}
+
+.monospaced {
+    font-family: "Courier New", Courier, monospace;
+    font-weight: bold;
+}
 
 .header-image {
     background-image: url("../images/hero/hero_bg.svg");
@@ -44,6 +71,14 @@ $navbar-background-color: transparent;
 }
 
 
+.features {
+    margin: 5rem 0;
+}
+
 .my-section {
     margin-top: 2rem;
+}
+
+.frontpage-tech-small {
+    text-transform: uppercase;
 }

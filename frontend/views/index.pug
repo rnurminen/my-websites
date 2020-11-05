@@ -19,13 +19,9 @@ block content
                   li.is-active
                     a Home
                   li
-                    a(href='') Examples
+                    a(href='/doc/latest') Docs
                   li
-                    a(href='') Features
-                  li
-                    a(href='') Team
-                  li
-                    a(href='') Help
+                    a(href='/team') Team
     .hero-body
       .container.has-text-centered.has-text-white
         .columns.is-vcentered
@@ -33,14 +29,12 @@ block content
             figure.image.is-square
               img(src='/assets/images/static/hero-big-logo.png' alt='Description')
           .column.is-6.is-offset-1
-            h1.title.is-2.has-text-grey-lighter
+            h1.title.is-2.has-text-grey-lighter.mb-6
               | A Node.js back end framework
-            h2.subtitle.is-4.has-text-grey-lighter
-              | Latest release: #[a(href='#' title='Latest Unnode.js release at npmjs.org') 0.0.1 @ npmjs.org]
-
-            br
+            a(href='https://www.npmjs.com/package/unnode' title='Unnode.js @ npmjs.org')
+              img.mb-6(src='https://img.shields.io/github/v/release/ricforge/unnode?color=ff8800&include_prereleases&label=Latest%20release&style=for-the-badge' alt='Latest release')
             p.has-text-centered
-              a.button.is-medium.is-info.is-outlined
+              a.button.is-medium.is-light.is-outlined
                 | Learn more
     .hero-foot
       .container
@@ -48,40 +42,216 @@ block content
           ul
             li
               a And this is the bottom
-  
-  section.my-section(style='')
+
+  section
     .container.is-fullhd
+      .columns.is-centered
+        .column.is-half
+          figure.image.is-3by1
+            img(src='/assets/images/static/another-js-framework.png')
+  
+  section
+    .container.is-fullhd
+      p.mb-4.is-size-5.has-text-centered
+        span.has-text-weight-bold Unnode.js 
+        | is a framework that makes creating Node.js back ends easy. It provides you with 
+        span.has-text-weight-bold process clustering
+        | , 
+        span.has-text-weight-bold proper logging
+        | , 
+        span.has-text-weight-bold web backend abstraction 
+        | and 
+        span.has-text-weight-bold vhosts with per-vhost TLS
+        | . It's small, simple and doesn't force you into a strict framework-structure; you can still organize your project as you like.
+      p.mb-4.is-size-5.has-text-centered
+        span.has-text-weight-bold It is 
+        | a 
+        span.is-italic.
+          bare-bones framework for creating hand-crafted custom back ends where speed and precision are of the essence.
+
+  section.features
+    .container.is-max-widescreen
+      .tile.is-ancestor
+        .tile.is-parent.has-text-centered
+          article.tile.is-child
+            .columns.is-centered
+              .column.is-two-thirds
+                figure.image.is-square.is-half
+                  img(src='/assets/images/static/node-cluster.png')
+            p.subtitle Process clustering
+            p.is-uppercase.is-size-7
+              a(href='https://nodejs.org/api/cluster.html' title='Node Cluster') Node Cluster API
+        .tile.is-parent.has-text-centered
+          article.tile.is-child
+            .columns.is-centered
+              .column.is-two-thirds
+                figure.image.is-square.is-half
+                  img(src='/assets/images/static/express-js.png')
+            p.subtitle Web backends abstraction
+            p.is-uppercase.is-size-7.mb-4
+              a(href='https://expressjs.com/' title='Express - Node.js web application framework') ExpressJS
+            p.is-size-7 More to come...
+        .tile.is-parent.has-text-centered
+          article.tile.is-child
+            .columns.is-centered
+              .column.is-two-thirds
+                figure.image.is-square.is-half
+                  img(src='/assets/images/static/helmet-logo.png')
+            p.subtitle Secure+graceful
+            p.is-uppercase.is-size-7.mb-1
+              a(href='https://helmetjs.github.io/' title='Express.js security with HTTP headers') Helmet
+            p.is-uppercase.is-size-7
+              a(href='https://www.npmjs.com/package/http-terminator' title='http-terminator - Gracefully terminates Node.js HTTP(S) server') http-terminator
+        .tile.is-parent.has-text-centered
+          article.tile.is-child
+            .columns.is-centered
+              .column.is-two-thirds
+                figure.image.is-square.is-half
+                  img(src='/assets/images/static/virtual-host-icon.png')
+            p.subtitle Vhosts with per-vhost TLS
+            p.is-uppercase.is-size-7
+              a(href='/doc/latest/virtual-hosts/' title='Unnode.js documentation: Virtual hosts') Unnode.js vhosts
+        .tile.is-parent.has-text-centered
+          article.tile.is-child
+            .columns.is-centered
+              .column.is-two-thirds
+                figure.image.is-square.is-half
+                  img(src='/assets/images/static/winston-logo.png')
+            p.subtitle Proper logging
+            p.is-uppercase.is-size-7.mb-1
+              a(href='https://github.com/winstonjs/winston' title='Winston - A logger for just about everything.') Winston
+            p.is-uppercase.is-size-7
+              a(href='https://docs.rollbar.com/docs/nodejs' title='Rollbar with Node.js') Rollbar
+        .tile.is-parent.has-text-centered
+          article.tile.is-child
+            .columns.is-centered
+              .column.is-two-thirds
+                figure.image.is-square.is-half
+                  img(src='/assets/images/static/dotenv-logo.png')
+            p.subtitle Easy configuration
+            p.is-uppercase.is-size-7.mb-1
+              a(href='https://github.com/motdotla/dotenv#readme' title='dotenv - Loads environment variables from .env for nodejs projects.') env vars
+            p.is-uppercase.is-size-7
+              a(href='/doc/latest/unnode-server-config-js/' title='Unnode.js documentation: unnode-server-config.js') unnode-server-config.js
+
+  section
+    .container.is-fullhd
+      h2.title.is-3.has-text-centered Example: Vanilla Express server...
+      p.monospaced server.js
+      pre.mb-6
+        code
+          | const express = require('express')
+          | const app = express()
+          | const port = 3000
+          | 
+          | app.get('/', (req, res) => {
+          |     res.send('Hello World!')
+          | })
+          | 
+          | app.listen(port, () => {
+          |     console.log(`Example app listening at http://localhost:${port}`)
+          | })
+      h2.title.is-3.has-text-centered Example: Unnode.js server!
       .tile.is-ancestor
         .tile.is-parent
-          article.tile.is-child.box
-            p.mb-4
-              span.has-text-weight-bold.
-                Unnode.js 
-              | is a framework that makes creating Node.js back ends easy. It provides you with a simple setup of process clustering, logging and Express. It's small, simple and doesn't force you into a strict framework-structure; you can still organize your project as you like.
-            p.mb-4.
-              I created it because I noticed I kept using the same setup in most of my Node.js projects: Node Cluster API, Express and Winston+Rollbar for logging.
-            p.mb-4.
-              It is a bare-bones framework for creating hand-crafted, highly customized back ends where speed and precision are of the essence.
-            p.mb-4.
-              The project is currently in alpha pre-release stages. In the future, support for more web backends will be added (fastify being the first one).
-            p.mb-4.
-              Read on for more or jump right into Getting started!
-        .tile.is-4.is-parent
           article.tile.is-child
-            figure.image.is-square
-              img(src='/assets/images/static/frontpage-console-example.png' style='border-radius:5px')
-
-      pre
-        code.javascript
-          | if(unnode.isWorker) {
-          |
-          |     //////////////////////////////////////////////////////////////////////
-          |     //
-          |     // WORKER app process
-          |     //
-          |     //////////////////////////////////////////////////////////////////////
-          |
-          |     const sqreen = process.env.SQREEN_TOKEN ? require('sqreen') : null
-          |
-          |     runWorker()
-          | }
+            p.monospaced server.js
+            pre
+              code
+                | require('dotenv').config({ path: `${__dirname}/.env` })
+                | 
+                | const unnode = require('unnode')
+                | 
+                | if (unnode.isMaster) {
+                |     const unnodeMaster = require('unnode').master
+                |     const masterLogger = require('unnode').masterLogger
+                | 
+                |     unnodeMaster.init(__dirname)
+                |         .catch(error => {
+                |             masterLogger.safeError('emerg',
+                |                 'UnnodeMaster.init() failed', error)
+                |         })
+                | } else if (unnode.isWorker) {
+                |     const unnodeWorker = require('unnode').worker
+                |     const workerLogger = require('unnode').workerLogger
+                | 
+                |     try {
+                |         unnodeWorker.setupServer(__dirname)
+                |             .catch((error) => {
+                |                 workerLogger.safeError('emerg',
+                |                     'UnnodeWorker.setupServer() failed',
+                |                     error)
+                |             })
+                |         unnodeWorker.runServer()
+                |     } catch (error) {
+                |         workerLogger.safeError('error',
+                |             'Worker failed to start', error)
+                |         process.exit(0)
+                |     }
+                | }
+        .tile.is-vertical.is-parent
+          article.tile.is-child
+            p.monospaced Env vars or .env
+            pre
+              code
+                | # Use two CPU cores
+                | UNNODE_WORKERS=2
+                | 
+                | # Enable file logging to log/app.log
+                | UNNODE_LOGFILE=app.log
+                | 
+                | # Log timezone (autodetected if omitted)
+                | UNNODE_TIMEZONE=Europe/Helsinki
+                | 
+                | # Server listen host and port
+                | UNNODE_SERVER_LISTEN_HOST=127.0.0.1
+                | UNNODE_SERVER_INSECURE_PORT=3000
+          article.tile.is-child
+            p.monospaced config/unnode-server-config.js
+            pre
+              code
+                | const path = require('path')
+                | 
+                | module.exports = [
+                |     {
+                |         'vhost': [ '*' ],
+                |         'routes': [
+                |             {
+                |                 method: 'GET',
+                |                 path: '/',
+                |                 controller: 'index_controller#index',
+                |                 customParameter: 'someParameter'
+                |             }
+                |         ]
+                |     }
+                | ]
+        .tile.is-parent
+          article.tile.is-child
+            p.monospaced controllers/index_controller.js
+            pre
+              code
+                | const logger  = require('unnode').workerLogger
+                | const unUtils = require('unnode').utils
+                | 
+                | class IndexController {
+                |     constructor() {
+                | 
+                |     }
+                | 
+                |     index(customParameter, req, res) {
+                |         // customParameter == "someParameter"
+                | 
+                |         const ip     = unUtils.getClientIp(req)
+                |         const method = req.method
+                |         const url    = unUtils.getRequestFullUrl(req)
+                |         const agent  = req.get('user-agent')
+                | 
+                |         logger.log('info',
+                |             `Request ${method} ${url} (from: ${ip}, `
+                |             + `User-Agent: ${agent})`)
+                | 
+                |         res.send('Hello World!')
+                |     }
+                | }
+                | 
+                | module.exports = new IndexController()
