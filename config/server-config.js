@@ -11,9 +11,10 @@ const helmet = require('helmet')
 
 module.exports = [
     {
-        'vhost': [ 'localhost' ],
+        'vhost': [ 'localhost', 'unnodejs.org' ],
         'viewEngine': 'pug',
         'viewsPath': path.resolve(__dirname, '..', 'dist', 'views'),
+        'serveFavicon': path.resolve(__dirname, '..', 'dist', 'assets', 'images', 'icons', 'favicon.ico'),
         'secureContext': {
             'key': process.env.UNNODE_SERVER_SECURE_DEFAULT_KEY,
             'cert': process.env.UNNODE_SERVER_SECURE_DEFAULT_CERT
@@ -29,11 +30,22 @@ module.exports = [
             }
         },
         'routes': [
-            { method: 'GET',  path: '/', controller: 'unnodejs.org/unnodejsorg_controller#index' },
+            { method: 'GET',  path: '/', controller: 'unnodejs.org/unnodejs-controller#index' },
+            { method: 'GET',  path: '/copyright', controller: 'unnodejs.org/unnodejs-controller#copyright_page' },
 
-            { path: '/assets',  static: path.resolve(__dirname, '..', 'dist', 'assets') }
-
+            { path: '/assets',  static: path.resolve(__dirname, '..', 'dist', 'assets') },
         ]
+    },
+    {
+        'vhost': [ 'www.localhost', 'www.unnodejs.org' ],
+        'secureContext': {
+            'key': process.env.UNNODE_SERVER_SECURE_DEFAULT_KEY,
+            'cert': process.env.UNNODE_SERVER_SECURE_DEFAULT_CERT
+        },
+        'routes': [
+            { method: 'GET',  path: '*', controller: 'unnodejs.org/unnodejs-controller#redirectToNonWww' }
+        ]
+
     },
     {
         'vhost': [ 'nurminen.local', '*.nurminen.local' ],
@@ -42,7 +54,7 @@ module.exports = [
             'cert': process.env.UNNODE_NURMINEN_LOCAL_CERT
         },
         'routes': [
-            { method: 'GET', path: '/', controller: 'nurminen.dev/nurminendev_controller#index' },
+            { method: 'GET', path: '/', controller: 'nurminen.dev/nurminendev-controller#index' },
         ]
     }
 ]

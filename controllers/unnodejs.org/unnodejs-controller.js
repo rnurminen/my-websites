@@ -25,13 +25,14 @@
 //
 
 
-const path   = require('path')
-const logger = require('../../../unnode/unnode.js').workerLogger
+const path      = require('path')
+const logger    = require('../../../unnode/unnode.js').workerLogger
+const unUtils   = require('../../../unnode/unnode.js').utils
 
-const moment = require('moment')
 
+class UnnodejsOrgController {
+    _copyrightStartYear = 2020
 
-class IndexController {
 
     constructor() {
 
@@ -39,10 +40,28 @@ class IndexController {
 
 
     index(_, req, res) {
-        res.render('index', { timeNow: moment().toISOString() })
+        res.render('index', Object.assign({ }, this._getDefaultPageAttribs()))
     }
 
+    copyright_page(_, req, res) {
+        res.render('copyright', Object.assign({ }, this._getDefaultPageAttribs()))
+    }
+
+    redirectToNonWww(_, req, res) {
+        const protocol  = req.headers["x-forwarded-proto"] || req.protocol
+        const newHost   = req.get('host').slice(4)
+        return res.redirect(301, protocol + '://' + newHost + req.originalUrl)
+    }
+
+
+    _getDefaultPageAttribs() {
+        const copyrightYearsStr = unUtils.getCopyrightNotice(this._copyrightStartYear)
+
+        return {
+            'copyrightYearsStr': copyrightYearsStr
+        }
+    }
 }
 
 
-module.exports = new IndexController()
+module.exports = new UnnodejsOrgController()

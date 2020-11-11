@@ -8,54 +8,72 @@
  *
  */
 
-@charset "utf-8";
+
+ @charset "utf-8";
 
 @import url('https://fonts.googleapis.com/css?family=Open+Sans');
 
 $family-sans-serif: "Open Sans", sans-serif;
-$widescreen-enabled: true;
-$fullhd-enabled: true;
-
-// Update some of Bulma's component variables
-$body-background-color: #fff;
-$control-border-width: 2px;
-$input-border-color: transparent;
-$input-shadow: none;
-
+$body-background-color: #f5f5f5;
 $link: #000;
 
-$tabs-link-color: #fff;
-$tabs-link-active-color: #fff;
-$tabs-link-active-border-bottom-color: #fff;
-$tabs-link-hover-border-bottom-color: #fff;
-$navbar-item-active-color: #fff;
-$navbar-background-color: transparent;
 
-
+//
+// Bulma
+//
 
 @import "~bulma/bulma";
+
+
+//
+// Custom CSS
+//
+
+section:not(.hero) {
+    margin-right: 1rem;
+    margin-left: 1rem;
+}
 
 
 a:link {
     text-decoration: underline;
 }
-  
+
 a:hover {
     text-decoration: none;
 }
 
-
 a.white { color: #fff; }
+
 
 pre {
     background-color: transparent;
     padding: 0;
 }
 
+
 .monospaced {
     font-family: "Courier New", Courier, monospace;
     font-weight: bold;
 }
+
+
+#navbar a:link {
+    text-decoration: none;
+}
+
+#navbar.is-white {
+    background-color: white;
+}
+
+#navbar.is-dark .navbar-item:hover .navbar-link {
+    background-color: #f2f2f2 !important;
+    color: #000 !important;
+}
+#navbar.is-dark .navbar-item:hover .navbar-link:after {
+    border-color: #000;
+}
+
 
 .header-image {
     background-image: url("../images/hero/hero_bg.svg");
@@ -66,19 +84,23 @@ pre {
     background-color: #999;
 }
 
-.hero .scrolled-navbar {
-    background-color: white;
-}
 
-
-.features {
+.frontpage-features {
     margin: 5rem 0;
 }
 
-.my-section {
-    margin-top: 2rem;
+
+footer {
+    background-image: url("../images/hero/hero_bg.svg");
+    background-position: center center;
+    background-repeat: repeat;
+    background-attachment: fixed;
+    background-size: auto;
+    background-color: #999;
 }
 
-.frontpage-tech-small {
-    text-transform: uppercase;
+footer,
+footer a:link,
+footer a:visited {
+        color: #dbdbdb;
 }

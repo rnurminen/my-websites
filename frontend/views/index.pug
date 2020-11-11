@@ -1,27 +1,13 @@
 extends layout/application.pug
 
+block pageTitle
+  title Unnode.js - A Node.js back end framework
+
 block content
-  section.hero.is-fullheight.is-default.is-bold.header-image
+  section.hero.is-fullheight.header-image
     .hero-head
-      nav#navbar.navbar.is-fixed-top
-        .container
-          .navbar-brand
-            a.navbar-item(href='../')
-              img(src='/assets/images/static/navbar-logo-small.png' alt='Logo')
-            span.navbar-burger.burger(data-target='navbarMenu')
-              span
-              span
-              span
-          #navbarMenu.navbar-menu
-            .navbar-end
-              .tabs.is-right
-                ul
-                  li.is-active
-                    a Home
-                  li
-                    a(href='/doc/latest') Docs
-                  li
-                    a(href='/team') Team
+      - const isFrontPage = true
+      include shared/navbar.pug
     .hero-body
       .container.has-text-centered.has-text-white
         .columns.is-vcentered
@@ -51,8 +37,8 @@ block content
             img(src='/assets/images/static/another-js-framework.png')
   
   section
-    .container.is-fullhd
-      p.mb-4.is-size-5.has-text-centered
+    .container.is-fullhd.has-text-centered
+      p.mb-4.is-size-5
         span.has-text-weight-bold Unnode.js 
         | is a framework that makes creating Node.js back ends easy. It provides you with 
         span.has-text-weight-bold process clustering
@@ -63,19 +49,19 @@ block content
         | and 
         span.has-text-weight-bold vhosts with per-vhost TLS
         | . It's small, simple and doesn't force you into a strict framework-structure; you can still organize your project as you like.
-      p.mb-4.is-size-5.has-text-centered
+      p.mb-4.is-size-5
         span.has-text-weight-bold It is 
         | a 
         span.is-italic.
           bare-bones framework for creating hand-crafted custom back ends where speed and precision are of the essence.
 
-  section.features
+  section.frontpage-features.is-mobile
     .container.is-max-widescreen
       .tile.is-ancestor
         .tile.is-parent.has-text-centered
           article.tile.is-child
-            .columns.is-centered
-              .column.is-two-thirds
+            .columns.is-centered.is-mobile
+              .column.is-two-thirds-tablet.is-one-third-mobile
                 figure.image.is-square.is-half
                   img(src='/assets/images/static/node-cluster.png')
             p.subtitle Process clustering
@@ -83,8 +69,8 @@ block content
               a(href='https://nodejs.org/api/cluster.html' title='Node Cluster') Node Cluster API
         .tile.is-parent.has-text-centered
           article.tile.is-child
-            .columns.is-centered
-              .column.is-two-thirds
+            .columns.is-centered.is-mobile
+              .column.is-two-thirds-tablet.is-one-third-mobile
                 figure.image.is-square.is-half
                   img(src='/assets/images/static/express-js.png')
             p.subtitle Web backends abstraction
@@ -93,8 +79,8 @@ block content
             p.is-size-7 More to come...
         .tile.is-parent.has-text-centered
           article.tile.is-child
-            .columns.is-centered
-              .column.is-two-thirds
+            .columns.is-centered.is-mobile
+              .column.is-two-thirds-tablet.is-one-third-mobile
                 figure.image.is-square.is-half
                   img(src='/assets/images/static/helmet-logo.png')
             p.subtitle Secure+graceful
@@ -104,8 +90,8 @@ block content
               a(href='https://www.npmjs.com/package/http-terminator' title='http-terminator - Gracefully terminates Node.js HTTP(S) server') http-terminator
         .tile.is-parent.has-text-centered
           article.tile.is-child
-            .columns.is-centered
-              .column.is-two-thirds
+            .columns.is-centered.is-mobile
+              .column.is-two-thirds-tablet.is-one-third-mobile
                 figure.image.is-square.is-half
                   img(src='/assets/images/static/virtual-host-icon.png')
             p.subtitle Vhosts with per-vhost TLS
@@ -113,8 +99,8 @@ block content
               a(href='/doc/latest/virtual-hosts/' title='Unnode.js documentation: Virtual hosts') Unnode.js vhosts
         .tile.is-parent.has-text-centered
           article.tile.is-child
-            .columns.is-centered
-              .column.is-two-thirds
+            .columns.is-centered.is-mobile
+              .column.is-two-thirds-tablet.is-one-third-mobile
                 figure.image.is-square.is-half
                   img(src='/assets/images/static/winston-logo.png')
             p.subtitle Proper logging
@@ -124,8 +110,8 @@ block content
               a(href='https://docs.rollbar.com/docs/nodejs' title='Rollbar with Node.js') Rollbar
         .tile.is-parent.has-text-centered
           article.tile.is-child
-            .columns.is-centered
-              .column.is-two-thirds
+            .columns.is-centered.is-mobile
+              .column.is-two-thirds-tablet.is-one-third-mobile
                 figure.image.is-square.is-half
                   img(src='/assets/images/static/dotenv-logo.png')
             p.subtitle Easy configuration

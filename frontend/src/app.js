@@ -42,7 +42,8 @@ import javascript from 'highlight.js/lib/languages/javascript'
 
 hljs.registerLanguage('javascript', javascript)
 
-require.context('../images/static', true, /\.(png|jpe?g)$/)
+require.context('../images/static', true, /\.(png|jpe?g|svg)$/)
+require.context('../images/icons', true, /\.(png|jpe?g|ico|svg)$/)
 
 
 
@@ -77,10 +78,17 @@ document.addEventListener('DOMContentLoaded', () => {
 
 
 window.onscroll = function () {
-    var nav = document.getElementById('navbar');
-    if (window.pageYOffset > 0) {
-        nav.classList.add("scrolled-navbar");
+    //
+    // Change navbar background to white when page is scrolled
+    // Transparent on top of hero
+    //
+    const nav = document.getElementById('navbar')
+    if(window.pageYOffset > 0) {
+        nav.classList.add('is-white')
+        nav.classList.remove('is-dark')
     } else {
-        nav.classList.remove("scrolled-navbar");
+        nav.classList.add('is-dark')
+        nav.classList.remove('is-white')
     }
+
 }
