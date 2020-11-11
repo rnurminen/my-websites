@@ -43,8 +43,16 @@ class UnnodejsOrgController {
         res.render('index', Object.assign({ }, this._getDefaultPageAttribs()))
     }
 
-    copyright_page(_, req, res) {
+    copyrightPage(_, req, res) {
         res.render('copyright', Object.assign({ }, this._getDefaultPageAttribs()))
+    }
+
+    privacyPolicyPage(_, req, res) {
+        res.render('privacy-policy', Object.assign({ }, this._getDefaultPageAttribs()))
+    }
+
+    termsOfServicePage(_, req, res) {
+        res.render('terms-of-service', Object.assign({ }, this._getDefaultPageAttribs()))
     }
 
     redirectToNonWww(_, req, res) {

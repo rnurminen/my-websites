@@ -26,7 +26,7 @@ function getPugTemplates() {
 
         return new HtmlWebpackPlugin({
             template: templateFile,
-            filename: outTemplate,
+            filename: outTemplate
         })
     })
 }

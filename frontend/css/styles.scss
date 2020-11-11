@@ -39,11 +39,13 @@ a:link {
     text-decoration: underline;
 }
 
+a.button:link,
 a:hover {
     text-decoration: none;
 }
 
 a.white { color: #fff; }
+
 
 
 pre {

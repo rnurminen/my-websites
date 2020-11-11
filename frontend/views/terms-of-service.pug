@@ -1,0 +1,140 @@
+extends layout/application.pug
+
+block pageTitle
+  title Terms of Service - Unnode.js
+
+block content
+  include shared/navbar.pug
+
+  section.hero.header-image.pt-6.pb-6
+    .hero-body
+      .container.is-fullhd.mt-6
+        h1.title.has-text-white
+          | Terms of Service
+
+  section
+    .container.is-fullhd.has-text-justified.mt-6.mb-5
+      .content
+        h3.subtitle TERMS OF USE
+        p.has-text-weight-bold Last updated November 11, 2020
+
+        h3.subtitle AGREEMENT TO TERMS
+        p
+          | These Terms of Use constitute a legally binding agreement made between you, whether
+          | personally or on behalf of an entity (&quot;you&quot;) and Nurminen Development,
+          | doing business as RicForge (&quot;RicForge&quot;, “we”, “us”, or “our”), concerning
+          | your access to and use of the 
+          a(href='https://unnodejs.org' title='Unnodejs.org') https://unnodejs.org
+          |  website as well as any other media form, media channel, mobile website or mobile
+          | application related, linked, or otherwise connected thereto (collectively, the “Site”).
+          | You agree that by accessing the Site, you have read, understood, and agreed to be
+          | bound by all of these Terms of Use. IF YOU DO NOT AGREE WITH ALL OF THESE TERMS OF
+          | USE, THEN YOU ARE EXPRESSLY PROHIBITED FROM USING THE SITE AND YOU MUST DISCONTINUE
+          | USE IMMEDIATELY
+        p
+          | We reserve the right, in our sole discretion, to make changes or modifications to
+          | these Terms of Use at any time and for any reason. We will alert you about any
+          | changes by updating the &quot;Last updated&quot; date of these Terms of Use, and
+          | you waive any right to receive specific notice of each such change. It is your
+          | responsibility to
+          | periodically review these Terms of Use to stay informed of updates. You will be
+          | subject to, and will be deemed to have been made aware of and to have accepted, the
+          | changes in any revised Terms of Use by your continued use of the Site after the date
+          | such revised Terms of Use are posted.
+        p
+          | The information provided on the Site is not intended for distribution to or use by
+          | any person or entity in any jurisdiction or country where such distribution or use
+          | would be contrary to law or regulation or which would subject us to any registration
+          | requirement within such jurisdiction or country. Accordingly, those persons who
+          | choose to access the Site from other locations do so on their own initiative and
+          | are solely responsible for compliance with local laws, if and to the extent local
+          | laws are applicable.
+
+        h3.subtitle 1. Use license
+        p
+          | The materials contained on the Site are protected by applicable copyright and
+          | trademark law.
+        p
+          | You may adapt elements and methods of the Site's CSS in your own projects, but 
+          | the unique combination of images, colors, sizes, typography, and positioning 
+          | (&quot;the design&quot;) is copyright &copy; #{copyrightYearsStr} RicForge and may not be 
+          | reproduced.
+        p
+          | The software provided on the Site (&quot;Unnode.js&quot;) is licensed under the 
+          a(href='https://opensource.org/licenses/MIT' title='MIT license') MIT license
+
+        h3.subtitle 2. Disclaimer
+        ol(type='a')
+          li
+            | The materials on the Site are provided on an 'as is' basis.
+            | The Site makes no warranties, expressed or implied, and hereby disclaims and
+            | negates all other warranties including, without limitation, implied warranties or
+            | conditions of merchantability, fitness for a particular purpose, or
+            | non-infringement of intellectual property or other violation of rights.
+          li
+            | Further, the Site does not warrant or make any representations concerning
+            | the accuracy, likely results, or reliability of the use of the materials on its
+            | website or otherwise relating to such materials or on any sites linked to this
+            | site.
+
+        h3.subtitle 3. Limitations
+        p
+          | In no event will we or our suppliers be liable for any damages (including,
+          | without limitation, damages for loss of data or profit, or due to business interruption)
+          | arising out of the use or inability to use the materials on the Site,
+          | even if the Site or an authorized representative of the Site has been notified
+          | orally or in writing of the possibility of such damage. Because some jurisdictions do
+          | not allow limitations on implied warranties, or limitations of liability for consequential
+          | or incidental damages, these limitations may not apply to you.
+
+        h3.subtitle 4. Modifications and interruptions
+        p
+          | We reserve the right to change, modify, or remove the contents of the Site at any
+          | time or for any reason at our sole discretion without notice. However, we have no
+          | obligation to update any information on our Site. We also reserve the right to
+          | modify or discontinue all or part of the Site without notice at any time.
+          | We will not be liable to you or any third party for any modification, price change,
+          | suspension, or discontinuance of the Site.
+        p
+          | We cannot guarantee the Site will be available at all times. We may experience
+          | hardware, software, or other problems or need to perform maintenance related to
+          | the Site, resulting in interruptions, delays, or errors. We reserve the right to
+          | change, revise, update, suspend, discontinue, or otherwise modify the Site at any
+          | time or for any reason without notice to you. You agree that we have no liability
+          | whatsoever for any loss, damage, or inconvenience caused by your inability to
+          | access or use the Site during any downtime or discontinuance of the Site. Nothing
+          | in these Terms of Use will be construed to obligate us to maintain and support the
+          | Site or to supply any corrections, updates, or releases in connection therewith.
+
+        h3.subtitle 5. Accuracy of materials
+        p
+          | There may be information on the Site that contains typographical errors,
+          | inaccuracies, or omissions, including descriptions, pricing, availability, and
+          | various other information. We reserve the right to correct any errors, inaccuracies,
+          | or omissions and to change or update the information on the Site at any time,
+          | without prior notice.
+
+        h3.subtitle 6. Links To Third-Party Content
+        p
+          | The Site may contain links to third-party content. We do not control, endorse,
+          | sponsor, recommend, or otherwise accept responsibility for such content.
+
+        h3.subtitle 7. Privacy policy
+        p
+          | We care about data privacy and security. Please review our Privacy Policy: 
+          a(href='/legal/privacy-policy' title='Unnodejs.org Privacy Policy') https//unnodejs.org/legal/privacy-policy
+          | . By using this website, you agree to be bound by our Privacy Policy, which is incorporated
+          | into these Terms of Use.
+
+        h3.subtitle 8. Governing Law
+        p
+          | These terms and conditions are governed by and construed in accordance with the
+          | laws of the European Union and you irrevocably submit to the exclusive jurisdiction of the
+          | courts in that State or location.
+
+        h3.subtitle 9. Contact us
+        p
+          | In order to resolve a complaint regarding the Site or to receive further information
+          | regarding use of the Site, please contact us at:
+        p.mb-6
+          a(href='mailto:admin@nurminen.dev') admin@nurminen.dev
