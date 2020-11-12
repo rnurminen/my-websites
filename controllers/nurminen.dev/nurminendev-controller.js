@@ -26,7 +26,7 @@
 
 
 const path   = require('path')
-const logger = require('../../../unnode/unnode.js').workerLogger
+const logger = require('unnode').workerLogger
 
 const moment = require('moment')
 

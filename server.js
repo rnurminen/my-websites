@@ -31,8 +31,8 @@ require('dotenv').config({ path: `${__dirname}/.env` })
 
 const path          = require('path')
 
-const unnode        = require('../unnode/unnode.js')
-const utils         = require('../unnode/unnode.js').utils
+const unnode        = require('unnode')
+const utils         = require('unnode').utils
 const handle        = utils.handle
 
 
@@ -44,8 +44,8 @@ if(unnode.isMaster) {
     //
     //////////////////////////////////////////////////////////////////////
 
-    const unnodeMaster = require('../unnode/unnode.js').master
-    const masterLogger = require('../unnode/unnode.js').masterLogger
+    const unnodeMaster = require('unnode').master
+    const masterLogger = require('unnode').masterLogger
 
     // Pre-init logger, otherwise it won't be usable until after unnodeMaster.init()
     masterLogger.init(__dirname)
@@ -99,8 +99,8 @@ if(unnode.isMaster) {
 async function runWorker() {
     const express       = require('express')
 
-    const unnodeWorker  = require('../unnode/unnode.js').worker
-    const workerLogger  = require('../unnode/unnode.js').workerLogger
+    const unnodeWorker  = require('unnode').worker
+    const workerLogger  = require('unnode').workerLogger
 
     try {
         const [status, error] = await handle(unnodeWorker.setupServer(__dirname))

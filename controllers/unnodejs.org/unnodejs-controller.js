@@ -26,8 +26,8 @@
 
 
 const path      = require('path')
-const logger    = require('../../../unnode/unnode.js').workerLogger
-const unUtils   = require('../../../unnode/unnode.js').utils
+const logger    = require('unnode').workerLogger
+const unUtils   = require('unnode').utils
 
 
 class UnnodejsOrgController {
