@@ -8,6 +8,8 @@
     "license": "UNLICENSED",
     "main": "server.js",
     "scripts": {
+        "start": "node server.js",
+        "heroku-postbuild": "webpack --config config/webpack.prod.js",
         "updateall": "npx npm-check-updates -u"
     },
     "dependencies": {
