@@ -61,7 +61,7 @@ if(unnode.isMaster) {
 
     masterLogger.log('info', '')
     masterLogger.log('info', '')
-    masterLogger.log('info', '    ' + chalk.underline.bold('my-websites - The Websites'))
+    masterLogger.log('info', '    ' + chalk.underline.bold('my-websites'))
     masterLogger.log('info', '')
     masterLogger.log('info', '    Copyright (c) 2020 Riku Nurminen')
     masterLogger.log('info', '')
@@ -112,9 +112,7 @@ async function runWorker() {
 
         const app = unnodeWorker.getWebBackend('localhost')
 
-        if(process.env.NODE_ENV !== 'production') {
-            app.locals.pretty = true
-        }
+        app.locals.pretty = true
 
         unnodeWorker.addWildcardRoute()
     
