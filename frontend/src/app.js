@@ -36,6 +36,8 @@
 import '../css/styles.scss'
 import 'highlight.js/styles/monokai-sublime.css';
 
+import * as zenscroll from 'zenscroll/zenscroll-min'
+
 import hljs from 'highlight.js/lib/core'
 import javascript from 'highlight.js/lib/languages/javascript'
 
@@ -46,6 +48,12 @@ require.context('../images/icons', true, /\.(png|jpe?g|ico|svg)$/)
 //
 // App wide JS
 //
+
+const zenscrollDefaultDuration = 400 // ms
+const zenscrollEdgeOffset = 25 // px
+zenscroll.setup(zenscrollDefaultDuration, zenscrollEdgeOffset)
+
+
 hljs.registerLanguage('javascript', javascript)
 
 document.addEventListener('DOMContentLoaded', () => {
@@ -67,6 +75,7 @@ document.addEventListener('DOMContentLoaded', () => {
         window.onscroll = function () {
             // Change navbar background to white when page is scrolled
             const nav = document.getElementById('navbar')
+
             if (window.pageYOffset > 0) {
                 nav.classList.add('is-white')
                 nav.classList.remove('is-dark')

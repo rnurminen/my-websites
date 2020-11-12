@@ -22,12 +22,10 @@ block content
             p.has-text-centered
               a.button.is-medium.is-light.is-outlined(href='#learnmore')
                 | Learn more
-    .hero-foot
-      .container
 
   section#learnmore
     .container.is-fullhd
-      .columns.is-centered
+      .columns.is-centered.mt-0
         .column.is-half
           figure.image.is-3by1
             img(src='/assets/images/static/another-js-framework.png')
@@ -94,7 +92,7 @@ block content
                     img(src='/assets/images/static/virtual-host-icon.png')
               p.subtitle Vhosts with per-vhost TLS
               p.is-uppercase.is-size-7
-                a(href='/doc/latest/virtual-hosts/' title='Unnode.js documentation: Virtual hosts') Unnode.js vhosts
+                a(href='/doc/latest/vhosts/' title='Documentation: Vhosts') Doc: Vhosts
           .tile.is-parent.has-text-centered
             article.tile.is-child
               .columns.is-centered.is-mobile
@@ -114,9 +112,7 @@ block content
                     img(src='/assets/images/static/dotenv-logo.png')
               p.subtitle Easy configuration
               p.is-uppercase.is-size-7.mb-1
-                a(href='https://github.com/motdotla/dotenv#readme' title='dotenv - Loads environment variables from .env for nodejs projects.') env vars
-              p.is-uppercase.is-size-7
-                a(href='/doc/latest/unnode-server-config-js/' title='Unnode.js documentation: unnode-server-config.js') unnode-server-config.js
+                a(href='/doc/latest/configuration' title='Documentation: Configuration') Doc: Configuration
 
   section
     .container.is-fullhd.mb-6
@@ -130,4 +126,3 @@ block content
           | ... and head on over to 
           a(href='/doc/latest/getting-started' title='Documentation: Getting started')
             | Documentation: Getting started 
-          | :)
