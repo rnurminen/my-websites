@@ -1,0 +1,37 @@
+extends layout/application.pug
+
+block pageTitle
+  title Team - Unnode.js
+
+block content
+  include shared/navbar.pug
+
+  section.hero.header-image.pt-6.pb-6
+    .hero-body
+      .container.is-fullhd.mt-6
+        h1.title.has-text-white
+          | Team
+
+  section
+    .container.is-fullhd.mt-6.mb-6
+      .columns.is-centered.is-mobile.mb-5
+        .column.is-4
+          figure.image.is-square
+            img(src='/assets/images/static/unnodejs-logo-big.png' alt='Unnode.js logo')
+      .content.has-text-centered
+        p.mb-4
+          | Unnode.js was created by Riku Nurminen and the team at  
+          a(href='https://ricforge.com' title='RicForge - Open source engineering.') RicForge
+        p.mb-4
+          | RicForge is a 
+          a(href='https://nurminen.dev' title='Nurminen Development') Nurminen Development 
+          | organization
+        p
+          | Issues, problems, features requests, etc. should be directed to 
+          a(href='https://github.com/ricforge/unnode/issues' title='Unnode.js GitHub issues')
+            | https://github.com/ricforge/unnode/issues
+        p
+          | You are also welcome to join our Discord server at 
+          a(href='https://discord.gg/ZSq76HERR6' title='Unnode.js Discord server')
+            | https://discord.gg/ZSq76HERR6 
+          | to ask any questions!

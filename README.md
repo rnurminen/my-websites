@@ -10,8 +10,6 @@ Built using https://www.unnodejs.org
 
 ## License
 
-Backend portions in this repository are licensed under the MIT license
-
 **Frontend portions under `frontend`-directory** LICENSE:
 
 These websites are copyright (c) 2020 Riku Nurminen
@@ -19,6 +17,8 @@ These websites are copyright (c) 2020 Riku Nurminen
 You may adapt elements and methods of these sites' CSS in your own projects,
 but the unique combination of images, colors, sizes, typography, and positioning
 ("the design") is copyright (c) 2020 Riku Nurminen and may not be reproduced.
+
+**Backend portions in this repository are licensed under the MIT license**
 
 **The MIT License (MIT)**
 

@@ -48,7 +48,8 @@ a.white { color: #fff; }
 
 
 
-pre {
+pre,
+.content pre {
     background-color: transparent;
     padding: 0;
 }
@@ -66,6 +67,10 @@ pre {
 
 #navbar.is-white {
     background-color: white;
+}
+
+#navbar.is-dark .navbar-brand:hover .navbar-item {
+    background-color: transparent;
 }
 
 #navbar.is-dark .navbar-item:hover .navbar-link {
@@ -88,7 +93,7 @@ pre {
 
 
 .frontpage-features {
-    margin: 5rem 0;
+    margin: 5rem 0 4rem 0;
 }
 
 

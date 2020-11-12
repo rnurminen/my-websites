@@ -10,25 +10,27 @@ nav#navbar(class=(isFrontPage ? 'navbar is-fixed-top is-dark' : 'navbar is-fixed
     #navbarMenu.navbar-menu
       .navbar-end
         .navbar-item
-          a.navbar-link.is-arrowless(href='/')
+          a.navbar-link.is-arrowless(href='/' title='Home')
             | Home
         .navbar-item.has-dropdown.is-hoverable
-          a.navbar-link
+          a.navbar-link(href='/doc/latest' title='Documentation')
             | Docs
           .navbar-dropdown
-            a.navbar-item
+            a.navbar-item(href='/doc/latest/getting-started' title='Documentation: Getting started')
               | Getting started
-            a.navbar-item
+            a.navbar-item(href='/doc/latest/configuration' title='Documentation: Configuration')
               | Configuration
-            a.navbar-item
+            a.navbar-item(href='/doc/latest/process-clustering' title='Documentation: Process clustering')
               | Process clustering
-            a.navbar-item
+            a.navbar-item(href='/doc/latest/vhosts' title='Documentation: Vhosts')
+              | Vhosts
+            a.navbar-item(href='/doc/latest/logging' title='Documentation: Logging')
               | Logging
-            a.navbar-item
+            a.navbar-item(href='/doc/latest/utils' title='Documentation: Utils')
               | Utils
             hr.navbar-divider
-            .navbar-item
-              | Version 0.9.1
+            a.navbar-item(href='/doc/latest/api-reference' title='Documentation: API reference')
+              | API reference
         .navbar-item
-          a.navbar-link.is-arrowless
+          a.navbar-link.is-arrowless(href='/team' title='Unnode.js Team')
             | Team

@@ -13,7 +13,7 @@ block content
         .columns.is-vcentered
           .column.is-5
             figure.image.is-square
-              img(src='/assets/images/static/hero-big-logo.png' alt='Description')
+              img(src='/assets/images/static/unnodejs-logo-big.png' alt='Unnode.js logo')
           .column.is-6.is-offset-1
             h1.title.is-2.has-text-grey-lighter.mb-6
               | A Node.js back end framework
@@ -53,7 +53,7 @@ block content
             bare-bones framework for creating hand-crafted custom back ends where speed and precision are of the essence.
 
   section.frontpage-features.is-mobile
-    .container
+    .container.is-fullhd
       .box
         .tile.is-ancestor
           .tile.is-parent.has-text-centered
@@ -119,123 +119,15 @@ block content
                 a(href='/doc/latest/unnode-server-config-js/' title='Unnode.js documentation: unnode-server-config.js') unnode-server-config.js
 
   section
-    .container.is-fullhd
-      h2.title.is-3.has-text-centered Example: Vanilla Express server...
-      p.monospaced server.js
-      pre.mb-6
-        code
-          | const express = require('express')
-          | const app = express()
-          | const port = 3000
-          | 
-          | app.get('/', (req, res) => {
-          |     res.send('Hello World!')
-          | })
-          | 
-          | app.listen(port, () => {
-          |     console.log(`Example app listening at http://localhost:${port}`)
-          | })
-      h2.title.is-3.has-text-centered Example: Unnode.js server!
-      .tile.is-ancestor
-        .tile.is-parent
-          article.tile.is-child
-            p.monospaced server.js
-            pre
-              code
-                | require('dotenv').config({ path: `${__dirname}/.env` })
-                | 
-                | const unnode = require('unnode')
-                | 
-                | if (unnode.isMaster) {
-                |     const unnodeMaster = require('unnode').master
-                |     const masterLogger = require('unnode').masterLogger
-                | 
-                |     unnodeMaster.init(__dirname)
-                |         .catch(error => {
-                |             masterLogger.safeError('emerg',
-                |                 'UnnodeMaster.init() failed', error)
-                |         })
-                | } else if (unnode.isWorker) {
-                |     const unnodeWorker = require('unnode').worker
-                |     const workerLogger = require('unnode').workerLogger
-                | 
-                |     try {
-                |         unnodeWorker.setupServer(__dirname)
-                |             .catch((error) => {
-                |                 workerLogger.safeError('emerg',
-                |                     'UnnodeWorker.setupServer() failed',
-                |                     error)
-                |             })
-                |         unnodeWorker.runServer()
-                |     } catch (error) {
-                |         workerLogger.safeError('error',
-                |             'Worker failed to start', error)
-                |         process.exit(0)
-                |     }
-                | }
-        .tile.is-vertical.is-parent
-          article.tile.is-child
-            p.monospaced Env vars or .env
-            pre
-              code
-                | # Use two CPU cores
-                | UNNODE_WORKERS=2
-                | 
-                | # Enable file logging to log/app.log
-                | UNNODE_LOGFILE=app.log
-                | 
-                | # Log timezone (autodetected if omitted)
-                | UNNODE_TIMEZONE=Europe/Helsinki
-                | 
-                | # Server listen host and port
-                | UNNODE_SERVER_LISTEN_HOST=127.0.0.1
-                | UNNODE_SERVER_INSECURE_PORT=3000
-          article.tile.is-child
-            p.monospaced config/unnode-server-config.js
-            pre
-              code
-                | const path = require('path')
-                | 
-                | module.exports = [
-                |     {
-                |         'vhost': [ '*' ],
-                |         'routes': [
-                |             {
-                |                 method: 'GET',
-                |                 path: '/',
-                |                 controller: 'index_controller#index',
-                |                 customParameter: 'someParameter'
-                |             }
-                |         ]
-                |     }
-                | ]
-        .tile.is-parent
-          article.tile.is-child
-            p.monospaced controllers/index_controller.js
-            pre
-              code
-                | const logger  = require('unnode').workerLogger
-                | const unUtils = require('unnode').utils
-                | 
-                | class IndexController {
-                |     constructor() {
-                | 
-                |     }
-                | 
-                |     index(customParameter, req, res) {
-                |         // customParameter == "someParameter"
-                | 
-                |         const ip     = unUtils.getClientIp(req)
-                |         const method = req.method
-                |         const url    = unUtils.getRequestFullUrl(req)
-                |         const agent  = req.get('user-agent')
-                | 
-                |         logger.log('info',
-                |             `Request ${method} ${url} (from: ${ip}, `
-                |             + `User-Agent: ${agent})`)
-                | 
-                |         res.send('Hello World!')
-                |     }
-                | }
-                | 
-                | module.exports = new IndexController()
+    .container.is-fullhd.mb-6
+      .content.has-text-centered
+        h2.mb-6 Getting started
+        .columns.is-centered.mb-5
+          .column.is-4
+            .box.has-text-left
+              p.monospaced npm install unnode
+        p
+          | ... and head on over to 
+          a(href='/doc/latest/getting-started' title='Documentation: Getting started')
+            | Documentation: Getting started 
+          | :)

@@ -1,0 +1,212 @@
+extends ../../layout/application.pug
+
+block pageTitle
+  title Getting started - Unnode.js
+
+block content
+  include ../../shared/navbar.pug
+
+  section.hero.header-image.pt-6.pb-6
+    .hero-body
+      .container.is-fullhd.mt-6
+        h1.title.has-text-white
+          | Getting started
+
+  section
+    .container.is-fullhd.mt-6.mb-6
+      .content
+        h2.title Foreword
+        p
+          | I created Unnode.js because I noticed I kept using the same setup in most of my
+          | projects: Node Cluster API, Express and Winston+Rollbar for logging.
+          | The purpose of the project is to simply make it easier to fire up new Node.js 
+          | back ends; a shared, re-usable component that takes care of all the mundane, low-level
+          | tasks.
+        p
+          | Note that project is currently in a 
+          strong pre-release stage
+          | . As we work towards a 
+          strong 1.0 
+          | release, new features will get added. My plan is to improve the web backends abstraction
+          | and then add more supported backends, first of which will probably be 
+          a(href='https://www.fastify.io/' title='Fastify, Fast and low overhead web framework, for Node.js') Fastify
+          | .
+        p
+          | Even though it's pre-release, I'm personally using Unnode.js in a commercial, mission
+          | critical REST API, aswell as to power the back ends of several of our websites,
+          | including the one you're visiting right now. So don't let the pre-release tag shy you
+          | away of using Unnode.js!
+        p
+          | Happy coding! :)
+        p.is-italic
+          | - Riku Nurminen
+          br
+          | &nbsp;&nbsp;
+          a(href='https://nurminen.dev' title='Nurminen Development') Nurminen Development 
+
+  section
+    .container.is-fullhd.mt-6.mb-6
+      .content
+        h2.title Hello, World!
+        p
+          | Lets take a look at a minimal Node.js web server written in vanilla ExpressJS:
+        p.monospaced.mb-0 server.js
+        pre.mb-5
+          code
+            | const express = require('express')
+            | const app = express()
+            | const port = 3000
+            | 
+            | app.get('/', (req, res) => {
+            |     res.send('Hello World!')
+            | })
+            | 
+            | app.listen(port, () => {
+            |     console.log(`Example app listening at http://localhost:${port}`)
+            | })
+        p
+          | Now lets re-create that in Unnode.js:
+        .columns
+          .column.is-4
+            p.monospaced.mb-0 server.js
+            pre
+              code
+                | require('dotenv').config({path: `${__dirname}/.env`})
+                | 
+                | const unnode = require('unnode')
+                | 
+                | if(unnode.isMaster) {
+                |     const unnodeMaster = require('unnode').master
+                |     const masterLog = require('unnode').masterLogger
+                | 
+                |     unnodeMaster.init(__dirname).catch(error => {
+                |         masterLog.safeError('emerg',
+                |             'UnnodeMaster.init() failed', error)
+                |     })
+                | } else if(unnode.isWorker) {
+                |     const unnodeWorker = require('unnode').worker
+                |     const workerLog = require('unnode').workerLogger
+                | 
+                |     try {
+                |         unnodeWorker.setupServer(__dirname)
+                |             .catch((error) => {
+                |                 workerLogger.safeError('emerg',
+                |                     'UnnodeWorker.setupServer() fail',
+                |                     error)
+                |             })
+                |         unnodeWorker.runServer()
+                |     } catch (error) {
+                |         workerLogger.safeError('error',
+                |             'Worker failed to start', error)
+                |         process.exit(0)
+                |     }
+                | }
+          .column.is-4
+            p.monospaced.mb-0 Env vars or .env
+            pre
+              code
+                | # Use two CPU cores
+                | UNNODE_WORKERS=2
+                | 
+                | # Enable file logging to log/app.log
+                | UNNODE_LOGFILE=app.log
+                | 
+                | # Log timezone (autodetected if omitted)
+                | UNNODE_TIMEZONE=Europe/Helsinki
+                | 
+                | # Server listen host and port
+                | UNNODE_SERVER_LISTEN_HOST=127.0.0.1
+                | UNNODE_SERVER_INSECURE_PORT=3000
+            p.monospaced.mb-0 config/unnode-server-config.js
+            pre
+              code
+                | const path = require('path')
+                | 
+                | module.exports = [
+                |     {
+                |         'vhost': [ '*' ],
+                |         'routes': [
+                |             {
+                |                 method: 'GET',
+                |                 path: '/',
+                |                 controller: 'index_controller#index',
+                |                 customParameter: 'someParameter'
+                |             }
+                |         ]
+                |     }
+                | ]
+          .column.is-4
+            p.monospaced.mb-0 controllers/index_controller.js
+            pre
+              code
+                | const logger  = require('unnode').workerLogger
+                | const unUtils = require('unnode').utils
+                | 
+                | class IndexController {
+                |     constructor() {
+                | 
+                |     }
+                | 
+                |     index(customParameter, req, res) {
+                |         // customParameter == "someParameter"
+                | 
+                |         const ip     = unUtils.getClientIp(req)
+                |         const method = req.method
+                |         const url    = unUtils.getRequestFullUrl(req)
+                |         const agent  = req.get('user-agent')
+                | 
+                |         logger.log('info',
+                |             `Request ${method} ${url} (from: ${ip}, `
+                |             + `User-Agent: ${agent})`)
+                | 
+                |         res.send('Hello World!')
+                |     }
+                | }
+                | 
+                | module.exports = new IndexController()
+        .columns.is-centered.mb-4.mt-4
+          .column.is-8
+            .box.has-text-centered
+              p.is-italic
+                | This &quot;Hello, World!&quot;-example can also be found at 
+                a(href='https://github.com/ricforge/unnodejs-hello-world' title='Unnode.js Hello, World! -example')
+                  | https://github.com/ricforge/unnodejs-hello-world
+        p Run it:
+        .columns.is-centered.mb-5
+          .column
+            .box.has-text-left
+              p.monospaced node server.js
+        p Your output should look like:
+        img.mb-4(src='/assets/images/static/doc/latest/unnode-hello-world-console-output.png' alt='Unnode.js logo')
+        p From this we can see that:
+        ul.mb-6
+          li
+            | We are utilizing process clustering to take advantage of multi-core systems. A single instance of Node.js normally runs only in a single thread. Behind the scenes this uses the 
+            a(href='https://nodejs.org/api/cluster.html' title='Node.js Cluster API') Node.js Cluster API
+            | .
+          li
+            | We are getting proper logging with:
+            ul
+              li Colorized console messages with ISO 8601 timestamps and syslog style log levels.
+              li JSON file logging to log/app.log since we set the 
+                span.monospaced APP_LOGFILE
+                |  environment variable.
+              li Seamless, centralized logging between master and worker processes.
+              li Some log messages appear twice, because they come from 2 different app processes. The process pid for each worker log message is the
+                span.monospaced [nnnn] 
+                | on a red background.
+              li
+                | Rollbar logging: By setting the 
+                span.monospaced ROLLBAR_ACCESS_TOKEN
+                |  and 
+                span.monospaced ROLLBAR_ENVIRONMENT
+                |  environment variables, our log messages of levels 
+                span.monospaced warning
+                |  and above would also get sent to Rollbar.
+          li
+            | Our code is nicely modularized and separated into different files. Easy to maintain!
+
+        p.is-size-5
+          | Next: 
+          a(href='/doc/latest/configuration' title='Documentation: Configuration')
+            | Configuration

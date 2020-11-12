@@ -43,6 +43,18 @@ class UnnodejsOrgController {
         res.render('index', Object.assign({ }, this._getDefaultPageAttribs()))
     }
 
+    docLatestPage(page, req, res) {
+        if(page) {
+            res.render(`doc/latest/${page}`, Object.assign({ }, this._getDefaultPageAttribs()))
+        } else {
+            res.render('doc/index', Object.assign({ }, this._getDefaultPageAttribs()))
+        }
+    }
+
+    teamPage(_, req, res) {
+        res.render('team', Object.assign({ }, this._getDefaultPageAttribs()))
+    }
+
     copyrightPage(_, req, res) {
         res.render('copyright', Object.assign({ }, this._getDefaultPageAttribs()))
     }
@@ -63,7 +75,7 @@ class UnnodejsOrgController {
 
 
     _getDefaultPageAttribs() {
-        const copyrightYearsStr = unUtils.getCopyrightNotice(this._copyrightStartYear)
+        const copyrightYearsStr = unUtils.getCopyrightYears(this._copyrightStartYear)
 
         return {
             'copyrightYearsStr': copyrightYearsStr
