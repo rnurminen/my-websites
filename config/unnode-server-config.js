@@ -7,6 +7,8 @@
 
 const path = require('path')
 
+const htmlCacheControl = { noCache: true }
+
 module.exports = [
     {
         'vhost': [ 'localhost', 'unnodejs.org' ],
@@ -28,19 +30,19 @@ module.exports = [
             }
         },
         'routes': [
-            { method: 'GET',  path: '/', controller: 'unnodejs.org/unnodejs-controller#index' },
-            { method: 'GET',  path: '/doc/latest', controller: 'unnodejs.org/unnodejs-controller#docLatestPage' },
-            { method: 'GET',  path: '/doc/latest/getting-started', controller: 'unnodejs.org/unnodejs-controller#docLatestPage', customParameter: 'getting-started' },
-            { method: 'GET',  path: '/doc/latest/configuration', controller: 'unnodejs.org/unnodejs-controller#docLatestPage', customParameter: 'configuration' },
-            { method: 'GET',  path: '/doc/latest/process-clustering', controller: 'unnodejs.org/unnodejs-controller#docLatestPage', customParameter: 'process-clustering' },
-            { method: 'GET',  path: '/doc/latest/vhosts', controller: 'unnodejs.org/unnodejs-controller#docLatestPage', customParameter: 'vhosts' },
-            { method: 'GET',  path: '/doc/latest/logging', controller: 'unnodejs.org/unnodejs-controller#docLatestPage', customParameter: 'logging' },
-            { method: 'GET',  path: '/doc/latest/utils', controller: 'unnodejs.org/unnodejs-controller#docLatestPage', customParameter: 'utils' },
-            { method: 'GET',  path: '/doc/latest/api-reference', controller: 'unnodejs.org/unnodejs-controller#docLatestPage', customParameter: 'api-reference' },
-            { method: 'GET',  path: '/team', controller: 'unnodejs.org/unnodejs-controller#teamPage' },
-            { method: 'GET',  path: '/legal/copyright', controller: 'unnodejs.org/unnodejs-controller#copyrightPage' },
-            { method: 'GET',  path: '/legal/privacy-policy', controller: 'unnodejs.org/unnodejs-controller#privacyPolicyPage' },
-            { method: 'GET',  path: '/legal/terms-of-service', controller: 'unnodejs.org/unnodejs-controller#termsOfServicePage' },
+            { method: 'GET',  path: '/', controller: 'unnodejs.org/unnodejs-controller#index', cacheControl: htmlCacheControl },
+            { method: 'GET',  path: '/doc/latest', controller: 'unnodejs.org/unnodejs-controller#docLatestPage', cacheControl: htmlCacheControl },
+            { method: 'GET',  path: '/doc/latest/getting-started', controller: 'unnodejs.org/unnodejs-controller#docLatestPage', customParameter: 'getting-started', cacheControl: htmlCacheControl },
+            { method: 'GET',  path: '/doc/latest/configuration', controller: 'unnodejs.org/unnodejs-controller#docLatestPage', customParameter: 'configuration', cacheControl: htmlCacheControl },
+            { method: 'GET',  path: '/doc/latest/process-clustering', controller: 'unnodejs.org/unnodejs-controller#docLatestPage', customParameter: 'process-clustering', cacheControl: htmlCacheControl },
+            { method: 'GET',  path: '/doc/latest/vhosts', controller: 'unnodejs.org/unnodejs-controller#docLatestPage', customParameter: 'vhosts', cacheControl: htmlCacheControl },
+            { method: 'GET',  path: '/doc/latest/logging', controller: 'unnodejs.org/unnodejs-controller#docLatestPage', customParameter: 'logging', cacheControl: htmlCacheControl },
+            { method: 'GET',  path: '/doc/latest/utils', controller: 'unnodejs.org/unnodejs-controller#docLatestPage', customParameter: 'utils', cacheControl: htmlCacheControl },
+            { method: 'GET',  path: '/doc/latest/api-reference', controller: 'unnodejs.org/unnodejs-controller#docLatestPage', customParameter: 'api-reference', cacheControl: htmlCacheControl },
+            { method: 'GET',  path: '/team', controller: 'unnodejs.org/unnodejs-controller#teamPage', cacheControl: htmlCacheControl },
+            { method: 'GET',  path: '/legal/copyright', controller: 'unnodejs.org/unnodejs-controller#copyrightPage', cacheControl: htmlCacheControl },
+            { method: 'GET',  path: '/legal/privacy-policy', controller: 'unnodejs.org/unnodejs-controller#privacyPolicyPage', cacheControl: htmlCacheControl },
+            { method: 'GET',  path: '/legal/terms-of-service', controller: 'unnodejs.org/unnodejs-controller#termsOfServicePage', cacheControl: htmlCacheControl },
 
             { path: '/assets',  static: path.resolve(__dirname, '..', 'dist', 'assets') },
         ]

@@ -19,6 +19,9 @@ const TerserJSPlugin            = require('terser-webpack-plugin')
 const HtmlWebpackPugPlugin      = require('html-webpack-pug-plugin')
 const OptimizeCssAssetsPlugin   = require('optimize-css-assets-webpack-plugin')
 
+const isProduction = process.env.NODE_ENV === 'production' ? true : false
+
+
 function getPugTemplates() {
     const templateFiles = glob.sync(path.resolve(__dirname, '..', 'frontend', 'views') + '/**/*.pug')
     return templateFiles.map(templateFile => {
@@ -62,9 +65,21 @@ module.exports = {
                     {
                         loader: 'file-loader',
                         options: {
+                            name: (resourcePath, resourceQuery) => {
+                                if(!isProduction) {
+                                    return '[name].[ext]'
+                                }
+
+                                return '[name].[ext]'
+
+                                // Enable this when I figure out how to load assets
+                                // from .pug files
+                                //return '[name]-[contenthash].[ext]'
+                            },
                             // Just load all images into assets/images
                             outputPath: (url, resourcePath, context) => {
-                                return `assets/${resourcePath.substr(resourcePath.lastIndexOf('frontend/images') + 9)}`
+                                const directory = path.dirname(`assets/${resourcePath.substr(resourcePath.lastIndexOf('frontend/images') + 9)}`)
+                                return path.join(directory, url)
                             }
                         },
                     },
@@ -81,7 +96,7 @@ module.exports = {
     },
 
     output: {
-        filename: 'assets/js/[name].bundle.js',
+        filename: 'assets/js/[name]-[contenthash].bundle.js',
         path: path.resolve(__dirname, '..', 'dist'),
         publicPath: '/'
     },
@@ -92,7 +107,7 @@ module.exports = {
         }),
 
         new MiniCssExtractPlugin({
-            filename: 'assets/css/[name].css',
+            filename: 'assets/css/[name]-[contenthash].css',
         }),
     ]
     .concat(htmlPlugins)
