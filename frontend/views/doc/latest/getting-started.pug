@@ -23,7 +23,7 @@ block content
           | back ends; a shared, re-usable component that takes care of all the mundane, low-level
           | tasks.
         p
-          | Note that project is currently in a 
+          | Note that the project is currently in a 
           strong pre-release stage
           | . As we work towards a 
           strong 1.0 
@@ -178,31 +178,21 @@ block content
               p.monospaced node server.js
         p Your output should look like:
         img.mb-4(src='/assets/images/static/doc/latest/unnode-hello-world-console-output.png' alt='Unnode.js logo')
-        p From this we can see that:
+        p From this we can already see that:
         ul.mb-6
           li
             | We are utilizing process clustering to take advantage of multi-core systems. A single instance of Node.js normally runs only in a single thread. Behind the scenes this uses the 
             a(href='https://nodejs.org/api/cluster.html' title='Node.js Cluster API') Node.js Cluster API
             | .
           li
-            | We are getting proper logging with:
-            ul
-              li Colorized console messages with ISO 8601 timestamps and syslog style log levels.
-              li JSON file logging to log/app.log since we set the 
-                span.monospaced APP_LOGFILE
-                |  environment variable.
-              li Seamless, centralized logging between master and worker processes.
-              li Some log messages appear twice, because they come from 2 different app processes. The process pid for each worker log message is the
-                span.monospaced [nnnn] 
-                | on a red background.
-              li
-                | Rollbar logging: By setting the 
-                span.monospaced ROLLBAR_ACCESS_TOKEN
-                |  and 
-                span.monospaced ROLLBAR_ENVIRONMENT
-                |  environment variables, our log messages of levels 
-                span.monospaced warning
-                |  and above would also get sent to Rollbar.
+            | We are getting proper console and file logging with ISO 8601 timestamps, syslog
+            | style log levels, and the possibility of logging to 
+            a(href='https://rollbar.com/' title='Rollbar - Error Tracking Software') Rollbar
+            |  by setting the 
+            span.monospaced ROLLBAR_ACCESS_TOKEN
+            |  and 
+            span.monospaced ROLLBAR_ENVIRONMENT
+            |  environment variables
           li
             | Our code is nicely modularized and separated into different files. Easy to maintain!
 
