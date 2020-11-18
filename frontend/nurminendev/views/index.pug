@@ -1,0 +1,13 @@
+extends layout/application.pug
+
+block pageTitle
+  title Nurminen.dev
+
+block content
+  section
+    .container.is-fullhd.has-text-centered
+      .content
+        p.mb-4.is-size-5
+          | Nurminen.dev
+        figure.image.is-square
+          img(src=require('../images/static/unnodejs-logo-big.png').default alt='Unnode.js logo')

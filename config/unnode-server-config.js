@@ -12,9 +12,7 @@ const htmlCacheControl = { noCache: true }
 module.exports = [
     {
         'vhost': [ 'localhost', 'unnodejs.org' ],
-        'viewEngine': 'pug',
-        'viewsPath': path.resolve(__dirname, '..', 'dist', 'views'),
-        'serveFavicon': path.resolve(__dirname, '..', 'dist', 'assets', 'images', 'icons', 'favicon.ico'),
+        'serveFavicon': path.resolve(__dirname, '..', 'dist', 'unnodejs', 'images', 'icons', 'favicon.ico'),
         'secureContext': {
             'key': process.env.UNNODE_SERVER_SECURE_DEFAULT_KEY,
             'cert': process.env.UNNODE_SERVER_SECURE_DEFAULT_CERT
@@ -44,7 +42,9 @@ module.exports = [
             { method: 'GET',  path: '/legal/privacy-policy', controller: 'unnodejs.org/unnodejs-controller#privacyPolicyPage', cacheControl: htmlCacheControl },
             { method: 'GET',  path: '/legal/terms-of-service', controller: 'unnodejs.org/unnodejs-controller#termsOfServicePage', cacheControl: htmlCacheControl },
 
-            { path: '/assets',  static: path.resolve(__dirname, '..', 'dist', 'assets') },
+            { path: '/css',  static: path.resolve(__dirname, '..', 'dist', 'css') },
+            { path: '/js',  static: path.resolve(__dirname, '..', 'dist', 'js') },
+            { path: '/images',  static: path.resolve(__dirname, '..', 'dist', 'unnodejs', 'images') },
         ]
     },
     {

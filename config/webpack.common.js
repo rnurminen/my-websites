@@ -60,26 +60,45 @@ module.exports = {
                 ],
             },
             {
+                test: /\.pug$/,
+                use: [
+                    {
+                        loader: 'pug-loader',
+                        options: {
+                            pretty: true
+                        }
+                    }
+                ]
+            },
+            {
                 test: /\.(png|jpe?g|svg|ico)$/i,
                 use: [
                     {
                         loader: 'file-loader',
                         options: {
                             name: (resourcePath, resourceQuery) => {
-                                if(!isProduction) {
+                                const filename = path.basename(resourcePath)
+
+                                if(filename === 'favicon.ico') {
+                                    // No hash for favicon.ico
                                     return '[name].[ext]'
                                 }
 
-                                return '[name].[ext]'
-
-                                // Enable this when I figure out how to load assets
-                                // from .pug files
-                                //return '[name]-[contenthash].[ext]'
+                                return '[name]-[contenthash].[ext]'
                             },
-                            // Just load all images into assets/images
                             outputPath: (url, resourcePath, context) => {
-                                const directory = path.dirname(`assets/${resourcePath.substr(resourcePath.lastIndexOf('frontend/images') + 9)}`)
-                                return path.join(directory, url)
+                                // Strip /frontend/ from path and place into dist/
+                                const outputPath = resourcePath.substr(resourcePath.lastIndexOf('/frontend/') + 10)
+                                const outputDir  = path.dirname(outputPath)
+                                return path.join(outputDir, url)
+                            },
+                            publicPath: (url, resourcePath, context) => {
+                                // Strip /frontend/ from path
+                                let outputPath = resourcePath.substr(resourcePath.lastIndexOf('/frontend/') + 10)
+                                // Strip first directory
+                                outputPath = outputPath.substr(outputPath.indexOf('/'))
+                                const publicPath = path.dirname(outputPath)
+                                return path.join(publicPath, url)
                             }
                         },
                     },
@@ -91,12 +110,19 @@ module.exports = {
         ]
     },
 
+    resolve: {
+        alias: {
+            FRONTEND: path.resolve(__dirname, '..', 'frontend')
+        }
+    },
+
     entry: {
-        app: './frontend/src/app.js'
+        unnodejs: './frontend/unnodejs/src/unnodejs.js',
+        nurminendev: './frontend/nurminendev/src/nurminendev.js'
     },
 
     output: {
-        filename: 'assets/js/[name]-[contenthash].bundle.js',
+        filename: 'js/[name]-[contenthash].bundle.js',
         path: path.resolve(__dirname, '..', 'dist'),
         publicPath: '/'
     },
@@ -107,11 +133,33 @@ module.exports = {
         }),
 
         new MiniCssExtractPlugin({
-            filename: 'assets/css/[name]-[contenthash].css',
+            filename: 'css/[name]-[contenthash].bundle.css'
         }),
-    ]
-    .concat(htmlPlugins)
-    .concat(new HtmlWebpackPugPlugin()),
+
+        new HtmlWebpackPlugin({
+            template: path.resolve(__dirname, '..', 'frontend', 'unnodejs', 'views', 'index.pug'),
+            filename: './unnodejs/views/index.html',
+            chunks: [ 'unnodejs' ],
+            minify: false
+        }),
+
+        new HtmlWebpackPlugin({
+            template: path.resolve(__dirname, '..', 'frontend', 'unnodejs', 'views', 'doc', 'index.pug'),
+            filename: './unnodejs/views/doc/index.html',
+            chunks: [ 'unnodejs' ],
+            minify: false
+        }),
+
+        new HtmlWebpackPlugin({
+            template: path.resolve(__dirname, '..', 'frontend', 'nurminendev', 'views', 'index.pug'),
+            filename: './nurminendev/views/index.html',
+            chunks: [ 'nurminendev' ],
+            minify: false
+        }),
+
+    ],
+    //.concat(htmlPlugins)
+    //.concat(new HtmlWebpackPugPlugin()),
 
     optimization: {
         splitChunks: {

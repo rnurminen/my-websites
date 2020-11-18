@@ -31,6 +31,7 @@ const unUtils   = require('unnode').utils
 
 
 class UnnodejsOrgController {
+    _viewsDir = path.resolve(__dirname, '..', '..', 'dist', 'unnodejs', 'views')
     _copyrightStartYear = 2020
 
 
@@ -40,7 +41,7 @@ class UnnodejsOrgController {
 
 
     index(_, req, res) {
-        res.render('index', Object.assign({ }, this._getDefaultPageAttribs()))
+        res.sendFile(path.join(this._viewsDir, 'index.html'))
     }
 
     docLatestPage(page, req, res) {

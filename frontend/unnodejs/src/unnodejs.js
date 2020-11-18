@@ -41,9 +41,12 @@ import * as zenscroll from 'zenscroll/zenscroll-min'
 import hljs from 'highlight.js/lib/core'
 import javascript from 'highlight.js/lib/languages/javascript'
 
+/*
 require.context('../images/static', true, /\.(png|jpe?g|svg)$/)
 require.context('../images/icons', true, /\.(png|jpe?g|ico|svg)$/)
+*/
 
+require('FRONTEND/unnodejs/images/icons/favicon.ico')
 
 //
 // App wide JS

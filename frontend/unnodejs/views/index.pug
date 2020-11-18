@@ -1,4 +1,4 @@
-extends layout/application.pug
+extends layout/_application.pug
 
 block pageTitle
   title Unnode.js - A Node.js back end framework
@@ -7,13 +7,13 @@ block content
   section#frontpage.hero.is-fullheight.header-image
     .hero-head
       - const isFrontPage = true
-      include shared/navbar.pug
+      include shared/_navbar.pug
     .hero-body
       .container.has-text-centered.has-text-white
         .columns.is-vcentered
           .column.is-5
             figure.image.is-square
-              img(src='/assets/images/static/unnodejs-logo-big.png' alt='Unnode.js logo')
+              img(src=require('FRONTEND/unnodejs/images/static/unnodejs-logo-big.png').default alt='Unnode.js logo')
           .column.is-6.is-offset-1
             h1.title.is-2.has-text-grey-lighter.mb-6
               | A Node.js back end framework
