@@ -22,12 +22,21 @@ html(lang="en")
     meta(name='msapplication-TileImage' content=require('FRONTEND/unnodejs/images/icons/mstile-310x310.png').default)
     meta(name='theme-color' content='#ffffff')
 
+    - const siteDescription = "Unnode.js is a framework that makes creating Node.js back ends easy. It provides you with process clustering, proper logging, web backend abstraction and vhosts (domain-based routing)"
+
     meta(property='og:title' content=pageTitle)
-    meta(property='og:description' content="Unnode.js is a framework that makes creating Node.js back ends easy. It provides you with process clustering, proper logging, web backend abstraction and vhosts with per-vhost TLS.")
+    meta(property='og:description' content=siteDescription)
     meta(property='og:url' content=pageCanonical)
     - const ogImageUrl = 'https://unnodejs.org' + require('FRONTEND/unnodejs/images/social/fb-og-image.png').default
     meta(property='og:image' content=ogImageUrl)
     meta(property='og:type' content="website")
+
+    meta(name='twitter:title' content=pageTitle)
+    meta(name='twitter:description' content=siteDescription)
+    - const twitterCardImageUrl = 'https://unnodejs.org' + require('FRONTEND/unnodejs/images/static/unnodejs-logo-big.png').default
+    meta(name='twitter:image' content=twitterCardImageUrl)
+    meta(name='twitter:card' content='summary_large_image')
+
 
   body
     #app
