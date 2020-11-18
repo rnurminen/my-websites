@@ -46,26 +46,26 @@ class UnnodejsOrgController {
 
     docLatestPage(page, req, res) {
         if(page) {
-            res.render(`doc/latest/${page}`, Object.assign({ }, this._getDefaultPageAttribs()))
+            res.sendFile(path.join(this._viewsDir, 'doc', 'latest', `${page}.html`))
         } else {
-            res.render('doc/index', Object.assign({ }, this._getDefaultPageAttribs()))
+            res.sendFile(path.join(this._viewsDir, 'doc', 'latest', 'index.html'))
         }
     }
 
     teamPage(_, req, res) {
-        res.render('team', Object.assign({ }, this._getDefaultPageAttribs()))
+        res.sendFile(path.join(this._viewsDir, 'team.html'))
     }
 
     copyrightPage(_, req, res) {
-        res.render('copyright', Object.assign({ }, this._getDefaultPageAttribs()))
+        res.sendFile(path.join(this._viewsDir, 'copyright.html'))
     }
 
     privacyPolicyPage(_, req, res) {
-        res.render('privacy-policy', Object.assign({ }, this._getDefaultPageAttribs()))
+        res.sendFile(path.join(this._viewsDir, 'privacy-policy.html'))
     }
 
     termsOfServicePage(_, req, res) {
-        res.render('terms-of-service', Object.assign({ }, this._getDefaultPageAttribs()))
+        res.sendFile(path.join(this._viewsDir, 'terms-of-service.html'))
     }
 
     redirectToNonWww(_, req, res) {

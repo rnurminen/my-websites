@@ -16,25 +16,33 @@ const { CleanWebpackPlugin }    = require('clean-webpack-plugin')
 const HtmlWebpackPlugin         = require('html-webpack-plugin')
 const MiniCssExtractPlugin      = require('mini-css-extract-plugin')
 const TerserJSPlugin            = require('terser-webpack-plugin')
-const HtmlWebpackPugPlugin      = require('html-webpack-pug-plugin')
 const OptimizeCssAssetsPlugin   = require('optimize-css-assets-webpack-plugin')
 
-const isProduction = process.env.NODE_ENV === 'production' ? true : false
 
+function viewsToHtml(site) {
+    let templateFiles = glob.sync(path.resolve(__dirname, '..', 'frontend', site, 'views') + '/**/*.pug')
 
-function getPugTemplates() {
-    const templateFiles = glob.sync(path.resolve(__dirname, '..', 'frontend', 'views') + '/**/*.pug')
+    // Filter out .pug templates that start with underscore (_)
+    templateFiles = templateFiles.filter(templateFile => {
+        if(path.basename(templateFile).charAt(0) === '_') {
+            return false
+        }
+
+        return true
+    })
+
     return templateFiles.map(templateFile => {
-        const outTemplate = `./${templateFile.substr(templateFile.lastIndexOf('views'))}`
+        let outTemplate = `${site}${templateFile.substr(templateFile.lastIndexOf('/views/'))}`
+        outTemplate = outTemplate.replace(/\.pug$/, '.html')
 
         return new HtmlWebpackPlugin({
             template: templateFile,
-            filename: outTemplate
+            filename: outTemplate,
+            chunks: [ site ],
+            minify: false
         })
     })
 }
-
-const htmlPlugins = getPugTemplates()
 
 
 module.exports = {
@@ -135,31 +143,9 @@ module.exports = {
         new MiniCssExtractPlugin({
             filename: 'css/[name]-[contenthash].bundle.css'
         }),
-
-        new HtmlWebpackPlugin({
-            template: path.resolve(__dirname, '..', 'frontend', 'unnodejs', 'views', 'index.pug'),
-            filename: './unnodejs/views/index.html',
-            chunks: [ 'unnodejs' ],
-            minify: false
-        }),
-
-        new HtmlWebpackPlugin({
-            template: path.resolve(__dirname, '..', 'frontend', 'unnodejs', 'views', 'doc', 'index.pug'),
-            filename: './unnodejs/views/doc/index.html',
-            chunks: [ 'unnodejs' ],
-            minify: false
-        }),
-
-        new HtmlWebpackPlugin({
-            template: path.resolve(__dirname, '..', 'frontend', 'nurminendev', 'views', 'index.pug'),
-            filename: './nurminendev/views/index.html',
-            chunks: [ 'nurminendev' ],
-            minify: false
-        }),
-
-    ],
-    //.concat(htmlPlugins)
-    //.concat(new HtmlWebpackPugPlugin()),
+    ]
+    .concat(viewsToHtml('unnodejs'))
+    .concat(viewsToHtml('nurminendev')),
 
     optimization: {
         splitChunks: {

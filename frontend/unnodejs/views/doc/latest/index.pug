@@ -1,10 +1,10 @@
-extends ../layout/_application.pug
+extends ../../layout/_application.pug
 
 block pageTitle
   title Documentation - Unnode.js
 
 block content
-  include ../shared/_navbar.pug
+  include ../../shared/_navbar.pug
 
   section.hero.header-image.pt-6.pb-6
     .hero-body
@@ -26,8 +26,15 @@ block content
             a(href='/doc/latest/process-clustering' title='Documentation: Process clustering')
               | Process clustering
           li
+            a(href='/doc/latest/vhosts' title='Documentation: Vhosts')
+              | Vhosts
+          li
             a(href='/doc/latest/logging' title='Documentation: Logging')
               | Logging
           li
             a(href='/doc/latest/utils' title='Documentation: Utils')
               | Utils
+        ul
+          li
+            a(href='/doc/latest/api-reference' title='Documentation: API reference')
+              | API reference
