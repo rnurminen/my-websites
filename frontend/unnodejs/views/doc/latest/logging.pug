@@ -1,7 +1,8 @@
 extends ../../layout/_application.pug
 
-block pageTitle
-  title Logging - Unnode.js
+block pageAttributes
+  - const pageTitle = 'Logging - Unnode.js'
+  - const pageCanonical = 'https://unnodejs.org/doc/latest/logging'
 
 block content
   include ../../shared/_navbar.pug

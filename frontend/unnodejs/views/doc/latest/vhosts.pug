@@ -1,7 +1,8 @@
 extends ../../layout/_application.pug
 
-block pageTitle
-  title Vhosts - Unnode.js
+block pageAttributes
+  - const pageTitle = 'Vhosts - Unnode.js'
+  - const pageCanonical = 'https://unnodejs.org/doc/latest/vhosts'
 
 block content
   include ../../shared/_navbar.pug

@@ -1,7 +1,8 @@
 extends ../../layout/_application.pug
 
-block pageTitle
-  title Getting started - Unnode.js
+block pageAttributes
+  - const pageTitle = 'Getting started - Unnode.js'
+  - const pageCanonical = 'https://unnodejs.org/doc/latest/getting-started'
 
 block content
   include ../../shared/_navbar.pug

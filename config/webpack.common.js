@@ -18,6 +18,7 @@ const MiniCssExtractPlugin      = require('mini-css-extract-plugin')
 const TerserJSPlugin            = require('terser-webpack-plugin')
 const OptimizeCssAssetsPlugin   = require('optimize-css-assets-webpack-plugin')
 const HtmlBeautifyPlugin        = require('@nurminen/html-beautify-webpack-plugin')
+const VueLoaderPlugin           = require('vue-loader/lib/plugin')
 
 
 function viewsToHtml(site) {
@@ -38,7 +39,7 @@ function viewsToHtml(site) {
 
         page = path.basename(templateFile).replace(/\.pug$/, '')
 
-        const options = {
+        let options = {
             template: templateFile,
             filename: outTemplate,
             chunks: [ site ],
@@ -47,6 +48,8 @@ function viewsToHtml(site) {
 
         if(site === 'unnodejs' && page === 'getting-started') {
             options.chunks.push('codehighlight')
+        } else if(site === 'unnodejs' && templateFile.includes('unnodejs/views/index.pug')) {
+            options.isFrontPage = true
         }
 
         return new HtmlWebpackPlugin(options)
@@ -58,6 +61,10 @@ module.exports = {
 
     module: {
         rules: [
+            {
+                test: /\.vue$/,
+                loader: 'vue-loader'
+            },
             {
                 test: /\.m?js$/,
                 exclude: /(node_modules)/,
@@ -82,7 +89,8 @@ module.exports = {
                     {
                         loader: 'pug-loader',
                         options: {
-                            pretty: true
+                            pretty: true,
+                            self: true
                         }
                     }
                 ]
@@ -154,6 +162,8 @@ module.exports = {
         new MiniCssExtractPlugin({
             filename: 'css/[name]-[contenthash].bundle.css'
         }),
+
+        new VueLoaderPlugin(),
     ]
 
     .concat(viewsToHtml('unnodejs'))

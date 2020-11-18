@@ -1,7 +1,8 @@
 extends ../../layout/_application.pug
 
-block pageTitle
-  title Configuration - Unnode.js
+block pageAttributes
+  - const pageTitle = 'Configuration - Unnode.js'
+  - const pageCanonical = 'https://unnodejs.org/doc/latest/configuration'
 
 block content
   include ../../shared/_navbar.pug

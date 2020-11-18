@@ -35,6 +35,8 @@
 //
 import '../css/styles.scss'
 
+import Vue from 'vue/dist/vue.esm.js'
+
 import * as zenscroll from 'zenscroll'
 
 require('FRONTEND/unnodejs/images/icons/favicon.ico')
@@ -42,6 +44,22 @@ require('FRONTEND/unnodejs/images/icons/favicon.ico')
 //
 // App wide JS
 //
+new Vue({
+    el: '#app',
+    data: {
+        'pageAttributes': {}
+    },
+    created() {
+        fetch('/api/pageattributes')
+            .then(res => res.json())
+            .then(res => {
+                this.pageAttributes = res
+            })
+            .catch(error => { })
+    }
+})
+
+
 
 const zenscrollDefaultDuration = 400 // ms
 const zenscrollEdgeOffset = 25 // px
@@ -79,3 +97,4 @@ document.addEventListener('DOMContentLoaded', () => {
     }
 
 })
+

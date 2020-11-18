@@ -1,7 +1,8 @@
 extends ../../layout/_application.pug
 
-block pageTitle
-  title API reference
+block pageAttributes
+  - const pageTitle = 'API reference'
+  - const pageCanonical = 'https://unnodejs.org/doc/latest/api-reference'
 
 block content
   include ../../shared/_navbar.pug

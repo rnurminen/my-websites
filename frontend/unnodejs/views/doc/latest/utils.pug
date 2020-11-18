@@ -1,7 +1,8 @@
 extends ../../layout/_application.pug
 
-block pageTitle
-  title Utils
+block pageAttributes
+  - const pageTitle = 'Utils'
+  - const pageCanonical = 'https://unnodejs.org/doc/latest/utils'
 
 block content
   include ../../shared/_navbar.pug

@@ -1,3 +1,5 @@
+block pageAttributes
+
 doctype html
 html(lang="en")
   head
@@ -7,8 +9,10 @@ html(lang="en")
     meta(name='viewport' content='width=device-width, initial-scale=1')
   
     link(rel='home' href='https://unnodejs.org')
+    link(rel='canonical' href=pageCanonical)
+
     
-    block pageTitle
+    title= pageTitle
 
     link(rel='apple-touch-icon' sizes='180x180' href=require('FRONTEND/unnodejs/images/icons/apple-touch-icon.png').default)
     link(rel='icon' type='image/png' sizes='32x32' href=require('FRONTEND/unnodejs/images/icons/favicon-32x32.png').default)
@@ -18,28 +22,35 @@ html(lang="en")
     meta(name='msapplication-TileImage' content=require('FRONTEND/unnodejs/images/icons/mstile-310x310.png').default)
     meta(name='theme-color' content='#ffffff')
 
-  body
-    block content
+    meta(property='og:title' content=pageTitle)
+    meta(property='og:description' content="A Node.js back end framework.")
+    meta(property='og:url' content=pageCanonical)
+    meta(property='og:image' content=require('FRONTEND/unnodejs/images/social/fb-og-image.png').default)
 
-    footer.footer.is-size-7
-      .container.is-fullhd.has-text-centered
-        p.mb-5
-          a(href='/legal/copyright' title='Website content copyright') Copyright
-          |  &copy; #{copyrightYearsStr} 
-          a(href='https://ricforge.com' title='RicForge - Open source engineering.') RicForge
-        p.mb-5
-          | RicForge is a 
-          a(href='https://nurminen.dev' title='Nurminen Development') Nurminen Development 
-          | organization
-        p.mb-5
-          a(href='https://ricforge.com' title='RicForge - Open source engineering.' class='mr-6')
-            img(src=require('FRONTEND/unnodejs/images/static/ricforge-logo-small.png').default) 
-          a(href='https://nurminen.dev' title='Nurminen Development')
-            img(src=require('FRONTEND/unnodejs/images/static/nurminendev-logo-small.png').default)
-        p.mb-5
-          a(href='/legal/privacy-policy' title='Privacy policy') Privacy policy
-          |  &ndash; 
-          a(href='/legal/terms-of-service' title='Terms of Service') Terms of Service
-        p
-          a(title='Realtime application protection' href='https://www.sqreen.com/?utm_source=badge')
-            img(src=require('FRONTEND/unnodejs/images/static/sqreen-light-badge.svg').default alt='Sqreen | Runtime Application Protection') 
+  body
+    #app
+
+      block content
+
+      footer#footer.footer.is-size-7
+        .container.is-fullhd.has-text-centered
+          p.mb-5
+            a(href='/legal/copyright' title='Website content copyright') Copyright
+            |  &copy; {{ pageAttributes.copyrightYearsStr }} 
+            a(href='https://ricforge.com' title='RicForge - Open source engineering.') RicForge
+          p.mb-5
+            | RicForge is a 
+            a(href='https://nurminen.dev' title='Nurminen Development') Nurminen Development 
+            | organization
+          p.mb-5
+            a(href='https://ricforge.com' title='RicForge - Open source engineering.' class='mr-6')
+              img(src=require('FRONTEND/unnodejs/images/static/ricforge-logo-small.png').default) 
+            a(href='https://nurminen.dev' title='Nurminen Development')
+              img(src=require('FRONTEND/unnodejs/images/static/nurminendev-logo-small.png').default)
+          p.mb-5
+            a(href='/legal/privacy-policy' title='Privacy policy') Privacy policy
+            |  &ndash; 
+            a(href='/legal/terms-of-service' title='Terms of Service') Terms of Service
+          p
+            a(title='Realtime application protection' href='https://www.sqreen.com/?utm_source=badge')
+              img(src=require('FRONTEND/unnodejs/images/static/sqreen-light-badge.svg').default alt='Sqreen | Runtime Application Protection') 

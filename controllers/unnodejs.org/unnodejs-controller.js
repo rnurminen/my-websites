@@ -75,13 +75,12 @@ class UnnodejsOrgController {
     }
 
 
-    _getDefaultPageAttribs() {
+    api_pageAttributes(_, req, res) {
         const copyrightYearsStr = unUtils.getCopyrightYears(this._copyrightStartYear)
 
-        return {
-            'copyrightYearsStr': copyrightYearsStr
-        }
+        res.send({ 'copyrightYearsStr': copyrightYearsStr })
     }
+
 }
 
 

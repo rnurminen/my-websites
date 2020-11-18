@@ -1,12 +1,12 @@
 extends layout/_application.pug
 
-block pageTitle
-  title Unnode.js - A Node.js back end framework
+block pageAttributes
+  - const pageTitle = 'Unnode.js - A Node.js back end framework'
+  - const pageCanonical = 'https://unnodejs.org'
 
 block content
   section#frontpage.hero.is-fullheight.header-image
     .hero-head
-      - const isFrontPage = true
       include shared/_navbar.pug
     .hero-body
       .container.has-text-centered.has-text-white

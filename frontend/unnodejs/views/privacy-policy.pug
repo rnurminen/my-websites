@@ -1,7 +1,8 @@
 extends layout/_application.pug
 
-block pageTitle
-  title Privacy policy - Unnode.js
+block pageAttributes
+  - const pageTitle = 'Privacy policy - Unnode.js'
+  - const pageCanonical = 'https://unnodejs.org/legal/privacy-policy'
 
 block content
   include shared/_navbar.pug

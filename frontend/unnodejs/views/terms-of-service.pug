@@ -1,7 +1,8 @@
 extends layout/_application.pug
 
-block pageTitle
-  title Terms of Service - Unnode.js
+block pageAttributes
+  - const pageTitle = 'Terms of Service - Unnode.js'
+  - const pageCanonical = 'https://unnodejs.org/legal/terms-of-service'
 
 block content
   include shared/_navbar.pug
@@ -57,7 +58,7 @@ block content
         p
           | You may adapt elements and methods of the Site's CSS in your own projects, but 
           | the unique combination of images, colors, sizes, typography, and positioning 
-          | (&quot;the design&quot;) is copyright &copy; #{copyrightYearsStr} RicForge and may not be 
+          | (&quot;the design&quot;) is copyright &copy; {{copyrightYearsStr}} RicForge and may not be 
           | reproduced.
         p
           | The software provided on the Site (&quot;Unnode.js&quot;) is licensed under the 
