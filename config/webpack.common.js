@@ -17,6 +17,7 @@ const HtmlWebpackPlugin         = require('html-webpack-plugin')
 const MiniCssExtractPlugin      = require('mini-css-extract-plugin')
 const TerserJSPlugin            = require('terser-webpack-plugin')
 const OptimizeCssAssetsPlugin   = require('optimize-css-assets-webpack-plugin')
+const HtmlBeautifyPlugin        = require('@nurminen/html-beautify-webpack-plugin')
 
 
 function viewsToHtml(site) {
@@ -35,12 +36,20 @@ function viewsToHtml(site) {
         let outTemplate = `${site}${templateFile.substr(templateFile.lastIndexOf('/views/'))}`
         outTemplate = outTemplate.replace(/\.pug$/, '.html')
 
-        return new HtmlWebpackPlugin({
+        page = path.basename(templateFile).replace(/\.pug$/, '')
+
+        const options = {
             template: templateFile,
             filename: outTemplate,
             chunks: [ site ],
             minify: false
-        })
+        }
+
+        if(site === 'unnodejs' && page === 'getting-started') {
+            options.chunks.push('codehighlight')
+        }
+
+        return new HtmlWebpackPlugin(options)
     })
 }
 
@@ -125,8 +134,10 @@ module.exports = {
     },
 
     entry: {
-        unnodejs: './frontend/unnodejs/src/unnodejs.js',
-        nurminendev: './frontend/nurminendev/src/nurminendev.js'
+        unnodejs: './frontend/unnodejs/js/unnodejs.js',
+        nurminendev: './frontend/nurminendev/js/nurminendev.js',
+
+        codehighlight: './frontend/shared/js/codehighlight.js'
     },
 
     output: {
@@ -144,8 +155,21 @@ module.exports = {
             filename: 'css/[name]-[contenthash].bundle.css'
         }),
     ]
+
     .concat(viewsToHtml('unnodejs'))
-    .concat(viewsToHtml('nurminendev')),
+    .concat(viewsToHtml('nurminendev'))
+
+    .concat(new HtmlBeautifyPlugin({
+        config: {
+            html: {
+                end_with_newline: true,
+                indent_size: 2,
+                indent_with_tabs: false,
+                indent_inner_html: true,
+                extra_liners: ''
+            }
+        },
+    })),
 
     optimization: {
         splitChunks: {

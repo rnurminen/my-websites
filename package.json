@@ -1,11 +1,10 @@
 {
     "name": "my-websites",
-    "description": "The Websites",
+    "description": "My websites, powered by Unnode.js",
     "version": "1.0.0",
     "author": "Riku Nurminen <riku@nurminen.dev>",
     "homepage": "https://www.nurminen.dev",
-    "//": "UNLICENSED = All rights reserved",
-    "license": "UNLICENSED",
+    "license": "MIT",
     "main": "server.js",
     "scripts": {
         "start": "node server.js",
@@ -25,11 +24,13 @@
     "devDependencies": {
         "@babel/core": "^7.12.3",
         "@babel/preset-env": "^7.12.1",
+        "@nurminen/html-beautify-webpack-plugin": "^1.1.3",
         "babel-loader": "^8.2.1",
         "clean-webpack-plugin": "^3.0.0",
         "css-loader": "^5.0.1",
         "file-loader": "^6.2.0",
         "glob": "^7.1.6",
+        "html-loader": "^1.3.2",
         "html-webpack-plugin": "^4.5.0",
         "mini-css-extract-plugin": "^1.3.1",
         "optimize-css-assets-webpack-plugin": "^5.0.4",
@@ -39,7 +40,7 @@
         "sass-loader": "^10.1.0",
         "terser-webpack-plugin": "^5.0.3",
         "url-loader": "^4.1.1",
-        "webpack": "^5.5.0",
+        "webpack": "^5.5.1",
         "webpack-cli": "^4.2.0",
         "webpack-dev-middleware": "^4.0.2",
         "webpack-merge": "^5.4.0"

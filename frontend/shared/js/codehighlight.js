@@ -25,25 +25,17 @@
 //
 
 
-const path   = require('path')
-const logger = require('unnode').workerLogger
+//
+// highlight.js for pages that need code highlighting
+//
 
-const moment = require('moment')
+import hljs from 'highlight.js/lib/core'
+import javascript from 'highlight.js/lib/languages/javascript'
 
+import 'highlight.js/styles/monokai-sublime.css';
 
-class IndexController {
-    _viewsDir = path.resolve(__dirname, '..', '..', 'dist', 'nurminendev', 'views')
+hljs.registerLanguage('javascript', javascript)
 
-
-    constructor() {
-        this.testVar = 0
-    }
-
-    index(_, req, res) {
-        res.sendFile(path.join(this._viewsDir, 'index.html'))
-    }
-
-}
-
-
-module.exports = new IndexController()
+document.addEventListener('DOMContentLoaded', () => {
+    hljs.initHighlightingOnLoad()
+})

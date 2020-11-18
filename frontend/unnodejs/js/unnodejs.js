@@ -34,17 +34,10 @@
 // Load assets
 //
 import '../css/styles.scss'
-import 'highlight.js/styles/monokai-sublime.css';
 
-import hljs from 'highlight.js/lib/core'
-import javascript from 'highlight.js/lib/languages/javascript'
+import * as zenscroll from 'zenscroll'
 
-import * as _ from 'lodash'
-
-/*
-require.context('../images/static', true, /\.(png|jpe?g|svg)$/)
-require.context('../images/icons', true, /\.(png|jpe?g|ico|svg)$/)
-*/
+require('FRONTEND/unnodejs/images/icons/favicon.ico')
 
 //
 // App wide JS
@@ -54,8 +47,6 @@ const zenscrollDefaultDuration = 400 // ms
 const zenscrollEdgeOffset = 25 // px
 zenscroll.setup(zenscrollDefaultDuration, zenscrollEdgeOffset)
 
-
-hljs.registerLanguage('javascript', javascript)
 
 document.addEventListener('DOMContentLoaded', () => {
     const navbarBurgers = Array.prototype.slice.call(document.querySelectorAll('.navbar-burger'), 0);
@@ -87,8 +78,4 @@ document.addEventListener('DOMContentLoaded', () => {
         }
     }
 
-    hljs.initHighlightingOnLoad()
-
 })
-
-

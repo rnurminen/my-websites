@@ -66,6 +66,10 @@ module.exports = [
         },
         'routes': [
             { method: 'GET', path: '/', controller: 'nurminen.dev/nurminendev-controller#index' },
+
+            { path: '/css',  static: path.resolve(__dirname, '..', 'dist', 'css') },
+            { path: '/js',  static: path.resolve(__dirname, '..', 'dist', 'js') },
+            { path: '/images',  static: path.resolve(__dirname, '..', 'dist', 'nurminendev', 'images') },
         ]
     }
 ]

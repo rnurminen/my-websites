@@ -1,12 +1,12 @@
 # my-websites
 
-- https://www.nurminen.dev
-- https://www.ricforge.com
-- https://www.unnodejs.org
+- https://nurminen.dev
+- https://ricforge.com
+- https://unnodejs.org
 - https://en.rikunmediatuotanto.fi
 - https://vanhat.rikunmediatuotanto.fi
 
-Built using https://www.unnodejs.org
+All powered by https://unnodejs.org :)
 
 ## License
 
@@ -23,8 +23,6 @@ but the unique combination of images, colors, sizes, typography, and positioning
 **The MIT License (MIT)**
 
 Copyright (c) 2020 Riku Nurminen
-
-[https://www.nurminen.dev](https://www.nurminen.dev)
 
 Permission is hereby granted, free of charge, to any person obtaining a copy of this software and associated documentation files (the "Software"), to deal in the Software without restriction, including without limitation the rights to use, copy, modify, merge, publish, distribute, sublicense, and/or sell copies of the Software, and to permit persons to whom the Software is furnished to do so, subject to the following conditions:
 
