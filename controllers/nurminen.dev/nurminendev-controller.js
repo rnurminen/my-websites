@@ -25,25 +25,66 @@
 //
 
 
-const path   = require('path')
-const logger = require('unnode').workerLogger
+const path                  = require('path')
+const moment                = require('moment-timezone')
 
-const moment = require('moment')
+const logger                = require('unnode').workerLogger
+const unUtils               = require('unnode').utils
 
 
-class IndexController {
+class NurminenDevController {
     _viewsDir = path.resolve(__dirname, '..', '..', 'dist', 'nurminendev', 'views')
+    _copyrightStartYear = 2016
 
 
     constructor() {
         this.testVar = 0
     }
 
+
     index(_, req, res) {
         res.sendFile(path.join(this._viewsDir, 'index.html'))
+    }
+
+    aboutPage(_, req, res) {
+        res.sendFile(path.join(this._viewsDir, 'about.html'))
+    }
+
+    copyrightPage(_, req, res) {
+        res.sendFile(path.join(this._viewsDir, 'copyright.html'))
+    }
+
+    privacyPolicyPage(_, req, res) {
+        res.sendFile(path.join(this._viewsDir, 'privacy-policy.html'))
+    }
+
+    termsOfServicePage(_, req, res) {
+        res.sendFile(path.join(this._viewsDir, 'terms-of-service.html'))
+    }
+
+
+    api_pageAttributes(_, req, res) {
+        const copyrightYearsStr = unUtils.getCopyrightYears(this._copyrightStartYear)
+
+        const bookedUntil = moment().add(2, 'months').format('MMMM YYYY')
+
+        const rikuAgeInYears = moment().diff('1987-03-18', 'years')
+
+        res.send({
+            'copyrightYearsStr': copyrightYearsStr,
+            'bookedUntil': bookedUntil,
+            'rikuAgeInYears': rikuAgeInYears
+        })
+    }
+
+
+    redirectToNonWww(_, req, res) {
+        const protocol  = req.headers["x-forwarded-proto"] || req.protocol
+        const newHost   = req.get('host').slice(4)
+        return res.redirect(301, protocol + '://' + newHost + req.originalUrl)
     }
 
 }
 
 
-module.exports = new IndexController()
+module.exports = new NurminenDevController()

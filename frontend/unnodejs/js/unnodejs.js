@@ -41,6 +41,7 @@ import * as zenscroll from 'zenscroll'
 
 require('FRONTEND/unnodejs/images/icons/favicon.ico')
 
+
 //
 // App wide JS
 //
@@ -58,7 +59,6 @@ new Vue({
             .catch(error => { })
     }
 })
-
 
 
 const zenscrollDefaultDuration = 400 // ms
@@ -82,6 +82,7 @@ document.addEventListener('DOMContentLoaded', () => {
     const frontpageSection = document.querySelector('#frontpage')
 
     if(frontpageSection) {
+        console.log('test')
         window.onscroll = function () {
             // Change navbar background to white when page is scrolled
             const nav = document.getElementById('navbar')

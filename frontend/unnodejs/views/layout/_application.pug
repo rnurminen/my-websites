@@ -11,7 +11,8 @@ html(lang="en")
     link(rel='home' href='https://unnodejs.org')
     link(rel='canonical' href=pageCanonical)
 
-    
+    meta(name='robots' content='all')
+
     title= pageTitle
 
     link(rel='apple-touch-icon' sizes='180x180' href=require('FRONTEND/unnodejs/images/icons/apple-touch-icon.png').default)
@@ -42,7 +43,7 @@ html(lang="en")
 
       block content
 
-      footer#footer.footer.is-size-7
+      footer.footer.is-size-7
         .container.is-fullhd.has-text-centered
           p.mb-5
             a(href='/legal/copyright' title='Website content copyright') Copyright
@@ -61,6 +62,6 @@ html(lang="en")
             a(href='/legal/privacy-policy' title='Privacy policy') Privacy policy
             |  &ndash; 
             a(href='/legal/terms-of-service' title='Terms of Service') Terms of Service
-          p
+          p.mb-5
             a(title='Realtime application protection' href='https://www.sqreen.com/?utm_source=badge')
-              img(src=require('FRONTEND/unnodejs/images/static/sqreen-light-badge.svg').default alt='Sqreen | Runtime Application Protection') 
+              img(src=require('FRONTEND/shared/images/sqreen-light-badge.svg').default alt='[sqreen-badge]') 

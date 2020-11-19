@@ -1,19 +1,15 @@
 extends layout/_application.pug
 
 block pageAttributes
-  - const pageTitle = 'Privacy policy - Unnode.js'
-  - const pageCanonical = 'https://unnodejs.org/legal/privacy-policy'
+  - const pageTitle = 'Privacy policy - Nurminen Development'
+  - const pageCanonical = 'https://nurminen.dev/legal/copyright'
 
 block content
   include shared/_navbar.pug
 
-  section.hero.header-image.pt-6.pb-6
-    .hero-body
-      .container.is-fullhd.mt-6
-        h1.title.has-text-white
-          | Privacy policy
-
-  section
+  section.mb-4
+    .content
+      h2.title.is-size-2 Copyright
     .container.is-fullhd.mt-6.mb-5
       .content
         p.is-size-5

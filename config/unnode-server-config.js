@@ -12,7 +12,6 @@ const noCache = { noCache: true }
 module.exports = [
     {
         'vhost': [ 'localhost', 'unnodejs.org' ],
-        'serveFavicon': path.resolve(__dirname, '..', 'dist', 'unnodejs', 'images', 'icons', 'favicon.ico'),
         'secureContext': {
             'key': process.env.UNNODE_SERVER_SECURE_DEFAULT_KEY,
             'cert': process.env.UNNODE_SERVER_SECURE_DEFAULT_CERT
@@ -22,13 +21,15 @@ module.exports = [
                 directives: {
                     'default-src': ["'self'"],
                     'img-src': ["'self'", 'img.shields.io'],
-                    'style-src': ["'self'", 'fonts.googleapis.com'],
+                    'style-src': ["'self'", "'unsafe-inline'", 'fonts.googleapis.com'],
                     'font-src': ["'self'", 'fonts.gstatic.com'],
                     'script-src': ["'self'", "'unsafe-eval'"],
                     'object-src': ["'self'"],
                 }
             }
         },
+        'robotsTxt': "User-agent: *\nAllow: /",
+        'serveFavicon': path.resolve(__dirname, '..', 'dist', 'unnodejs', 'images', 'icons', 'favicon.ico'),
         'routes': [
             { method: 'GET',  path: '/', controller: 'unnodejs.org/unnodejs-controller#index', cacheControl: noCache },
             { method: 'GET',  path: '/doc/latest', controller: 'unnodejs.org/unnodejs-controller#docLatestPage', cacheControl: noCache },
@@ -47,6 +48,7 @@ module.exports = [
             { path: '/css',  static: path.resolve(__dirname, '..', 'dist', 'css') },
             { path: '/js',  static: path.resolve(__dirname, '..', 'dist', 'js') },
             { path: '/images',  static: path.resolve(__dirname, '..', 'dist', 'unnodejs', 'images') },
+            { path: '/shared/images',  static: path.resolve(__dirname, '..', 'dist', 'shared', 'images') },
 
             // API
             { method: 'GET',  path: '/api/pageattributes', controller: 'unnodejs.org/unnodejs-controller#api_pageAttributes', cacheControl: noCache },
@@ -64,17 +66,47 @@ module.exports = [
 
     },
     {
-        'vhost': [ 'nurminen.local', '*.nurminen.local' ],
+        'vhost': [ 'nurminen.local', 'nurminen.dev' ],
         'secureContext': {
             'key': process.env.UNNODE_NURMINEN_LOCAL_KEY,
             'cert': process.env.UNNODE_NURMINEN_LOCAL_CERT
         },
+        'helmetOptions': {
+            contentSecurityPolicy: {
+                directives: {
+                    'default-src': ["'self'"],
+                    'img-src': ["'self'"],
+                    'style-src': ["'self'", "'unsafe-inline'", 'fonts.googleapis.com'],
+                    'font-src': ["'self'", 'fonts.gstatic.com'],
+                    'script-src': ["'self'", "'unsafe-eval'"],
+                    'object-src': ["'self'"],
+                }
+            }
+        },
+        'robotsTxt': "User-agent: *\nAllow: /",
+        'serveFavicon': path.resolve(__dirname, '..', 'dist', 'nurminendev', 'images', 'icons', 'favicon.ico'),
         'routes': [
             { method: 'GET', path: '/', controller: 'nurminen.dev/nurminendev-controller#index' },
+            { method: 'GET', path: '/about', controller: 'nurminen.dev/nurminendev-controller#aboutPage' },
+            { method: 'GET',  path: '/legal/copyright', controller: 'nurminen.dev/nurminendev-controller#copyrightPage', cacheControl: noCache },
+            { method: 'GET',  path: '/legal/privacy-policy', controller: 'nurminen.dev/nurminendev-controller#privacyPolicyPage', cacheControl: noCache },
+            { method: 'GET',  path: '/legal/terms-of-service', controller: 'nurminen.dev/nurminendev-controller#termsOfServicePage', cacheControl: noCache },
 
             { path: '/css',  static: path.resolve(__dirname, '..', 'dist', 'css') },
             { path: '/js',  static: path.resolve(__dirname, '..', 'dist', 'js') },
             { path: '/images',  static: path.resolve(__dirname, '..', 'dist', 'nurminendev', 'images') },
+            { path: '/shared/images',  static: path.resolve(__dirname, '..', 'dist', 'shared', 'images') },
+            { path: '/pdf',  static: path.resolve(__dirname, '..', 'dist', 'nurminendev', 'pdf') },
+
+
+            // API
+            { method: 'GET',  path: '/api/pageattributes', controller: 'nurminen.dev/nurminendev-controller#api_pageAttributes', cacheControl: noCache },
+        ]
+    },
+    {
+        'vhost': [ 'www.nurminen.dev' ],
+        'routes': [
+            { method: 'GET',  path: '*', controller: 'nurminen.dev/nurminendev-controller#redirectToNonWww' }
         ]
     }
 ]

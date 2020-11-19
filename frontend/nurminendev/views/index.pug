@@ -1,13 +1,141 @@
 extends layout/_application.pug
 
-block pageTitle
-  title Nurminen.dev
+block pageAttributes
+  - const pageTitle = 'Nurminen Development - Software engineering'
+  - const pageCanonical = 'https://nurminen.dev'
 
 block content
-  section
-    .container.is-fullhd.has-text-centered
-      .content
-        p.mb-4.is-size-5
-          | Nurminen.dev
-        figure.image.is-square
-          img(src=require('../images/static/unnodejs-logo-big.png').default alt='Unnode.js logo')
+  include shared/_navbar.pug
+
+  section.mb-4
+    .content
+      .columns
+        .column.is-three-quarters
+          h2.title.is-size-2 Riku Nurminen
+          h3.subtitle.is-size-5 Software developer
+          p.mb-4.has-text-weight-semibold
+            | Main skills: Full-stack web development, Node.js & Ruby on Rails
+          p.mb-4
+            | My main expertise is on the back end side of things, but I can also work on the front end
+            | with HTML/CSS/Vue.js/jQuery. I have no experience with React and Angular, and I'd like to 
+            span.is-italic keep it that way
+            | . My CSS framework of choice (at
+            | the moment) is Bulma.
+          p.mb-4
+            | Other things I can manage: REST APIs and API design, relational databases, technical documentation, Heroku, Git, AWS, webpack, Jelastic, Cloudflare, gRPC, Linux/UNIX server installs & admin... oh, and getting the Job Done of course :)
+          p.mb-4
+            | Special expertise with Travel Industry API integrations: Expedia, Bokun, Viator.
+          p.mb-4
+            | As a hobby I may have also dabbled in: C, C++, C#, Python, Perl, Assembly, ... you name it.
+          p.mb-4
+            | My CV is available 
+            a(href=require('FRONTEND/nurminendev/pdf/cv-riku-nurminen.pdf').default title='My CV (pdf)' target='_blank')
+              | here (pdf)
+            | . You can also read more 
+            a(href='/about' title='About')
+              | about me
+            | .
+        .column.has-text-centered
+          img.nice-image(src=require('FRONTEND/nurminendev/images/static/riku.jpg').default alt='[riku_image]')
+
+  section.mb-4
+    .content
+      .columns
+        .column.is-three-quarters
+          h2.title Clients
+          .tile.is-ancestor
+            .tile.is-parent.has-text-centered(style='align-self: center;')
+              article.tile.is-child
+                .columns.is-centered.is-vcentered.is-mobile
+                  .column.is-two-thirds-tablet.is-one-third-mobile
+                    a(href='https://www.upwork.com' title='Upwork.com' target='_blank')
+                      img(src=require('FRONTEND/nurminendev/images/static/upwork-logo.png').default alt='[upwork-logo]')
+            .tile.is-parent.has-text-centered(style='align-self: center;')
+              article.tile.is-child
+                .columns.is-centered.is-vcentered.is-mobile
+                  .column.is-two-thirds-tablet.is-one-third-mobile
+                    a(href='https://phenomenal.fi/' title='Phenomenal Development - Software specially tailored for your business' target='_blank')
+                      img(src=require('FRONTEND/nurminendev/images/static/phenomenal-development-logo.png').default alt='[phenomenal-development-logo]')
+            .tile.is-parent.has-text-centered(style='align-self: center;')
+              article.tile.is-child
+                .columns.is-centered.is-vcentered.is-mobile
+                  .column.is-one-third-tablet.is-one-quarter-mobile
+                    a(href='https://comgate.fi/' title='Comgate Oy' target='_blank')
+                      img(src=require('FRONTEND/nurminendev/images/static/comgate-logo.png').default alt='[comgate-logo]')
+          .tile.is-ancestor.is-hidden-mobile
+            .tile.is-parent.has-text-centered
+              article.tile.is-child
+                p
+                  | Various clients
+            .tile.is-parent.has-text-centered
+              article.tile.is-child
+                p
+                  | Node.js
+            .tile.is-parent.has-text-centered
+              article.tile.is-child
+                p
+                  | Node.js / Ruby on Rails
+
+          h2.title.mb-6 Products by me
+          .columns.is-centered.has-text-centered.is-mobile
+            .column.is-three-fifths-tablet.is-half-mobile
+              .columns.is-variable.is-8.is-vcentered
+                .column
+                  a(href='https://unnodejs.org' title='Unnodejs.org' target='_blank')
+                    img(src=require('FRONTEND/shared/images/unnodejs-logo-2.png').default alt='[unnodejs-logo]')
+                .column
+                  a(href='https://lolq.org' title='LoLQ.org' target='_blank')
+                    img(src=require('FRONTEND/nurminendev/images/static/lolq-logo.png').default alt='[lolq-logo]')
+          .columns.is-centered.has-text-centered.mb-5.is-hidden-mobile
+            .column.is-three-fifths
+              .columns.is-variable.is-8.is-8
+                .column
+                  p
+                    | A Node.js back end framework
+                  p
+                    a(href='https://unnodejs.org' title='Unnodejs.org' target='_blank') https://unnodejs.org
+                .column
+                  p
+                    | ElectronJS desktop app
+                  p
+                    a(href='https://lolq.org' title='LoLQ.org' target='_blank') https://lolq.org
+
+          p
+            | Find more of my projects at 
+            a(href='https://ricforge.com' title='RicForge - Open source engineering' target='_blank')
+              | https://ricforge.com
+
+        .column.has-text-centered
+          h3.subtitle.is-size-4.mb-4(style='font-weight: 800;') Hire me, contact:
+          img.mb-4(src=require('FRONTEND/nurminendev/images/static/email.jpg').default)
+
+          p
+            | Pricing starts at 
+            span.has-text-weight-semibold 60&euro; + VAT24% / hour
+          p
+            | Short-term: 
+            span.has-text-weight-semibold Available
+            br
+            | Long-term: 
+            span.has-text-weight-semibold Booked until {{ pageAttributes.bookedUntil }}
+
+          h3.subtitle.is-size-4.mb-4(style='font-weight: 800;') Work feedback
+          p.mb-5
+            span.is-italic.has-text-grey-dark A reliable and skilled freelancer.
+            br
+            img(src=require('FRONTEND/nurminendev/images/static/5stars.jpg').default alt='[5-stars]')
+            br
+            | - Upwork.com client
+          p
+            span.is-italic.has-text-grey-dark
+              | Project was completed ahead of schedule, even some extra work was needed. Good coding
+              | skills. Project was shown to me on his test server and executed with comprehensive test
+              | data. Professional touch in all areas.
+            br
+            img(src=require('FRONTEND/nurminendev/images/static/5stars.jpg').default alt='[5-stars]')
+            br
+            | - Upwork.com client
+          p.is-size-7 All Upwork feedback viewable at 
+            a(href='https://www.upwork.com/freelancers/~01748ea7ae11ea8bc5' title='My Upwork.com profile' target='_blank')
+              | My Upwork.com profile
+            |  (requires login)

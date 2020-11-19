@@ -25,9 +25,10 @@
 //
 
 
-const path      = require('path')
-const logger    = require('unnode').workerLogger
-const unUtils   = require('unnode').utils
+const path                  = require('path')
+
+const logger                = require('unnode').workerLogger
+const unUtils               = require('unnode').utils
 
 
 class UnnodejsOrgController {
@@ -68,17 +69,18 @@ class UnnodejsOrgController {
         res.sendFile(path.join(this._viewsDir, 'terms-of-service.html'))
     }
 
-    redirectToNonWww(_, req, res) {
-        const protocol  = req.headers["x-forwarded-proto"] || req.protocol
-        const newHost   = req.get('host').slice(4)
-        return res.redirect(301, protocol + '://' + newHost + req.originalUrl)
-    }
-
 
     api_pageAttributes(_, req, res) {
         const copyrightYearsStr = unUtils.getCopyrightYears(this._copyrightStartYear)
 
         res.send({ 'copyrightYearsStr': copyrightYearsStr })
+    }
+
+
+    redirectToNonWww(_, req, res) {
+        const protocol  = req.headers["x-forwarded-proto"] || req.protocol
+        const newHost   = req.get('host').slice(4)
+        return res.redirect(301, protocol + '://' + newHost + req.originalUrl)
     }
 
 }

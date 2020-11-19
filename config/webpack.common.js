@@ -96,7 +96,7 @@ module.exports = {
                 ]
             },
             {
-                test: /\.(png|jpe?g|svg|ico)$/i,
+                test: /\.(png|jpe?g|svg|ico|pdf)$/i,
                 use: [
                     {
                         loader: 'file-loader',
@@ -120,8 +120,12 @@ module.exports = {
                             publicPath: (url, resourcePath, context) => {
                                 // Strip /frontend/ from path
                                 let outputPath = resourcePath.substr(resourcePath.lastIndexOf('/frontend/') + 10)
-                                // Strip first directory
-                                outputPath = outputPath.substr(outputPath.indexOf('/'))
+                                // Strip first directory (unless it's a shared image)
+                                if(outputPath.includes('shared/')) {
+                                    outputPath = '/' + outputPath
+                                } else {
+                                    outputPath = outputPath.substr(outputPath.indexOf('/'))
+                                }
                                 const publicPath = path.dirname(outputPath)
                                 return path.join(publicPath, url)
                             }

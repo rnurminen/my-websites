@@ -1,0 +1,39 @@
+extends layout/_application.pug
+
+block pageAttributes
+  - const pageTitle = 'About - Nurminen Development'
+  - const pageCanonical = 'https://nurminen.dev/legal/copyright'
+
+block content
+  include shared/_navbar.pug
+
+  section.mb-4
+    .content
+      .box
+        h2.title.is-size-2 Riku Nurminen
+        .columns.is-centered
+          .column.is-three-fifths
+            p.mb-4
+              | I’m {{ pageAttributes.rikuAgeInYears }} years old and I live in Tampere, Finland. I studied tv/film production, event production and digital media at Koulutuskeskus Salpaus. I graduated in 2013.
+            p.mb-4
+              | Coding wise I’m completely self-learned, having started with the BASIC programming language when I was 6 years old. I then spent most of my childhood and teenage years tinkering with computers and learning things such as different programming languages, web development, linux, open source, game development and 3D technologies. Generally speaking I was a complete nerd.
+            p.mb-4
+              | Original software  by me and my buddies: 
+              a(href='https://ricforge.com' title='RicForge - Open source engineering.') https://ricforge.com
+            p.mb-4
+              | My old freelancing business: 
+              a(href='https://en.rikunmediatuotanto.fi' title='Rikun Mediatuotanto') https://en.rikunmediatuotanto.fi
+            p.mb-4
+              | My old personal website: 
+              a(href='https://vanhat.rikunmediatuotanto.fi/' title='My old personal website') https://vanhat.rikunmediatuotanto.fi/
+            p.mb-4
+              | All code written locally in my 
+              a(href='https://i.imgur.com/7uWq0dO.jpg' title='Home office picture' target='_blank')
+                | home office
+              |  :)
+            p.mb-4
+              span.is-italic Happy coding!
+            p.mb-4
+              img(src=require('FRONTEND/nurminendev/images/static/riku-signature.jpg').default alt='[riku-signature]')
+          .column
+            img(src=require('FRONTEND/nurminendev/images/static/riku-as-child.jpg').default alt='[riku-as-child]')

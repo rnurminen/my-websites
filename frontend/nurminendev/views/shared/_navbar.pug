@@ -1,0 +1,16 @@
+nav#navbar(class='navbar is-transparent')
+  .navbar-brand
+    a.navbar-item(href='/' title='Nurminen.dev')
+      img(src=require('FRONTEND/nurminendev/images/static/nurminendev-logo-1.png').default alt='[nurminendev-logo]')
+    span.navbar-burger.burger(data-target='navbarMenu' id='my-navbar-burger')
+      span
+      span
+      span
+  #navbarMenu.navbar-menu
+    .navbar-end
+      .navbar-item
+        a.navbar-link.is-arrowless(href='/' title='Home')
+          | HOME
+      .navbar-item
+        a.navbar-link.is-arrowless(href='/about' title='About')
+          | ABOUT

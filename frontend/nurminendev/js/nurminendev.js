@@ -35,14 +35,32 @@
 //
 import '../css/styles.scss'
 
+import Vue from 'vue/dist/vue.esm.js'
+
 import * as zenscroll from 'zenscroll'
 
-import * as _ from 'lodash'
+require('FRONTEND/nurminendev/images/icons/favicon.ico')
 
 
 //
 // App wide JS
 //
+new Vue({
+    el: '#app',
+    data: {
+        'pageAttributes': {}
+    },
+    created() {
+        fetch('/api/pageattributes')
+            .then(res => res.json())
+            .then(res => {
+                this.pageAttributes = res
+            })
+            .catch(error => { })
+    }
+})
+
+
 const zenscrollDefaultDuration = 400 // ms
 const zenscrollEdgeOffset = 25 // px
 zenscroll.setup(zenscrollDefaultDuration, zenscrollEdgeOffset)
@@ -50,7 +68,14 @@ zenscroll.setup(zenscrollDefaultDuration, zenscrollEdgeOffset)
 
 document.addEventListener('DOMContentLoaded', () => {
     const navbarBurgers = Array.prototype.slice.call(document.querySelectorAll('.navbar-burger'), 0);
-
-    const frontpageSection = document.querySelector('#frontpage')
-
+    if(navbarBurgers.length > 0) {
+        navbarBurgers.forEach(el => {
+            el.addEventListener('click', () => {
+                const target = el.dataset.target
+                const $target = document.getElementById(target)
+                el.classList.toggle('is-active')
+                $target.classList.toggle('is-active')
+            })
+        })
+    }
 })
