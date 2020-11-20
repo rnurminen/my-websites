@@ -16,6 +16,202 @@ block content
   section
     .container.is-fullhd.mt-6.mb-6
       .content
-        h2.title ...
+        h2.title Environment variables
+        table.table.is-bordered.is-striped.is-hoverable
+          thead
+            tr
+              th Env var
+              th Meaning
+          tbody
+            tr
+              th UNNODE_WORKERS
+              td
+                | Maximum number of CPUs the server should use. Omit or set to 0 to use all CPU
+                | cores.
+            tr
+              th UNNODE_LOGFILE
+              td
+                | Logfile name. Will be used as:
+                br
+                span.monospaced server-dir/log/{UNNODE_LOGFILE}-YYYY-MM-DD
+                br
+                span.monospaced server-dir/log/{UNNODE_LOGFILE} 
+                | will be a symlink to current/latest logfile.
+                br
+                br
+                | Logs are automatically rotated and kept for 30 days OR 30 files of 20mb each,
+                | whichever comes first.
+                br
+                br
+                | If not set, no logfiles will be produced.
+            tr
+              th UNNODE_TIMEZONE
+              td
+                | Timezome for log timestamps.
+                br
+                br
+                | Value must be supported by 
+                a(href='https://momentjs.com/timezone/' title='moment-timezone')
+                  | https://momentjs.com/timezone/
+                br
+                br
+                | Usually this is autodetected, no need to set unless you want to explicitly change it.
+            tr
+              th UNNODE_SERVER_LISTEN_HOST
+              td
+                | IP-address or hostname to bind to.
+            tr
+              th UNNODE_SERVER_INSECURE_PORT
+              td
+                | HTTP server listen port (insecure)
+                br
+                br
+                | Omit or set to 0 to skip starting insecure server.
+            tr
+              th UNNODE_SERVER_SECURE_PORT
+              td
+                | HTTPS server listen port.
+                br
+                br
+                | If this is set, then...
+                br
+                br
+                strong UNNODE_SERVER_SECURE_DEFAULT_KEY
+                br
+                strong UNNODE_SERVER_SECURE_DEFAULT_CERT
+                br
+                strong UNNODE_SERVER_SECURE_DEFAULT_CA
+                br
+                br
+                | ... must also be set.
+                br
+                br
+                | Omit or set to 0 to skip starting secure server.
+            tr
+              th UNNODE_SERVER_SECURE_DEFAULT_KEY
+              td
+                | Full path to a certificate key file in PEM format.
+            tr
+              th UNNODE_SERVER_SECURE_DEFAULT_CERT
+              td
+                | Full path to certificate file in PEM format.
+            tr
+              th UNNODE_SERVER_SECURE_DEFAULT_CA
+              td
+                | Full path to trusted CA certificates file in PEM format. Optional, only set
+                | if you want to override the trusted CA certificates.
+            tr
+              th UNNODE_SERVER_SECURE_MINVERSION
+              td
+                | Optionally set the minimum TLS version to allow. See 
+                a(href='https://nodejs.org/api/tls.html#tls_tls_createsecurecontext_options' title='Node.js TLS')
+                  | https://nodejs.org/api/tls.html#tls_tls_createsecurecontext_options
+                |  'minversion' for supported values.
+            tr
+              th UNNODE_SERVER_CONFIG
+              td
+                | Full path to Unnode.js server config file (see below).
+                br
+                br
+                | Default is 
+                span.monospaced server-dir/config/unnode-server-config.js
+            tr
+              th ROLLBAR_ACCESS_TOKEN
+              td
+                | Rollbar access token. Setting this and 
+                strong ROLLBAR_ENVIRONMENT 
+                | will enable Rollbar logging for all log messages of level 'warning' and above.
+            tr
+              th ROLLBAR_ENVIRONMENT
+              td
+                | Rollbar environment.
+        h2.title Server config file
         p
-          | ...
+          | By default, Unnode.js will look for the server config file at 
+          span.monospaced server-dir/config/unnode-server-config.js
+          |  or at the path specified in 
+          strong UNNODE_SERVER_CONFIG 
+          | environment variable.
+        p
+          | See below for an example config file.
+        p
+          | The file should export an array of objects with the following properties:
+        table.table.is-bordered.is-striped.is-hoverable
+          thead
+            tr
+              th Property
+              th Type
+              th Meaning
+          tbody
+            tr
+              th vhost
+              td
+                | array
+              td
+                | ...
+            tr
+              th secureContext
+              td
+                | object
+              td
+                | ...
+            tr
+              th helmetOptions
+              td
+                | object
+              td
+                | ...
+            tr
+              th robotsTxt
+              td
+                | string
+              td
+                | ...
+            tr
+              th serveFavicon
+              td
+                | string
+              td
+                | ...
+            tr
+              th routes
+              td
+                | array
+              td
+                | ...
+            tr
+              th routes[n].method
+              td
+                | string
+              td
+                | ...
+            tr
+              th routes[n].path
+              td
+                | string
+              td
+                | ...
+            tr
+              th routes[n].controller
+              td
+                | string
+              td
+                | ...
+            tr
+              th routes[n].static
+              td
+                | string
+              td
+                | ...
+            tr
+              th routes[n].customParameter
+              td
+                | any
+              td
+                | ...
+            tr
+              th routes[n].cacheControl
+              td
+                | object
+              td
+                | ...

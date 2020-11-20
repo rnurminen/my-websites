@@ -23,8 +23,10 @@ html(lang="en")
     meta(name='msapplication-TileImage' content=require('FRONTEND/nurminendev/images/icons/mstile-310x310.png').default)
     meta(name='theme-color' content='#ffffff')
 
-    - const siteDescription = "Nurminen Development - Software engineering"
+    - const siteDescription = "Software engineering, full-stack web development."
     - const socialsImageUrl = 'https://nurminen.dev' + require('FRONTEND/nurminendev/images/social/card-image-2by1.png').default
+
+    meta(name='description' content=siteDescription)
 
     meta(property='og:title' content=pageTitle)
     meta(property='og:description' content=siteDescription)

@@ -26,6 +26,8 @@ html(lang="en")
     - const siteDescription = "Unnode.js is a framework that makes creating Node.js back ends easy. It provides you with process clustering, proper logging, web backend abstraction and vhosts (domain-based routing)"
     - const socialsImageUrl = 'https://unnodejs.org' + require('FRONTEND/unnodejs/images/social/card-image-2by1.png').default
 
+    meta(name='description' content=siteDescription)
+
     meta(property='og:title' content=pageTitle)
     meta(property='og:description' content=siteDescription)
     meta(property='og:url' content=pageCanonical)
@@ -55,9 +57,9 @@ html(lang="en")
             | organization
           p.mb-5
             a(href='https://ricforge.com' title='RicForge - Open source engineering.' class='mr-6')
-              img(src=require('FRONTEND/unnodejs/images/static/ricforge-logo-small.png').default) 
+              img(src=require('FRONTEND/unnodejs/images/static/ricforge-logo-small.png').default alt='[ricforge-logo]') 
             a(href='https://nurminen.dev' title='Nurminen Development')
-              img(src=require('FRONTEND/unnodejs/images/static/nurminendev-logo-small.png').default)
+              img(src=require('FRONTEND/unnodejs/images/static/nurminendev-logo-small.png').default alt='[nurminendev-logo]')
           p.mb-5
             a(href='/legal/privacy-policy' title='Privacy policy') Privacy policy
             |  &ndash; 
