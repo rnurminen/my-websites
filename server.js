@@ -97,8 +97,6 @@ if(unnode.isMaster) {
 
 
 async function runWorker() {
-    const express       = require('express')
-
     const unnodeWorker  = require('unnode').worker
     const workerLogger  = require('unnode').workerLogger
 
