@@ -48,6 +48,14 @@ function viewsToHtml(site) {
 
         if(site === 'unnodejs' && page === 'getting-started') {
             options.chunks.push('codehighlight')
+        } else if(site === 'unnodejs' && page === 'configuration') {
+            options.chunks.push('codehighlight')
+        } else if(site === 'unnodejs' && page === 'process-clustering') {
+            options.chunks.push('codehighlight')
+        } else if(site === 'unnodejs' && page === 'vhosts') {
+            options.chunks.push('codehighlight')
+        } else if(site === 'unnodejs' && page === 'logging') {
+            options.chunks.push('codehighlight')
         } else if(site === 'unnodejs' && templateFile.includes('unnodejs/views/index.pug')) {
             options.isFrontPage = true
         }

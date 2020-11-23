@@ -16,6 +16,57 @@ block content
   section
     .container.is-fullhd.mt-6.mb-6
       .content
-        h2.title ...
         p
-          | ...
+          | Unnode.js can easily be used to host multiple domains / websites on a single app instance.
+        p
+          | You can also set a TLS certificate per-vhost. This uses SNI (Serve Name Indication) which
+          | is 
+          a(href='https://caniuse.com/sni' title='SNI support') well supported
+          |  by now.
+        p
+          | Just configure your hostnames / domains in your 
+          span.monospaced unnode-server-config.js
+          |  file:
+        pre
+          code
+            | module.exports = [
+            |     {
+            |         'vhost': ['my-site.org'],
+            |         'routes': [
+            |             { ... },
+            |             { ... }
+            |     },
+            |     {
+            |         // You can also use wildcards
+            |         'vhost': ['another-site.org', '*.another-site.org'],
+            |         'routes': [
+            |             { ... },
+            |             { ... }
+            |     },
+            |     {
+            |         // This will catch all other requests not matched to the above hostnames
+            |         'vhost': ['*'],
+            |         'routes': [
+            |             { method: 'GET', path: '/', controller: 'site-controller#not_found' }
+            |         ]
+            |     }
+            | ]
+        .columns.is-centered.mb-4.mt-4
+          .column.is-8
+            .box
+              p.is-italic.is-tip
+                | For a more comprehensive server config example, see 
+                a(href='https://github.com/rnurminen/my-websites/blob/master/config/unnode-server-config.js' title='Unnode.js example')
+                  | https://github.com/rnurminen/my-websites/blob/master/config/unnode-server-config.js
+
+        p
+          | See 
+          a(href='/doc/latest/configuration' title='Documentation: Configuration')
+            | configuration
+          |  for full details on the server config file.
+
+        p.is-size-5
+          | Next: 
+          a(href='/doc/latest/logging' title='Documentation: Logging')
+            | Logging
+

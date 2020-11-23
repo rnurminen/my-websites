@@ -16,6 +16,100 @@ block content
   section
     .container.is-fullhd.mt-6.mb-6
       .content
-        h2.title ...
         p
-          | ...
+          | Use the Unnode.js logger for easy console, file and Rollbar logging.
+        p
+          | Console logging is always enabled. File logs will be saved in JSON format if the 
+          span.monospaced UNNODE_LOGFILE
+          |  env var is set.
+        p
+          | Log messages of level 
+          span.monospaced warning
+          |  and above will be sent to Rollbar if the 
+          span.monospaced ROLLBAR_ACCESS_TOKEN
+          |  and 
+          span.monospaced ROLLBAR_ENVIRONMENT
+          |  env vars are set correctly. You can override this behavior with the 
+          span.monospaced overrideRollbar
+          |  option to the logger (see below).
+
+        h2.title Master and worker loggers
+        p
+          | Use 
+          span.monospaced require('unnode').masterLogger
+          |  inside the master process and 
+          span.monospaced require('unnode').workerLogger
+          |  when inside a worker process:
+        pre
+          code
+            | const unnode = require('unnode')
+            | 
+            | if(unnode.isMaster) {
+            | 
+            |     const masterLog = require('unnode').masterLogger
+            | 
+            |     // Skip logging this error to Rollbar
+            |     masterLog.log('error', 'Some error', 'no-rollbar')
+            | 
+            | } else if(unnode.isWorker) {
+            | 
+            |     const workerLog = require('unnode').workerLogger
+            | 
+            |     // Force log this to Rollbar even though it's only
+            |     // of level 'info'
+            |     masterLog.log('info', 'Some message', 'force-rollbar')
+            | 
+            | }
+
+        h2.title log(level, message, overrideRollbar)
+        ul
+          li.mb-4
+            span.monospaced level
+            | : log level, one of the 8 syslog-style log levels:
+            ul
+              li debug
+              li info
+              li notice
+              li warning
+              li error
+              li crit
+              li alert
+              li emerg
+          li.mb-4
+            span.monospaced message
+            | : the log message. You can use something like 
+            a(href='https://www.npmjs.com/package/chalk' title='npm: chalk') chalk
+            |  to colorize it for the console:
+            pre
+              code
+                | const unnode = require('unnode')
+                | const chalk  = require('chalk')
+                | 
+                | if(unnode.isWorker) {
+                |     const workerLog = require('unnode').workerLogger
+                |
+                |     const coloredMsg = chalk.underline.red('a message')
+                | 
+                |     masterLog.log('info', coloredMsg)
+                | 
+                | }
+          li.mb-4
+            span.monospaced overrideRollbar
+            | : By default, messages of level 
+            span.monospaced warning
+            |  and above will get sent to Rollbar. Use this to override:
+            ul
+              li
+                span.monospaced no-rollbar
+                | : Never send to Rollbar
+              li
+                span.monospaced force-rollbar
+                | : Always send to Rollbar
+              li
+                span.monospaced only-rollbar
+                | : Only send to Rollbar, skip console and file
+
+        p.is-size-5
+          | Next: 
+          a(href='/doc/latest/utils' title='Documentation: Utils')
+            | Utils

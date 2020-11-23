@@ -136,7 +136,7 @@ block content
           | See below for an example config file.
         p
           | The file should export an array of objects with the following properties:
-        table.table.is-bordered.is-striped.is-hoverable
+        table.table.is-bordered.is-striped.is-hoverable.mb-6
           thead
             tr
               th Property
@@ -148,70 +148,272 @@ block content
               td
                 | array
               td
-                | ...
+                | An array of strings for hostnames where the 
+                span.monospaced routes 
+                | in this entry should respond to. This can be used to easily host multiple
+                | domains on a single instance of Unnode.js.
+                br
+                br
+                | If this only contains one entry 
+                span.monospaced '*' 
+                | , then this entry will be treated as a wild-card "catch-all" vhost if no other
+                | vhost entry matches.
+                br
+                br
+                | You can also use wildcards, e.g. 
+                span.monospaced '*.mysite.org' 
+                | . This would make the routes respond to any hostname under '.mysite.org'
             tr
               th secureContext
               td
                 | object
               td
-                | ...
+                | TLS certificate that will be served for this vhost.
+            tr
+              th secureContext.key
+              td
+                | string
+              td
+                | Full path to a certificate key file for this vhost, in PEM format.
+                br
+                br
+                | If your default cert covers the hostnames for this vhost, then you can simply
+                | use 
+                span.monospaced process.env.UNNODE_SERVER_SECURE_DEFAULT_KEY 
+                | here.
+            tr
+              th secureContext.cert
+              td
+                | string
+              td
+                | Full path to certificate file for this vhost, in PEM format.
+                br
+                br
+                | The cert should be valid for all hostnames listed under 
+                span.monospaced vhosts
+                | .
+                br
+                br
+                | If your default cert covers the hostnames for this vhost, then you can simply
+                | use 
+                span.monospaced process.env.UNNODE_SERVER_SECURE_DEFAULT_CERT 
+                | here.
+            tr
+              th secureContext.ca
+              td
+                | string
+              td
+                | Full path to trusted CA certificates file in PEM format. Optional, only set
+                | if you want to override the trusted CA certificates for this vhost.
+                br
+                br
+                | If your default cert covers the hostnames for this vhost, then you can simply
+                | use 
+                span.monospaced process.env.UNNODE_SERVER_SECURE_DEFAULT_CA 
+                | here.
             tr
               th helmetOptions
               td
                 | object
               td
-                | ...
+                | Helmet configuration. Will be passed directly to the helmet middleware. See 
+                a(href='https://helmetjs.github.io/' title='Helmet') https://helmetjs.github.io/
             tr
               th robotsTxt
               td
                 | string
               td
-                | ...
+                | A string that will be served at 
+                span.monospaced /robots.txt
+                | . For example: 
+                span.monospaced "User-agent: *\nAllow: /"
             tr
               th serveFavicon
               td
                 | string
               td
-                | ...
+                | Full filesystem path to a favicon file. Will be served at 
+                span.monospaced /favicon.ico
             tr
               th routes
               td
                 | array
               td
-                | ...
+                | Routes configuration
             tr
               th routes[n].method
               td
                 | string
               td
-                | ...
+                | HTTP method for this route. GET / HEAD / POST / PUT / DELETE / PATCH etc.
             tr
               th routes[n].path
               td
                 | string
               td
-                | ...
+                | URL path for this route.
             tr
               th routes[n].controller
               td
                 | string
               td
-                | ...
+                | Controller for this route.
+                br
+                br
+                | Example: 
+                span.monospaced unnodejs.org/unnodejs-controller#index 
+                br
+                br
+                | This would route requests for this route to 
+                span.monospaced server-dir/controllers/unnodejs.org/unnodejs-controller.js
+                | .
+                br
+                br
+                | The file should export a class that contains a method of the name 
+                span.monospaced index
+                | . Example:
+                pre
+                  code
+                    | const logger  = require('unnode').workerLogger
+                    | const unUtils = require('unnode').utils
+                    | 
+                    | class IndexController {
+                    |     constructor() {
+                    | 
+                    |     }
+                    | 
+                    |     index(customParameter, req, res) {
+                    |         const ip     = unUtils.getClientIp(req)
+                    |         const method = req.method
+                    |         const url    = unUtils.getRequestFullUrl(req)
+                    |         const agent  = req.get('user-agent')
+                    | 
+                    |         logger.log('info',
+                    |             `Request ${method} ${url} (from: ${ip}, `
+                    |             + `User-Agent: ${agent})`)
+                    | 
+                    |         res.send('Hello World!')
+                    |     }
+                    | }
+                    | 
+                    | module.exports = new IndexController()
+                br
+                br
+                strong
+                  | Either this or 
+                  span.monospaced static 
+                  | must be set per route.
             tr
               th routes[n].static
               td
                 | string
               td
-                | ...
+                | Serve a static directory on this route instead. This should be a full filesystem
+                | path to the directory you want to serve.
+                br
+                br
+                strong
+                  | Either this or 
+                  span.monospaced controller 
+                  | must be set per route.
             tr
               th routes[n].customParameter
               td
                 | any
               td
-                | ...
+                | Send a custom variable as the first parameter to the route controller method/function.
             tr
               th routes[n].cacheControl
               td
                 | object
               td
-                | ....
+                | Cache-Control header directives for this route. This option will be passed directly
+                | to the 
+                a(href='https://www.npmjs.com/package/express-cache-controller' title='Express Cache-Control middleware') express-cache-controller 
+                | middleware.
+                br
+                br
+                | NOTE: Does not apply for 
+                span.monospace static 
+                | routes, they will be automatically served with:
+                br
+                br
+                span.monospaced Cache-Control: public, max-age=16070400
+                br
+                br
+                | and no Etag and Last-Modified headers (see 
+                a(href='https://medium.com/pixelpoint/best-practices-for-cache-control-settings-for-your-website-ff262b38c5a2' title='Best practices for cache control settings for your website') here
+                | )
+
+        p.subtitle.is-size-5
+          | Example config:
+        pre
+          code
+            | //
+            | // config/unnode-server-config.js
+            | //
+            |
+            | module.exports = [
+            |     {
+            |         // Answer on localhost also for development
+            |         'vhost': ['localhost', 'my-site.org'],
+            |         'secureContext': {
+            |             'key': process.env.UNNODE_SERVER_SECURE_DEFAULT_KEY,
+            |             'cert': process.env.UNNODE_SERVER_SECURE_DEFAULT_CERT
+            |         },
+            |         'helmetOptions': {
+            |             // Allow external google font imports in our CSP policy
+            |             contentSecurityPolicy: {
+            |                 directives: {
+            |                     'default-src': ["'self'"],
+            |                     'img-src': ["'self'", 'img.shields.io'],
+            |                     'style-src': ["'self'", "'unsafe-inline'", 'fonts.googleapis.com'],
+            |                     'font-src': ["'self'", 'fonts.gstatic.com'],
+            |                     'script-src': ["'self'", "'unsafe-eval'"],
+            |                     'object-src': ["'self'"],
+            |                 }
+            |             }
+            |         },
+            |         'robotsTxt': "User-agent: *\nAllow: /",
+            |         'serveFavicon': path.resolve(__dirname, '..', 'favicon.ico'),
+            |         'routes': [
+            |             // Serve some html pages
+            |             {
+            |                 method: 'GET',
+            |                 path: '/',
+            |                 controller: 'site-controller#index',
+            |                 cacheControl: noCache
+            |             },
+            |             {
+            |                 method: 'GET',
+            |                 path: '/team',
+            |                 controller: 'site-controller#teamPage',
+            |                 cacheControl: noCache
+            |             },
+            | 
+            |             // Serve some static assets
+            |             { path: '/css', static: path.resolve(__dirname, '..', 'css') },
+            |             { path: '/js', static: path.resolve(__dirname, '..', 'js') },
+            |             { path: '/images', static: path.resolve(__dirname, '..', 'images') },
+            |             { path: '/shared/images', static: path.resolve(__dirname, '..', 'images') },
+            |         ]
+            |     },
+            | 
+            |     {
+            |         // This will catch every other request not matched to the above vhosts
+            |         'vhost': ['*'],
+            |         'routes': [
+            |             {
+            |                 method: 'GET',
+            |                 path: '/',
+            |                 // Serve a 404 page via our controller
+            |                 controller: 'site-controller#not_found'
+            |             }
+            |         ]
+            |     }
+            | ]
+
+        p.is-size-5
+          | Next: 
+          a(href='/doc/latest/process-clustering' title='Documentation: Process clustering')
+            | Process clustering

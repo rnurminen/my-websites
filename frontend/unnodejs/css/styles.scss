@@ -91,6 +91,15 @@ pre,
     background-color: #999;
 }
 
+p.is-tip {
+    background-image: url("../../shared/images/tip-icon-lightbulb.png");
+    background-repeat: no-repeat;
+    background-size: 25px 25px;
+    padding-left: 38px;
+    min-height: 25px;
+
+}
+
 
 .frontpage-features {
     margin: 5rem 0 4rem 0;

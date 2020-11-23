@@ -16,6 +16,31 @@ block content
   section
     .container.is-fullhd.mt-6.mb-6
       .content
-        h2.title ...
+        p.is-italic.is-size-4
+          | &lt; Documentation in progress &gt;
         p
-          | ...
+          | Utility methods under 
+          span.monospaced require('unnode').utils
+          | :
+        ul
+          li handle
+          li isObject
+          li isFileReadable
+          li isFileReadableSync
+          li readFile
+          li readFileSync
+          li getDirectories
+          li _v
+          li parseJson
+          li convertCountryCodeAlpha2toAlpha3
+          li convertCountryCodeAlpha3toAlpha2
+          li fetch
+          li safeError
+          li getClientIp
+          li getRequestFullUrl
+          li getCopyrightYear
+
+        p.is-size-5
+          | Next: 
+          a(href='/doc/latest/api-reference' title='Documentation: API reference')
+            | API reference

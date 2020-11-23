@@ -16,6 +16,80 @@ block content
   section
     .container.is-fullhd.mt-6.mb-6
       .content
-        h2.title ...
         p
-          | ...
+          | Unnode.js wraps around the 
+          a(href='https://nodejs.org/api/cluster.html' title='Node Cluster API')
+            | Node Cluster API 
+          | for process clustering. From the documentation:
+        p.is-italic
+          | A single instance of Node.js runs in a single thread. To take advantage of multi-core
+          | systems, the user will sometimes want to launch a cluster of Node.js processes to
+          | handle the load.
+        p
+          span.monospaced require('unnode').isMaster 
+          br
+          span.monospaced require('unnode').isWorker 
+          br
+          br
+          | are simple wrappers for
+          br
+          br
+          span.monospaced require('cluster').isMaster 
+          br
+          span.monospaced require('cluster').isWorker
+        p
+          | Here is a quick boilerplate for an Unnode.js app entrypoint file:
+        pre
+          code
+            | require('dotenv').config({path: `${__dirname}/.env`})
+            | 
+            | const unnode = require('unnode')
+            | 
+            | if(unnode.isMaster) {
+            |     //
+            |     // This code will only run in the master process
+            |     //
+            |
+            |     const unnodeMaster = require('unnode').master
+            |     const masterLog = require('unnode').masterLogger
+            | 
+            |     unnodeMaster.init(__dirname).catch(error => {
+            |         masterLog.safeError('emerg',
+            |             'UnnodeMaster.init() failed', error)
+            |     })
+            | } else if(unnode.isWorker) {
+            |     //
+            |     // This code will only run in the worker process(es)
+            |     //
+            |
+            |     const unnodeWorker = require('unnode').worker
+            |     const workerLog = require('unnode').workerLogger
+            | 
+            |     try {
+            |         unnodeWorker.setupServer(__dirname)
+            |             .catch((error) => {
+            |                 workerLogger.safeError('emerg',
+            |                     'UnnodeWorker.setupServer() fail',
+            |                     error)
+            |             })
+            |         unnodeWorker.runServer()
+            |     } catch (error) {
+            |         workerLogger.safeError('error',
+            |             'Worker failed to start', error)
+            |         process.exit(0)
+            |     }
+            | }
+
+        .columns.is-centered.mb-4.mt-4
+          .column.is-8
+            .box
+              p.is-italic.is-tip
+                | For a more comprehensive example, see 
+                a(href='https://github.com/rnurminen/my-websites/blob/master/server.js' title='Unnode.js example')
+                  | https://github.com/rnurminen/my-websites/blob/master/server.js
+
+        p.is-size-5
+          | Next: 
+          a(href='/doc/latest/vhosts' title='Documentation: Vhosts')
+            | Vhosts
+
