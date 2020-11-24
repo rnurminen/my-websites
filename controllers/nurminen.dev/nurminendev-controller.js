@@ -50,6 +50,10 @@ class NurminenDevController {
         res.sendFile(path.join(this._viewsDir, 'about.html'))
     }
 
+    contactPage(_, req, res) {
+        res.sendFile(path.join(this._viewsDir, 'contact.html'))
+    }
+
     copyrightPage(_, req, res) {
         res.sendFile(path.join(this._viewsDir, 'copyright.html'))
     }

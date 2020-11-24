@@ -22,6 +22,8 @@ $navbar-item-img-max-height: 6rem;
 $footer-background-color: #fff;
 $footer-padding: 3rem 1.5rem 3rem;
 
+$transition-duration: .1s;
+
 
 //
 // Bulma
@@ -59,6 +61,10 @@ nav {
         margin-left: 0.7rem;
     }
 }
+
+.modal-button {
+    cursor: pointer;
+}
   
 
 a:link {
@@ -84,6 +90,13 @@ a.navbar-link:hover {
     text-decoration: underline;
 }
 
+
+.fastertransition {
+    -webkit-transition: all 0.1s !important;
+    -moz-transition: all 0.1s !important;
+    -o-transition: all 0.1s !important;
+    transition: all 0.1s !important;
+}
 
 
 #app.container {

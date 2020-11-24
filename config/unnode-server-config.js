@@ -88,6 +88,7 @@ module.exports = [
         'routes': [
             { method: 'GET', path: '/', controller: 'nurminen.dev/nurminendev-controller#index' },
             { method: 'GET', path: '/about', controller: 'nurminen.dev/nurminendev-controller#aboutPage' },
+            { method: 'GET', path: '/contact', controller: 'nurminen.dev/nurminendev-controller#contactPage' },
             { method: 'GET',  path: '/legal/copyright', controller: 'nurminen.dev/nurminendev-controller#copyrightPage', cacheControl: noCache },
             { method: 'GET',  path: '/legal/privacy-policy', controller: 'nurminen.dev/nurminendev-controller#privacyPolicyPage', cacheControl: noCache },
             { method: 'GET',  path: '/legal/terms-of-service', controller: 'nurminen.dev/nurminendev-controller#termsOfServicePage', cacheControl: noCache },
@@ -110,6 +111,3 @@ module.exports = [
         ]
     }
 ]
-
-
-

@@ -1,0 +1,54 @@
+extends layout/_application.pug
+
+block pageAttributes
+  - const pageTitle = 'Contact - Nurminen Development'
+  - const pageCanonical = 'https://nurminen.dev/contact'
+
+block content
+  include shared/_navbar.pug
+
+  section.mb-4
+    .content
+      .box
+        h2.title.is-size-2 Contact information
+        .columns.is-centered
+          .column.is-three-fifths
+            p.mb-4
+              | I'm located in the Pirkkala area, near Tampere, Finland.
+            p.mb-4
+              | Best way to contact me is via email:
+            p.mb-4
+              img.mb-4(src=require('FRONTEND/nurminendev/images/static/email.jpg').default alt='[email-image]' width='300')
+            p.mb-4
+              | Sometimes I might also pick up the phone at:
+            p.mb-4
+              img.mb-4(src=require('FRONTEND/nurminendev/images/static/phone.png').default alt='[phone-image]' width='200')
+            p.mb-4
+              | Billing via 
+              a(href='https://www.ukko.fi/en/' title='Ukko.fi')
+                | Ukko.fi invoice service
+              | :
+            p.mb-4
+              a(href='https://www.ukko.fi/en/' title='Ukko.fi')
+                img(src=require('FRONTEND/nurminendev/images/static/ukkofi_logo.png').default alt='[ukkofi-logo]' width='250')
+            p.mb-4
+              | SLP Group Oy
+              br
+              | Itämerenkatu 1
+              br
+              | (5th floor)
+              br
+              | 00180 Helsinki
+            p.mb-4
+              | Business ID: 2485076-3
+          .column
+            .box
+              img.modal-button(src=require('FRONTEND/nurminendev/images/static/pirkkala-area.jpg').default data-target='pirkkala-modal' alt='[pirkkala-area]')
+              p.mb-4.is-italic.is-size-7.has-text-centered
+                | Pirkkala, Finland
+
+  #pirkkala-modal.modal.modal-fx-superScaled
+    .modal-background.fastertransition
+    .modal-content.is-huge.is-image.fastertransition
+      img(src=require('FRONTEND/nurminendev/images/static/pirkkala-area-big.jpg').default alt='[pirkkala-area]')
+    button.modal-close.is-large(aria-label='close')

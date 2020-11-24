@@ -56,6 +56,10 @@ function viewsToHtml(site) {
             options.chunks.push('codehighlight')
         } else if(site === 'unnodejs' && page === 'logging') {
             options.chunks.push('codehighlight')
+        } else if(site === 'nurminendev' && page === 'contact') {
+            options.chunks.push('bulmamodalfx')
+        } else if(site === 'nurminendev' && page === 'about') {
+            options.chunks.push('bulmamodalfx')
         } else if(site === 'unnodejs' && templateFile.includes('unnodejs/views/index.pug')) {
             options.isFrontPage = true
         }
@@ -157,7 +161,8 @@ module.exports = {
         unnodejs: './frontend/unnodejs/js/unnodejs.js',
         nurminendev: './frontend/nurminendev/js/nurminendev.js',
 
-        codehighlight: './frontend/shared/js/codehighlight.js'
+        codehighlight: './frontend/shared/js/codehighlight.js',
+        bulmamodalfx: './frontend/shared/js/bulma-modal-fx.js'
     },
 
     output: {

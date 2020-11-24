@@ -36,4 +36,11 @@ block content
             p.mb-4
               img(src=require('FRONTEND/nurminendev/images/static/riku-signature.jpg').default alt='[riku-signature]')
           .column
-            img(src=require('FRONTEND/nurminendev/images/static/riku-as-child.jpg').default alt='[riku-as-child]')
+            .box
+              img.modal-button(src=require('FRONTEND/nurminendev/images/static/riku-as-child.jpg').default data-target='riku-modal' alt='[riku-as-child]')
+  
+  #riku-modal.modal.modal-fx-superScaled
+    .modal-background.fastertransition
+    .modal-content.is-huge.is-image.fastertransition
+      img(src=require('FRONTEND/nurminendev/images/static/riku-as-child-big.jpg').default alt='[riku-as-child]')
+    button.modal-close.is-large(aria-label='close')
