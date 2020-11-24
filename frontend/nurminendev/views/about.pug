@@ -28,7 +28,7 @@ block content
               a(href='https://vanhat.rikunmediatuotanto.fi/' title='My old personal website') https://vanhat.rikunmediatuotanto.fi/
             p.mb-4
               | All code written locally in my 
-              a(href='https://i.imgur.com/7uWq0dO.jpg' title='Home office picture' target='_blank')
+              a.modal-button(href='#' title='Home office picture' data-target='office-modal')
                 | home office
               |  :)
             p.mb-4
@@ -43,4 +43,10 @@ block content
     .modal-background.fastertransition
     .modal-content.is-huge.is-image.fastertransition
       img(src=require('FRONTEND/nurminendev/images/static/riku-as-child-big.jpg').default alt='[riku-as-child]')
+    button.modal-close.is-large(aria-label='close')
+
+  #office-modal.modal.modal-fx-superScaled
+    .modal-background.fastertransition
+    .modal-content.is-huge.is-image.fastertransition
+      img(src=require('FRONTEND/nurminendev/images/static/home-office.jpg').default alt='[home-office]')
     button.modal-close.is-large(aria-label='close')
