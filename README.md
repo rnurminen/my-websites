@@ -1,12 +1,9 @@
 # my-websites
 
 - https://nurminen.dev
-- https://ricforge.com
 - https://unnodejs.org
-- https://en.rikunmediatuotanto.fi
-- https://vanhat.rikunmediatuotanto.fi
 
-All powered by https://unnodejs.org :)
+Powered by [Unnode.js](https://unnodejs.org) :)
 
 ## License
 
