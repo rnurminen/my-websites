@@ -19,11 +19,11 @@ module.exports = [
         'helmetOptions': {
             contentSecurityPolicy: {
                 directives: {
-                    'default-src': ["'self'"],
+                    'default-src': ["'self'", 'www.google-analytics.com'],
                     'img-src': ["'self'", 'img.shields.io'],
                     'style-src': ["'self'", "'unsafe-inline'", 'fonts.googleapis.com'],
                     'font-src': ["'self'", 'fonts.gstatic.com'],
-                    'script-src': ["'self'", "'unsafe-eval'"],
+                    'script-src': ["'self'", "'unsafe-eval'", "'unsafe-inline'", 'www.googletagmanager.com'],
                     'object-src': ["'self'"],
                 }
             }
@@ -74,11 +74,11 @@ module.exports = [
         'helmetOptions': {
             contentSecurityPolicy: {
                 directives: {
-                    'default-src': ["'self'"],
+                    'default-src': ["'self'", 'www.google-analytics.com'],
                     'img-src': ["'self'"],
                     'style-src': ["'self'", "'unsafe-inline'", 'fonts.googleapis.com'],
                     'font-src': ["'self'", 'fonts.gstatic.com'],
-                    'script-src': ["'self'", "'unsafe-eval'"],
+                    'script-src': ["'self'", "'unsafe-eval'", "'unsafe-inline'", 'www.googletagmanager.com'],
                     'object-src': ["'self'"],
                 }
             }

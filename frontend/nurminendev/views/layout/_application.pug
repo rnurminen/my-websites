@@ -39,6 +39,13 @@ html(lang="en")
     meta(name='twitter:image' content=socialsImageUrl)
     meta(name='twitter:card' content='summary_large_image')
 
+    if self.htmlWebpackPlugin.options.isProduction === true
+      script(async='' src='https://www.googletagmanager.com/gtag/js?id=G-K55ZH6QK9P')
+      script.
+        window.dataLayer = window.dataLayer || [];
+        function gtag(){dataLayer.push(arguments);}
+        gtag('js', new Date());
+        gtag('config', 'G-K55ZH6QK9P');
 
   body
     #app.container.is-widescreen.page-shadow

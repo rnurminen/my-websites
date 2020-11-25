@@ -43,7 +43,8 @@ function viewsToHtml(site) {
             template: templateFile,
             filename: outTemplate,
             chunks: [ site ],
-            minify: false
+            minify: false,
+            isProduction: (process.env.NODE_ENV === 'production')
         }
 
         if(site === 'unnodejs' && page === 'getting-started') {
