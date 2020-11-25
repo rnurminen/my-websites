@@ -30,22 +30,28 @@ const path                  = require('path')
 const logger                = require('unnode').workerLogger
 const unUtils               = require('unnode').utils
 
+const BaseController        = require('../basecontroller.js')
 
-class UnnodejsOrgController {
+
+class UnnodejsOrgController extends BaseController {
     _viewsDir = path.resolve(__dirname, '..', '..', 'dist', 'unnodejs', 'views')
     _copyrightStartYear = 2020
 
 
     constructor() {
-
+        super()
     }
 
 
     index(_, req, res) {
+        super.logRequest(req)
+
         res.sendFile(path.join(this._viewsDir, 'index.html'))
     }
 
     docLatestPage(page, req, res) {
+        super.logRequest(req)
+
         if(page) {
             res.sendFile(path.join(this._viewsDir, 'doc', 'latest', `${page}.html`))
         } else {
@@ -54,18 +60,26 @@ class UnnodejsOrgController {
     }
 
     teamPage(_, req, res) {
+        super.logRequest(req)
+
         res.sendFile(path.join(this._viewsDir, 'team.html'))
     }
 
     copyrightPage(_, req, res) {
+        super.logRequest(req)
+
         res.sendFile(path.join(this._viewsDir, 'copyright.html'))
     }
 
     privacyPolicyPage(_, req, res) {
+        super.logRequest(req)
+
         res.sendFile(path.join(this._viewsDir, 'privacy-policy.html'))
     }
 
     termsOfServicePage(_, req, res) {
+        super.logRequest(req)
+
         res.sendFile(path.join(this._viewsDir, 'terms-of-service.html'))
     }
 

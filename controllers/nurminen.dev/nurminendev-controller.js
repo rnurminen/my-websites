@@ -31,38 +31,54 @@ const moment                = require('moment-timezone')
 const logger                = require('unnode').workerLogger
 const unUtils               = require('unnode').utils
 
+const BaseController        = require('../basecontroller.js')
 
-class NurminenDevController {
+
+class NurminenDevController extends BaseController {
     _viewsDir = path.resolve(__dirname, '..', '..', 'dist', 'nurminendev', 'views')
     _copyrightStartYear = 2016
 
 
     constructor() {
+        super()
+
         this.testVar = 0
     }
 
 
     index(_, req, res) {
+        super.logRequest(req)
+
         res.sendFile(path.join(this._viewsDir, 'index.html'))
     }
 
     aboutPage(_, req, res) {
+        super.logRequest(req)
+
         res.sendFile(path.join(this._viewsDir, 'about.html'))
     }
 
     contactPage(_, req, res) {
+        super.logRequest(req)
+
         res.sendFile(path.join(this._viewsDir, 'contact.html'))
     }
 
     copyrightPage(_, req, res) {
+        super.logRequest(req)
+
         res.sendFile(path.join(this._viewsDir, 'copyright.html'))
     }
 
     privacyPolicyPage(_, req, res) {
+        super.logRequest(req)
+
         res.sendFile(path.join(this._viewsDir, 'privacy-policy.html'))
     }
 
     termsOfServicePage(_, req, res) {
+        super.logRequest(req)
+
         res.sendFile(path.join(this._viewsDir, 'terms-of-service.html'))
     }
 

@@ -17,6 +17,7 @@
         "chalk": "^4.1.0",
         "dotenv": "^8.2.0",
         "highlight.js": "^10.4.0",
+        "ua-parser-js": "^0.7.22",
         "unnode": "^0.4.13",
         "vue": "^2.6.12",
         "zenscroll": "^4.0.2"
