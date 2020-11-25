@@ -24,9 +24,6 @@
 //
 //
 
-const { Parser } = require('webpack')
-
-
 const logger                = require('unnode').workerLogger
 const unUtils               = require('unnode').utils
 const { _v }                = require('unnode').utils
