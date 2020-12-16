@@ -88,6 +88,15 @@ block content
                 a(href='https://github.com/rnurminen/my-websites/blob/master/server.js' title='Unnode.js example')
                   | https://github.com/rnurminen/my-websites/blob/master/server.js
 
+        h2.title Signal handling and process management
+        p
+          | Unnode will automatically restart a worker process if it crashes.
+        p
+          | SIGINT and SIGTERM signals will attempt to gracefully terminate all workers, and then the master process will exit.
+        p.mb-5
+          | Sending a SIGUSR2 will gracefully restart all workers processes. This allows you to do code hot-reload on the fly.
+
+
         p.is-size-5
           | Next: 
           a(href='/doc/latest/vhosts' title='Documentation: Vhosts')

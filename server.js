@@ -108,10 +108,6 @@ async function runWorker() {
             return unnodeWorker.shutdownServer()
         }
 
-        const app = unnodeWorker.getWebBackend('localhost')
-
-        app.locals.pretty = true
-
         unnodeWorker.addWildcardRoute()
     
         unnodeWorker.runServer().catch((error) => {

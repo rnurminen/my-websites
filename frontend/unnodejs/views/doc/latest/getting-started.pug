@@ -202,6 +202,12 @@ block content
             span.monospaced ROLLBAR_ENVIRONMENT
             |  environment variables
           li
+            | Since we set up our routes and controllers via the 
+            a(href='/doc/latest/configuration' title='Documentation: Configuration') Unnode server config file
+            | , we are automatically getting the 
+            a(href='https://helmetjs.github.io/' title='Express.js security with HTTP headers') Helmet
+            |  middleware on all of our routes. We can also easily configure things such as caching, express views, favicon and robots.txt.
+          li
             | Our code is nicely modularized and separated into different files. Easy to maintain!
 
         p.is-size-5
