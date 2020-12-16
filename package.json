@@ -18,7 +18,7 @@
         "dotenv": "^8.2.0",
         "highlight.js": "^10.4.1",
         "ua-parser-js": "^0.7.23",
-        "unnode": "^0.5.1",
+        "unnode": "^0.5.2",
         "vue": "^2.6.12",
         "winston": "^3.3.3",
         "zenscroll": "^4.0.2"
@@ -48,7 +48,7 @@
         "webpack": "^5.10.3",
         "webpack-cli": "^4.2.0",
         "webpack-dev-middleware": "^4.0.2",
-        "webpack-merge": "^5.7.1"
+        "webpack-merge": "^5.7.2"
     },
     "engines": {
         "node": "14.x"
