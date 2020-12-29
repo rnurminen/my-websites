@@ -66,20 +66,14 @@ class UnnodejsOrgController extends BaseController {
     }
 
     copyrightPage(_, req, res) {
-        super.logRequest(req)
-
         res.sendFile(path.join(this._viewsDir, 'copyright.html'))
     }
 
     privacyPolicyPage(_, req, res) {
-        super.logRequest(req)
-
         res.sendFile(path.join(this._viewsDir, 'privacy-policy.html'))
     }
 
     termsOfServicePage(_, req, res) {
-        super.logRequest(req)
-
         res.sendFile(path.join(this._viewsDir, 'terms-of-service.html'))
     }
 

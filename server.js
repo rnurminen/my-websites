@@ -108,8 +108,8 @@ async function runWorker() {
             return unnodeWorker.shutdownServer()
         }
 
-        unnodeWorker.addWildcardRoute()
-    
+        unnodeWorker.addWildcardRoute(false)
+
         unnodeWorker.runServer().catch((error) => {
             workerLogger.safeError('error', `Worker failed to start`, error)
             process.exit(0)
