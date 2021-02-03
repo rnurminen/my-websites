@@ -45,19 +45,25 @@ require('FRONTEND/unnodejs/images/icons/favicon.ico')
 //
 // App wide JS
 //
-new Vue({
+const app = new Vue({
     el: '#app',
+
     data: {
         'pageAttributes': {}
     },
-    created() {
-        fetch('/api/pageattributes')
-            .then(res => res.json())
-            .then(res => {
-                this.pageAttributes = res
-            })
-            .catch(error => { })
+
+    async created() {
+        try {
+            const res = await fetch('/api/pageattributes')
+
+            const data = await res.json()
+
+            this.pageAttributes = data
+        } catch(error) {
+            console.log(`Failed to fetch page attributes: ${error.message}`)
+        }
     }
+
 })
 
 
@@ -82,7 +88,6 @@ document.addEventListener('DOMContentLoaded', () => {
     const frontpageSection = document.querySelector('#frontpage')
 
     if(frontpageSection) {
-        console.log('test')
         window.onscroll = function () {
             // Change navbar background to white when page is scrolled
             const nav = document.getElementById('navbar')

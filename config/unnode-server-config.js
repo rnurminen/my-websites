@@ -11,7 +11,7 @@ const noCache = { noCache: true }
 
 module.exports = [
     {
-        'vhost': [ 'localhost', 'unnodejs.org' ],
+        'vhost': [ 'unnodejs.local', 'unnodejs.org' ],
         'secureContext': {
             'key': process.env.UNNODE_SERVER_SECURE_DEFAULT_KEY,
             'cert': process.env.UNNODE_SERVER_SECURE_DEFAULT_CERT
@@ -55,7 +55,7 @@ module.exports = [
         ]
     },
     {
-        'vhost': [ 'www.localhost', 'www.unnodejs.org' ],
+        'vhost': [ 'www.unnodejs.local', 'www.unnodejs.org' ],
         'secureContext': {
             'key': process.env.UNNODE_SERVER_SECURE_DEFAULT_KEY,
             'cert': process.env.UNNODE_SERVER_SECURE_DEFAULT_CERT
@@ -66,7 +66,7 @@ module.exports = [
 
     },
     {
-        'vhost': [ 'nurminen.local', 'nurminen.dev' ],
+        'vhost': [ 'nurminendev.local', 'nurminen.dev' ],
         'secureContext': {
             'key': process.env.UNNODE_NURMINEN_LOCAL_KEY,
             'cert': process.env.UNNODE_NURMINEN_LOCAL_CERT
@@ -105,7 +105,7 @@ module.exports = [
         ]
     },
     {
-        'vhost': [ 'www.nurminen.dev' ],
+        'vhost': [ 'www.nurminendev.local', 'www.nurminen.dev' ],
         'routes': [
             { method: 'GET',  path: '*', controller: 'nurminen.dev/nurminendev-controller#redirectToNonWww' }
         ]
