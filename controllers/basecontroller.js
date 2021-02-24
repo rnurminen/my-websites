@@ -2,7 +2,7 @@
 //
 // my-websites
 //
-// Copyright (c) 2020 Riku Nurminen
+// Copyright (c) 2020, 2021 Riku Nurminen
 //
 // Permission is hereby granted, free of charge, to any person obtaining a copy
 // of this software and associated documentation files (the "Software"), to
