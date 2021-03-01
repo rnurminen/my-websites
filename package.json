@@ -24,7 +24,7 @@
         "zenscroll": "^4.0.2"
     },
     "devDependencies": {
-        "@babel/core": "^7.13.1",
+        "@babel/core": "^7.13.8",
         "@babel/polyfill": "^7.12.1",
         "@babel/preset-env": "^7.13.5",
         "@nurminen/html-beautify-webpack-plugin": "^1.1.3",
