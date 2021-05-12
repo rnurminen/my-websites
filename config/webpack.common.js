@@ -179,7 +179,8 @@ module.exports = {
 
     resolve: {
         alias: {
-            FRONTEND: path.resolve(__dirname, '..', 'frontend')
+            FRONTEND: path.resolve(__dirname, '..', 'frontend'),
+            'vue$': 'vue/dist/vue.esm.js'
         }
     },
 
