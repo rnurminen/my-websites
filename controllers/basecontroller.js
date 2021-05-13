@@ -25,11 +25,12 @@
 //
 
 
-const logger                = require('unnode').workerLogger
-const unUtils               = require('unnode').utils
-const { _v }                = require('unnode').utils
+import { workerLogger as logger } from 'unnode'
+import { utils as unUtils } from 'unnode'
 
-const uaParser              = require('ua-parser-js')
+const { _v } = unUtils
+
+import uaParser from 'ua-parser-js'
 
 
 class BaseController {
@@ -62,4 +63,4 @@ class BaseController {
 }
 
 
-module.exports = BaseController
+export default BaseController

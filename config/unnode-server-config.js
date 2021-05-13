@@ -5,11 +5,13 @@
 //
 
 
-const path = require('path')
+import path from 'node:path'
+
+const __dirname = path.dirname(new URL(import.meta.url).pathname)
 
 const noCache = { noCache: true }
 
-module.exports = [
+export default [
     {
         'vhost': [ 'unnodejs.local', 'unnodejs.org' ],
         'secureContext': {

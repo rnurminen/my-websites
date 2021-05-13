@@ -39,7 +39,7 @@ import Vue from 'vue/dist/vue.esm.js'
 
 import * as zenscroll from 'zenscroll'
 
-require('FRONTEND/unnodejs/images/icons/favicon.ico')
+import 'FRONTEND/unnodejs/images/icons/favicon.ico'
 
 
 //

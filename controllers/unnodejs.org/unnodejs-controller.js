@@ -25,12 +25,14 @@
 //
 
 
-const path                  = require('path')
+import path from 'node:path'
 
-const logger                = require('unnode').workerLogger
-const unUtils               = require('unnode').utils
+const __dirname = path.dirname(new URL(import.meta.url).pathname)
 
-const BaseController        = require('../basecontroller.js')
+import { workerLogger as logger } from 'unnode'
+import { utils as unUtils } from 'unnode'
+
+import BaseController from '../basecontroller.js'
 
 
 class UnnodejsOrgController extends BaseController {
@@ -94,4 +96,4 @@ class UnnodejsOrgController extends BaseController {
 }
 
 
-module.exports = new UnnodejsOrgController()
+export default new UnnodejsOrgController()

@@ -24,14 +24,15 @@
 //
 //
 
+import path     from 'node:path'
+import moment   from 'moment-timezone'
 
-const path                  = require('path')
-const moment                = require('moment-timezone')
+import { workerLogger as logger }   from 'unnode'
+import { utils as unUtils }         from 'unnode'
 
-const logger                = require('unnode').workerLogger
-const unUtils               = require('unnode').utils
+import BaseController from          '../basecontroller.js'
 
-const BaseController        = require('../basecontroller.js')
+const __dirname = path.dirname(new URL(import.meta.url).pathname)
 
 
 class NurminenDevController extends BaseController {
@@ -101,4 +102,4 @@ class NurminenDevController extends BaseController {
 }
 
 
-module.exports = new NurminenDevController()
+export default new NurminenDevController()

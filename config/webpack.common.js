@@ -25,16 +25,18 @@
 //
 
 
-const path                      = require('path')
-const glob                      = require('glob')
+import path from 'node:path'
 
-const { CleanWebpackPlugin }    = require('clean-webpack-plugin')
-const HtmlWebpackPlugin         = require('html-webpack-plugin')
-const MiniCssExtractPlugin      = require('mini-css-extract-plugin')
-const CssMinimizerPlugin        = require('css-minimizer-webpack-plugin')
-const TerserJSPlugin            = require('terser-webpack-plugin')
-const HtmlBeautifyPlugin        = require('@nurminen/html-beautify-webpack-plugin')
-const VueLoaderPlugin           = require('vue-loader/lib/plugin')
+const __dirname = path.dirname(new URL(import.meta.url).pathname)
+
+import glob                      from 'glob'
+import { CleanWebpackPlugin }    from 'clean-webpack-plugin'
+import HtmlWebpackPlugin         from 'html-webpack-plugin'
+import MiniCssExtractPlugin      from 'mini-css-extract-plugin'
+import CssMinimizerPlugin        from 'css-minimizer-webpack-plugin'
+import TerserJSPlugin            from 'terser-webpack-plugin'
+import HtmlBeautifyPlugin        from '@nurminen/html-beautify-webpack-plugin'
+import { VueLoaderPlugin }       from 'vue-loader'
 
 
 function viewsToHtml(site) {
@@ -53,7 +55,7 @@ function viewsToHtml(site) {
         let outTemplate = `${site}${templateFile.substr(templateFile.lastIndexOf('/views/'))}`
         outTemplate = outTemplate.replace(/\.pug$/, '.html')
 
-        page = path.basename(templateFile).replace(/\.pug$/, '')
+        const page = path.basename(templateFile).replace(/\.pug$/, '')
 
         let options = {
             template: templateFile,
@@ -86,7 +88,7 @@ function viewsToHtml(site) {
 }
 
 
-module.exports = {
+export default {
 
     module: {
         rules: [
@@ -233,9 +235,7 @@ module.exports = {
             new TerserJSPlugin({
                 extractComments: false
             }),
-            new CssMinimizerPlugin({
-                sourceMap: true
-            })
+            new CssMinimizerPlugin()
         ]
     }
 

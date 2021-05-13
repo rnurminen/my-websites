@@ -25,12 +25,12 @@
 //
 
 
-const { merge }     = require('webpack-merge')
+import { merge } from 'webpack-merge'
 
-const common        = require('./webpack.common.js')
+import common from './webpack.common.js'
 
 
-module.exports = merge(common, {
+export default merge(common, {
     mode: 'production',
     devtool: 'source-map',
     optimization: {
