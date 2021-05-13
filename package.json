@@ -19,7 +19,7 @@
         "highlight.js": "^10.7.2",
         "read-pkg-up": "^8.0.0",
         "ua-parser-js": "^0.7.28",
-        "unnode": "^1.0.1",
+        "unnode": "^1.0.2",
         "vue": "^2.6.12",
         "winston": "^3.3.3",
         "zenscroll": "^4.0.2"
