@@ -16,7 +16,7 @@
         "bulma-modal-fx": "^1.1.1",
         "chalk": "^4.1.1",
         "dotenv": "^9.0.2",
-        "highlight.js": "^10.7.2",
+        "highlight.js": "^11.0.1",
         "read-pkg-up": "^8.0.0",
         "ua-parser-js": "^0.7.28",
         "unnode": "^1.0.2",
