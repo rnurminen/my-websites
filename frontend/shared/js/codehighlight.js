@@ -29,7 +29,7 @@
 // highlight.js for pages that need code highlighting
 //
 
-import hljs from 'highlight.js/lib/core.js'
+import hljs from 'highlight.js/lib/core'
 import javascript from 'highlight.js/lib/languages/javascript.js'
 
 import 'highlight.js/styles/monokai-sublime.css';
